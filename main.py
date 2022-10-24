@@ -1,26 +1,23 @@
 import argparse
+from models.WaveCD import WaveCD
 import pytorch_lightning as pl
 from models.Exposure import Exposure
-from datamodules.CDDataModule import ExposuretDataModule
+from datamodules.CDDataModule import CDDataModule
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--mode", type=str, default="train", help="Train or test")
-parser.add_argument("--pretrained", type=str, default=None, help="File pretrained swin")
+parser.add_argument("--model_name", type=str, default="wavevit", help="Model name")
+parser.add_argument("--pretrained", type=str, default=None, help="File pretrained")
 parser.add_argument("--data_dir", type=str, default="datasets/Exposure", help="Path ke datasets")
 parser.add_argument("--batch_size", type=int, default=8, help="Batch size")
-#parser.add_argument("--embed_dim", type=int, default=128, help="Embed dimension")
-parser.add_argument("--frozen_stages", type=int, default=-1 , help="Frozen stages")
 parser.add_argument("--ckpt_path", type=str, default=None, help="Checkpoint path")
 parser.add_argument("--max_epochs", type=int, default=100, help="Max epochs")
 parser.add_argument("--num_workers", type=int, default=8, help="num_workers")
 parser.add_argument("--accelerator", type=str, default='cpu', help="Accelerator")
-parser.add_argument("--dataset_mode", type=str, default='repeat', help="Dataset Mode")
 parser.add_argument("--logs_dir", type=str, default='lightning_logs', help="Log dir")
 parser.add_argument("--variant", type=str, default='base', help="Variant model")
-parser.add_argument("--csv_file", type=str, default='datasets/video_exposure.csv', help="File csv")
-parser.add_argument("--sampling_strategy", type=str, default='trauncate', help="Sampling strategy")
 parser.add_argument("--multi_stage_training", action='store_true', help="Multi stage training")
 parser.add_argument("--log", action='store_true', help="log")
 
@@ -29,30 +26,26 @@ params = parser.parse_args()
 if __name__ == '__main__':
     mode = params.mode
     data_dir = params.data_dir
+    model_name = params.model_name
     pretrained = params.pretrained
     batch_size = params.batch_size
-    #embed_dim = params.embed_dim
-    frozen_stages = params.frozen_stages
     ckpt_path = params.ckpt_path
     max_epochs = params.max_epochs
     num_workers = params.num_workers
     accelerator = params.accelerator
-    dataset_mode = params.dataset_mode
-    csv_file = params.csv_file
-    sampling_strategy = params.sampling_strategy
     logs_dir = params.logs_dir
-    multi_stage_training = params.multi_stage_training
     log = params.log
     variant = params.variant
 
-    logger = TensorBoardLogger(save_dir=logs_dir, name="exposure")
+    logger = TensorBoardLogger(save_dir=logs_dir, name=model_name)
 
-    data_module = ExposuretDataModule(data_dir=data_dir, 
-                        batch_size=batch_size, 
-                        num_workers=num_workers, 
-                        dataset_mode=dataset_mode,
-                        sampling_strategy=sampling_strategy, 
-                        csv_file=csv_file)
+    data_module = CDDataModule(
+                    root_data_path = data_dir,
+                    pre_image_dir = "A",
+                    post_image_dir = "B",
+                    mask_image_dir = "label",
+                    batch_size=batch_size,
+                    num_workers=num_workers)
 
     if variant == 'small':
         depths = [2, 2, 18, 2]
@@ -63,13 +56,11 @@ if __name__ == '__main__':
         num_heads = [4, 8, 16, 32]
         embed_dim = 128 
 
-    exposure = Exposure(pretrained, 
-                    embed_dim=embed_dim, 
+    wavecd = WaveCD(embed_dim=embed_dim, 
                     depths=depths, 
                     num_heads=num_heads, 
-                    frozen_stages=frozen_stages, 
                     batch_size=batch_size, 
-                    multi_stage_training=multi_stage_training)
+                    wavevit_checkpoint=pretrained)
 
     trainer = pl.Trainer(accelerator=accelerator, 
                 max_epochs=max_epochs, 
@@ -82,25 +73,25 @@ if __name__ == '__main__':
                 callbacks=[EarlyStopping(monitor="val_loss")])
 
     if mode == 'train':
-        trainer.fit(model=exposure, datamodule=data_module, ckpt_path=ckpt_path)
+        trainer.fit(model=wavecd, datamodule=data_module, ckpt_path=ckpt_path)
 
     if mode == 'validate':
         if not log:
             trainer.logger = False
 
-        trainer.validate(model=exposure, datamodule=data_module, ckpt_path=ckpt_path)
+        trainer.validate(model=wavecd, datamodule=data_module, ckpt_path=ckpt_path)
 
     if mode == 'test':
         if not log:
             trainer.logger = False
 
-        trainer.test(model=exposure, datamodule=data_module, ckpt_path=ckpt_path)
+        trainer.test(model=wavecd, datamodule=data_module, ckpt_path=ckpt_path)
 
     if mode == 'predict':
         if not log:
             trainer.logger = False
 
-        predicts = trainer.predict(model=exposure, datamodule=data_module, ckpt_path=ckpt_path)
+        predicts = trainer.predict(model=wavecd, datamodule=data_module, ckpt_path=ckpt_path)
 
         for predict in predicts:
             print(predict)

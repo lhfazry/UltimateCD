@@ -11,7 +11,6 @@ from einops import rearrange
 from utils.tensor_utils import Reduce
 from sklearn.metrics import r2_score
 
-
 class WaveCD(pl.LightningModule):
     def __init__(self,
                 pretrained=None,
@@ -34,19 +33,17 @@ class WaveCD(pl.LightningModule):
             embed_dims=embed_dims,
             num_heads=num_heads, 
             mlp_ratios=mlp_ratios, 
-            depths=depths, 
-            token_label=True
+            depths=depths,
+            token_label=False
         )
-        
-        
+
+        self.model.load_state_dict(torch.load(wavevit_checkpoint))
 
     def forward_features(self, x):
         
-
         return x
 
     def forward_head(self, x):
-        
 
         return x
 

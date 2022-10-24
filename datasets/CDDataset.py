@@ -18,21 +18,26 @@ from PIL import Image
 
 class CDDataset(torch.utils.data.Dataset):
     def __init__(self, 
-            pre_image_path,
-            post_image_path,
-            mask_image_path,
+            root_data_path: str = "datasets/LEVIR", 
+            pre_image_dir = "A",
+            post_image_dir = "B",
+            mask_image_dir = "label",
             name='LEVIR',
             split='train',
             image_size=128, 
             augmented=False):
 
-        for path in [pre_image_path, post_image_path, mask_image_path]:
+        self.root_data_path = root_data_path
+
+        for dir in [pre_image_dir, post_image_dir, mask_image_dir]:
+            path = os.path.join(root_data_path, dir)
+
             if not os.path.exists(path):
                 raise ValueError("Path does not exist: " + path)
 
-        self.pre_images = glob(os.path.join(pre_image_path, "*.png"))
-        self.post_images = glob(os.path.join(post_image_path, "*.png"))
-        self.mask_images = glob(os.path.join(mask_image_path, "*.png"))
+        self.pre_images = glob(os.path.join(root_data_path, pre_image_dir, "*.png"))
+        self.post_images = glob(os.path.join(root_data_path, post_image_dir, "*.png"))
+        self.mask_images = glob(os.path.join(root_data_path, mask_image_dir, "*.png"))
 
         self.augmented = augmented
         self.image_size = image_size
