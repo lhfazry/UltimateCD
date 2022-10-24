@@ -18,7 +18,7 @@ class WaveCD(pl.LightningModule):
                 stem_hidden_dim = 32,
                 embed_dims=[64, 128, 320, 512],
                 depths=[3, 4, 12, 3], 
-                num_heads=[3, 6, 12, 24],
+                num_heads=[2, 4, 10, 16],
                 mlp_ratios=[8, 8, 4, 4], 
                 wavevit_checkpoint=None, 
                 batch_size=8):

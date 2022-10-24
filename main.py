@@ -50,13 +50,13 @@ if __name__ == '__main__':
     if variant == 'small':
         depths = [2, 2, 18, 2]
         num_heads = [3, 6, 12, 24]
-        embed_dim = 96
+        embed_dims = 96
     else: # base
-        depths = [2, 2, 18, 2]
-        num_heads = [4, 8, 16, 32]
-        embed_dim = 128 
+        depths = [3, 4, 12, 3]
+        num_heads = [2, 4, 10, 16]
+        embed_dims = [64, 128, 320, 512] 
 
-    wavecd = WaveCD(embed_dim=embed_dim, 
+    wavecd = WaveCD(embed_dims=embed_dims, 
                     depths=depths, 
                     num_heads=num_heads, 
                     batch_size=batch_size, 
