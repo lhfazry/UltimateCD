@@ -15,7 +15,7 @@ class WaveCD(pl.LightningModule):
     def __init__(self,
                 pretrained=None,
                 in_chans=3, 
-                stem_hidden_dim = 32,
+                stem_hidden_dim = 64,
                 embed_dims=[64, 128, 320, 512],
                 depths=[3, 4, 12, 3], 
                 num_heads=[2, 4, 10, 16],
@@ -37,7 +37,7 @@ class WaveCD(pl.LightningModule):
             token_label=False
         )
 
-        self.model.load_state_dict(torch.load(wavevit_checkpoint))
+        self.wavevit.load_state_dict(torch.load(wavevit_checkpoint)['state_dict'])
 
     def forward_features(self, x):
         

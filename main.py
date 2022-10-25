@@ -48,19 +48,23 @@ if __name__ == '__main__':
                     num_workers=num_workers)
 
     if variant == 'small':
+        state_hidden_dim = 32
         depths = [2, 2, 18, 2]
         num_heads = [3, 6, 12, 24]
         embed_dims = 96
     else: # base
+        state_hidden_dim = 64
         depths = [3, 4, 12, 3]
         num_heads = [2, 4, 10, 16]
         embed_dims = [64, 128, 320, 512] 
 
-    wavecd = WaveCD(embed_dims=embed_dims, 
-                    depths=depths, 
-                    num_heads=num_heads, 
-                    batch_size=batch_size, 
-                    wavevit_checkpoint=pretrained)
+    wavecd = WaveCD(
+                stem_hidden_dim = state_hidden_dim,
+                embed_dims=embed_dims, 
+                depths=depths, 
+                num_heads=num_heads, 
+                batch_size=batch_size, 
+                wavevit_checkpoint=pretrained)
 
     trainer = pl.Trainer(accelerator=accelerator, 
                 max_epochs=max_epochs, 
