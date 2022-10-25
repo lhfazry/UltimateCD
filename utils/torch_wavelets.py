@@ -15,15 +15,15 @@ class DWT_Function(Function):
         ctx.save_for_backward(w_ll, w_lh, w_hl, w_hh)
         ctx.shape = x.shape
 
-        print(f"awal: {x.dtype}")
-        print(f"wll: {w_ll.dtype}")
+        #print(f"awal: {x.dtype}")
+        #print(f"wll: {w_ll.dtype}")
         dim = x.shape[1]
         x_ll = torch.nn.functional.conv2d(x, w_ll.expand(dim, -1, -1, -1), stride = 2, groups = dim)
         x_lh = torch.nn.functional.conv2d(x, w_lh.expand(dim, -1, -1, -1), stride = 2, groups = dim)
         x_hl = torch.nn.functional.conv2d(x, w_hl.expand(dim, -1, -1, -1), stride = 2, groups = dim)
         x_hh = torch.nn.functional.conv2d(x, w_hh.expand(dim, -1, -1, -1), stride = 2, groups = dim)
         x = torch.cat([x_ll, x_lh, x_hl, x_hh], dim=1)
-        print(f"akhir: {x.dtype}")
+        #print(f"akhir: {x.dtype}")
 
         return x
 
