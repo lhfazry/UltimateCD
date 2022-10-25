@@ -16,6 +16,7 @@ class DWT_Function(Function):
         ctx.shape = x.shape
 
         print(f"awal: {x.dtype}")
+        print(f"wll: {w_ll.dtype}")
         dim = x.shape[1]
         x_ll = torch.nn.functional.conv2d(x, w_ll.expand(dim, -1, -1, -1), stride = 2, groups = dim)
         x_lh = torch.nn.functional.conv2d(x, w_lh.expand(dim, -1, -1, -1), stride = 2, groups = dim)
