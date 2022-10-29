@@ -42,7 +42,7 @@ def parse_args():
 
 def download_zip(zip_url, output_dir, split=None, extract=True, delete_after_extract=True):
     zip_file = os.path.join(output_dir, "data.zip" if split is None else f"{split}.zip")
-    gdown(zip_url, zip_file)
+    gdown.download(zip_url, zip_file)
 
     if extract:
         with zipfile.ZipFile(zip_file, 'r') as zip:

@@ -5,7 +5,7 @@ import warnings
 import gdown
 import zipfile
 from pathlib import Path
-from .utils import create_dir_if_not_exist
+from utils import create_dir_if_not_exist
 
 PRETRAINED_URLs = {
     'wavevit-s': 'https://drive.google.com/file/d/14ZtFxFiM60Ol5obv2vBHUJVXPfm5VnhE',
@@ -31,7 +31,7 @@ def download_ptretrained(model_name, output_dir):
     urls = PRETRAINED_URLs[model_name]
 
     if type(urls) == str:
-        gdown(urls, os.path.join(output_dir, f"{model_name}.pth".replace('-', '_')))
+        gdown.download(urls, os.path.join(output_dir, f"{model_name}.pth".replace('-', '_')))
             
 
 def main():
