@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'LEVIR_CD_Dataset'
-data_root = 'datasets/LEVIR'
+data_root = 'datasets/levir-cd'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (128, 128)#(256, 256)
