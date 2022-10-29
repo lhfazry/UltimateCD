@@ -75,7 +75,9 @@ class SiamEncoderDecoder(BaseSegmentor):
     def encode_decode(self, img, img_metas):
         """Encode images with backbone and decode into a semantic segmentation
         map of the same size as input."""
+        print(f"img shape: {img.shape}")
         x = self.extract_feat(img)
+        print(f"x shape: {x.shape}")
         out = self._decode_head_forward_test(x, img_metas)
         out = resize(
             input=out,
