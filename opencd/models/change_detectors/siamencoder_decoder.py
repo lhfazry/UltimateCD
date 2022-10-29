@@ -40,7 +40,7 @@ class SiamEncoderDecoder(BaseSegmentor):
 
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
-
+        
         assert self.with_decode_head
 
     def _init_decode_head(self, decode_head):
@@ -75,9 +75,9 @@ class SiamEncoderDecoder(BaseSegmentor):
     def encode_decode(self, img, img_metas):
         """Encode images with backbone and decode into a semantic segmentation
         map of the same size as input."""
-        print(f"img shape: {img.shape}")
+        #print(f"img shape: {img.shape}")
         x = self.extract_feat(img)
-        print(f"x shape: {x.shape}")
+        #print(f"x shape: {x.shape}")
         out = self._decode_head_forward_test(x, img_metas)
         out = resize(
             input=out,
@@ -141,8 +141,9 @@ class SiamEncoderDecoder(BaseSegmentor):
             dict[str, Tensor]: a dictionary of loss components
         """
 
+        print(f"image shape: {img.shape}")
         x = self.extract_feat(img)
-
+        print(f"x shape: {x.shape}")
         losses = dict()
 
         loss_decode = self._decode_head_forward_train(x, img_metas,
