@@ -209,9 +209,9 @@ def main():
             'avoid this error.')
         model = revert_sync_batchnorm(model)
 
-    n = torch.rand((4, 3, 128, 128))
-    o = model(n)
-    logger.info(f"output: {o}")
+    #n = torch.rand((4, 3, 128, 128))
+    #o = model(n)
+    #logger.info(f"output: {o}")
     logger.info(model)
 
     datasets = [build_dataset(cfg.data.train)]
