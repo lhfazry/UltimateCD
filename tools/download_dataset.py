@@ -5,7 +5,7 @@ import warnings
 import gdown
 import zipfile
 from pathlib import Path
-from .utils import create_dir_if_not_exist
+from utils import create_dir_if_not_exist
 
 DS_URLs = {
     'levir-cd': {
