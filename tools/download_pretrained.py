@@ -8,8 +8,8 @@ from pathlib import Path
 from utils import create_dir_if_not_exist
 
 PRETRAINED_URLs = {
-    'wavevit-s': 'https://drive.google.com/file/d/14ZtFxFiM60Ol5obv2vBHUJVXPfm5VnhE',
-    'wavevit-b': 'https://drive.google.com/file/d/1vKA3pJiX5A3KOKNDvZuAXRQFUj4ew9Hu'
+    'wavevit-s': '14ZtFxFiM60Ol5obv2vBHUJVXPfm5VnhE',
+    'wavevit-b': '1vKA3pJiX5A3KOKNDvZuAXRQFUj4ew9Hu'
 }
 
 def parse_args():
@@ -31,7 +31,7 @@ def download_ptretrained(model_name, output_dir):
     urls = PRETRAINED_URLs[model_name]
 
     if type(urls) == str:
-        gdown.download(urls, os.path.join(output_dir, f"{model_name}.pth".replace('-', '_')))
+        gdown.download(id=urls, output=os.path.join(output_dir, f"{model_name}.pth".replace('-', '_')))
             
 
 def main():
