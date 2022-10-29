@@ -156,6 +156,8 @@ def main():
         _, world_size = get_dist_info()
         cfg.gpu_ids = range(world_size)
 
+    cfg.device='cuda'
+    
     # create work_dir
     mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
     # dump config
