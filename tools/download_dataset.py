@@ -9,11 +9,11 @@ from utils import create_dir_if_not_exist
 
 DS_URLs = {
     'levir-cd': {
-            "train": "https://drive.google.com/file/d/18GuoCuBn48oZKAlEo-LrNwABrFhVALU-",
-            "val": "https://drive.google.com/file/d/1BqSt4ueO7XAyQ_84mUjswUSJt13ZBuzG",
-            "test": "https://drive.google.com/file/d/1jj3qJD_grJlgIhUWO09zibRGJe0R4Tn0"
+            "train": "18GuoCuBn48oZKAlEo-LrNwABrFhVALU-",
+            "val": "1BqSt4ueO7XAyQ_84mUjswUSJt13ZBuzG",
+            "test": "1jj3qJD_grJlgIhUWO09zibRGJe0R4Tn0"
         },
-    'dsifn-cd': "https://drive.google.com/file/d/10BuTzKyuInzeau2Wx1PRW3Inbply5uQn"
+    'dsifn-cd': "10BuTzKyuInzeau2Wx1PRW3Inbply5uQn"
 }
 
 def parse_args():
@@ -41,8 +41,9 @@ def parse_args():
     return args
 
 def download_zip(zip_url, output_dir, split=None, extract=True, delete_after_extract=True):
+    #print(zip_url)
     zip_file = os.path.join(output_dir, "data.zip" if split is None else f"{split}.zip")
-    gdown.download(zip_url, zip_file)
+    gdown.download(id=zip_url, output=zip_file)
 
     if extract:
         with zipfile.ZipFile(zip_file, 'r') as zip:
@@ -56,13 +57,14 @@ def download_zip(zip_url, output_dir, split=None, extract=True, delete_after_ext
 def download_dataset(ds_name, output_dir, extract, delete_after_extract):
     create_dir_if_not_exist(output_dir)
     urls = DS_URLs[ds_name]
+    #print(urls)
     
     output_dir = os.path.join(output_dir, ds_name)
     create_dir_if_not_exist(output_dir)
 
     if type(urls) == dict:
-        for split, url in enumerate(urls):
-            download_zip(url, output_dir, split=split)
+        for split in urls:
+            download_zip(urls[split], output_dir, split=split)
     elif type(urls) == str:
         download_zip(urls, output_dir)
             

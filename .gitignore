@@ -138,3 +138,4 @@ dmypy.json
 #ignore data
 data/
 output/*
+datasets/
