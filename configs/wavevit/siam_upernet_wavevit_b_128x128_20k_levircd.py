@@ -3,6 +3,7 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py'
 ]
 model = dict(
+    neck=dict(type='FeatureFusionNeck', policy='concat'),
     backbone=dict(
         stem_hidden_dim=64, 
         embed_dims=[64, 128, 320, 512],
