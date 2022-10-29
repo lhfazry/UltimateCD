@@ -211,7 +211,7 @@ def main():
 
     n = torch.rand((4, 3, 128, 128))
     o = model(n)
-    logger.info(o)
+    logger.info(f"output: {o}")
     logger.info(model)
 
     datasets = [build_dataset(cfg.data.train)]
