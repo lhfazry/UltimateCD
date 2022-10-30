@@ -12,11 +12,11 @@ model = dict(
     ),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        in_channels=[64, 128, 320, 512],
+        in_channels=[v*2 for v in [64, 128, 320, 512]],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=320,
+        in_channels=320*2,
         num_classes=2
     ))
 
