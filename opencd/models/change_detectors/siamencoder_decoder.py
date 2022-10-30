@@ -141,9 +141,9 @@ class SiamEncoderDecoder(BaseSegmentor):
             dict[str, Tensor]: a dictionary of loss components
         """
 
-        print(f"image shape: {img.shape}")
+        #print(f"image shape: {img.shape}")
         x = self.extract_feat(img)
-        print(f"x shape: {x.shape}")
+        #print(f"x shape: {x.shape}")
         losses = dict()
 
         loss_decode = self._decode_head_forward_train(x, img_metas,

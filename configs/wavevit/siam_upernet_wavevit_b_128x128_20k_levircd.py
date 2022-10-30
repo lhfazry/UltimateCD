@@ -3,7 +3,6 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py'
 ]
 model = dict(
-    neck=dict(type='FeatureFusionNeck', policy='concat'),
     backbone=dict(
         stem_hidden_dim=64, 
         embed_dims=[64, 128, 320, 512],
@@ -11,6 +10,7 @@ model = dict(
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 12, 3]
     ),
+    neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
         in_channels=[64, 128, 320, 512],
         num_classes=2
