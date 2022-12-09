@@ -9,6 +9,7 @@ import math
 import pywt
 from torch.autograd import Function
 from mmseg.models.builder import BACKBONES
+from mmcv.runner import BaseModule
 
 class DWT_Function(Function):
     @staticmethod
@@ -391,7 +392,7 @@ class Stem(nn.Module):
         return x, H, W
 
 @BACKBONES.register_module()
-class WaveViT(nn.Module):
+class WaveViT(BaseModule):
     def __init__(self, 
         in_chans=3, 
         stem_hidden_dim = 32, 
@@ -401,9 +402,9 @@ class WaveViT(nn.Module):
         drop_path_rate = 0., 
         depths = [3, 4, 6, 3],
         sr_ratios = [4, 2, 1, 1], 
-        norm_layer = partial(nn.LayerNorm, eps=1e-6)):
+        norm_layer = partial(nn.LayerNorm, eps=1e-6), **kwargs):
 
-        super().__init__()
+        super().__init__(**kwargs)
         self.num_stages = 4
         self.depths = depths
         
