@@ -27,8 +27,20 @@ model = dict(
 crop_size = (256, 256)
 
 train_pipeline = [
-    dict(type='MultiImgRandomCrop', crop_size=crop_size)
+    dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=10,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.8, 1.2),
+        hue_delta=10)
 ]
+
+data = dict(
+    samples_per_gpu=32,
+    workers_per_gpu=8,
+    train=dict(pipeline=train_pipeline)
+)
 
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
@@ -42,12 +54,9 @@ lr_config = dict(_delete_=True, policy='poly',
                  warmup_ratio=1e-6,
                  power=1.0, min_lr=0.0, by_epoch=False)
 
-data = dict(
-    samples_per_gpu=32,
-    workers_per_gpu=8)
 # By default, models are trained on 8 GPUs with 2 images per GPU
 #data=dict(samples_per_gpu=2)
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/siam_upernet_wavevit_s_256x256_50k_cdd'
+work_dir = './work_dirs/wavecd_s_256x256_50k_cdd'
