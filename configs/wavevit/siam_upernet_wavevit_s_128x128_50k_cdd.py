@@ -34,8 +34,8 @@ lr_config = dict(_delete_=True, policy='poly',
                  power=1.0, min_lr=0.0, by_epoch=False)
 
 data = dict(
-    samples_per_gpu=8,
-    workers_per_gpu=4)
+    samples_per_gpu=32,
+    workers_per_gpu=8)
 # By default, models are trained on 8 GPUs with 2 images per GPU
 #data=dict(samples_per_gpu=2)
 
