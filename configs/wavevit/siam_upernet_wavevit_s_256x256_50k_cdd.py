@@ -24,7 +24,7 @@ model = dict(
         num_classes=2
     ))
 
-crop_size = (128, 128)#(256, 256)
+crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgRandomCrop', crop_size=crop_size)
@@ -50,4 +50,4 @@ data = dict(
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/siam_upernet_wavevit_s_128x128_50k_cdd'
+work_dir = './work_dirs/siam_upernet_wavevit_s_256x256_50k_cdd'
