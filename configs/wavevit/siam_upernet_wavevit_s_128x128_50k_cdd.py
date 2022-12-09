@@ -4,7 +4,7 @@ _base_ = [
 ]
 model = dict(
     backbone=dict(
-        pretrained='./pretrained/wavevit_s.pth',
+        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
         stem_hidden_dim=64, 
         embed_dims=[64, 128, 320, 448],
         num_heads=[2, 4, 10, 14], 
