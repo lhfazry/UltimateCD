@@ -47,7 +47,7 @@ train_pipeline = [
         saturation_range=(0.8, 1.2),
         hue_delta=10),
 
-    dict(type='Collect', keys=['img', 'gt_semantic_seg']),
+    dict(type='Collect', keys=['img', 'gt_semantic_seg'])
 ]
 
 data = dict(
