@@ -314,7 +314,7 @@ class PatchEmbed(nn.Module):
 
 
 @BACKBONES.register_module()
-class FocalNet(nn.Module):
+class FocalNet(BaseModule):
     """ FocalNet backbone.
 
     Args:
@@ -356,8 +356,9 @@ class FocalNet(nn.Module):
                  use_conv_embed=False, 
                  use_layerscale=False, 
                  use_checkpoint=False, 
+                 **kwargs
         ):
-        super().__init__()
+        super().__init__(**kwargs)
 
         self.pretrain_img_size = pretrain_img_size
         self.num_layers = len(depths)
