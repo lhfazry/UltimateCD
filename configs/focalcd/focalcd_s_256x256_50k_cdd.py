@@ -1,30 +1,32 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
+    '../_base_/models/siam_upernet_focalnet.py', '../_base_/datasets/cdd.py',
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py'
 ]
 
-embed_dims=[64, 128, 320, 448]
+in_channels = [96, 192, 384, 768]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
-        stem_hidden_dim=32, 
-        embed_dims=embed_dims,
-        num_heads=[2, 4, 10, 14], 
-        drop_path_rate=0.3, #0.2, 
-        depths=[3, 4, 6, 3]
+        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_small_lrf.pth'),
+        embed_dim=96,
+        depths=[2, 2, 18, 2],
+        drop_path_rate=0.3,
+        patch_norm=True,
+        use_checkpoint=False,    
+        focal_windows=[9, 9, 9, 9],
+        focal_levels=[2, 2, 2, 2],
     ),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        in_channels=[v*2 for v in embed_dims],
+        in_channels=[v*2 for v in in_channels],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=embed_dims[2]*2,
+        in_channels=in_channels[2]*2,
         num_classes=2
     ))
 
-crop_size = (128, 128)#(256, 256)
+crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgRandomCrop', crop_size=crop_size),
