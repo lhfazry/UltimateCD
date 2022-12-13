@@ -36,10 +36,7 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
-    dict(type='MultiImgNormalize', **img_norm_cfg),
-    dict(type='MultiImgDefaultFormatBundle'),
-
-    dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    
     dict(
         type='MultiImgPhotoMetricDistortion',
         brightness_delta=10,
@@ -47,6 +44,8 @@ train_pipeline = [
         saturation_range=(0.8, 1.2),
         hue_delta=10),
 
+    dict(type='MultiImgNormalize', **img_norm_cfg),
+    dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
 ]
 

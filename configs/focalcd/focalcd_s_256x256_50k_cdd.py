@@ -38,8 +38,7 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
-
-    dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    
     dict(
         type='MultiImgPhotoMetricDistortion',
         brightness_delta=10,
