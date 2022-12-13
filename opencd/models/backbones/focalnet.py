@@ -13,8 +13,8 @@ import torch.utils.checkpoint as checkpoint
 import numpy as np
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
-from mmcv.utils import get_root_logger
 from mmcv.runner import load_checkpoint
+from mmseg.utils import get_root_logger
 from mmseg.models.builder import BACKBONES
 
 class Mlp(nn.Module):
