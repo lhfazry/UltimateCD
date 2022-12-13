@@ -23,7 +23,7 @@ model = dict(
         in_channels=embed_dims[2]*2,
         num_classes=2
     ))
-    
+
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (128, 128)#(256, 256)
@@ -47,7 +47,7 @@ train_pipeline = [
         saturation_range=(0.8, 1.2),
         hue_delta=10),
 
-    dict(type='Collect', keys=['img', 'gt_semantic_seg']),
+    dict(type='Collect', keys=['img', 'gt_semantic_seg'])
 ]
 
 data = dict(
