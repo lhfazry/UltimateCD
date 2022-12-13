@@ -34,7 +34,7 @@ class FeatureFusionNeck(BaseModule):
     def fusion(x1, x2, policy):
         """Specify the form of feature fusion"""
         
-        _fusion_policies = ['concat', 'sum', 'diff', 'abs_diff']
+        _fusion_policies = ['concat', 'sum', 'diff', 'Lp_distance']
         assert policy in _fusion_policies, 'The fusion policies {} are ' \
             'supported'.format(_fusion_policies)
         
