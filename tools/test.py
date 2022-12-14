@@ -304,7 +304,8 @@ def main():
                 'np.array, pre-eval results or file paths for '
                 '``dataset.format_results()``.')
             print(f'\nwriting results to {args.out}')
-            mmcv.dump(results, args.out)
+            #mmcv.dump(results, args.out)
+            torch.save(results, args.out)
         if args.eval:
             eval_kwargs.update(metric=args.eval)
             metric = dataset.evaluate(results, **eval_kwargs)
