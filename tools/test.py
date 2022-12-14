@@ -214,10 +214,6 @@ def main():
     # build the dataloader
     data_loader = build_dataloader(dataset, **test_loader_cfg)
 
-    for data in data_loader:
-        img_tensor = data['img'][0]
-        print(f"img shape: {img_tensor.shape}")
-        
     # build the model and load checkpoint
     cfg.model.train_cfg = None
     model = build_segmentor(cfg.model, test_cfg=cfg.get('test_cfg'))
