@@ -49,6 +49,7 @@ def main():
             'FLOPs counter is currently not currently supported with {}'.
             format(model.__class__.__name__))
 
+    model.float()
     flops, params = get_model_complexity_info(model, input_shape)
     split_line = '=' * 30
     print('{0}\nInput shape: {1}\nFlops: {2}\nParams: {3}\n{0}'.format(
