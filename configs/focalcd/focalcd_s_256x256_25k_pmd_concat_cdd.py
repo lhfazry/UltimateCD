@@ -7,12 +7,14 @@ in_channels = [96, 192, 384, 768]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
-        stem_hidden_dim=32, 
-        embed_dims=in_channels,
-        num_heads=[2, 4, 10, 14], 
-        drop_path_rate=0.3, #0.2, 
-        depths=[3, 4, 6, 3]
+        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_small_lrf.pth'),
+        embed_dim=96,
+        depths=[2, 2, 18, 2],
+        drop_path_rate=0.3,
+        patch_norm=True,
+        use_checkpoint=False,    
+        focal_windows=[9, 9, 9, 9],
+        focal_levels=[2, 2, 2, 2],
     ),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
