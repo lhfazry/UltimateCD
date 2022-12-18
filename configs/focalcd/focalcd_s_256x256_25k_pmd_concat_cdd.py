@@ -9,7 +9,7 @@ model = dict(
     backbone=dict(
         init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
         stem_hidden_dim=32, 
-        embed_dims=embed_dims,
+        embed_dims=in_channels,
         num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3]
