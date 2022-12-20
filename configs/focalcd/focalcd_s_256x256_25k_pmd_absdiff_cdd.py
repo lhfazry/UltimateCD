@@ -14,7 +14,7 @@ model = dict(
         patch_norm=True,
         use_checkpoint=False,    
         focal_windows=[9, 9, 9, 9],
-        focal_levels=[2, 2, 2, 2],
+        focal_levels=[3, 3, 3, 3],
     ),
     neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(

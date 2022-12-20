@@ -7,7 +7,7 @@ in_channels = [96, 192, 384, 768]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_small_lrf.pth'),
+        #init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_small_lrf.pth'),
         embed_dim=96,
         depths=[2, 2, 18, 2],
         drop_path_rate=0.3,
@@ -16,19 +16,19 @@ model = dict(
         focal_windows=[9, 9, 9, 9],
         focal_levels=[3, 3, 3, 3],
     ),
-    neck=dict(type='FeatureFusionNeck', policy='concat'),
+    neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
-        in_channels=[v*2 for v in in_channels],
+        in_channels=[v for v in in_channels],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=in_channels[2]*2,
+        in_channels=in_channels[2],
         num_classes=2
     ))
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (128, 128)#(256, 256)
+crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
@@ -39,13 +39,6 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
     
-    dict(
-        type='MultiImgPhotoMetricDistortion',
-        brightness_delta=10,
-        contrast_range=(0.8, 1.2),
-        saturation_range=(0.8, 1.2),
-        hue_delta=10),
-
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
@@ -74,4 +67,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd_s_128x128_25k_pmd_concat_cdd'
+work_dir = './work_dirs/focalcd_s_256x256_25k_sum_cdd'
