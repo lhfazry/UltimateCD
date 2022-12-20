@@ -838,13 +838,19 @@ class MultiImgPhotoMetricDistortion(object):
     """
 
     def __init__(self,
-                 brightness_delta=32,
-                 contrast_range=(0.5, 1.5),
-                 saturation_range=(0.5, 1.5),
-                 hue_delta=18):
+                 brightness_delta=None,#32,
+                 contrast_range=None,#(0.5, 1.5),
+                 saturation_range=None,#(0.5, 1.5),
+                 hue_delta=None#18
+                 ):
         self.brightness_delta = brightness_delta
-        self.contrast_lower, self.contrast_upper = contrast_range
-        self.saturation_lower, self.saturation_upper = saturation_range
+
+        if contrast_range is not None:
+            self.contrast_lower, self.contrast_upper = contrast_range
+
+        if saturation_range is not None:
+            self.saturation_lower, self.saturation_upper = saturation_range
+
         self.hue_delta = hue_delta
 
     def convert(self, img, alpha=1, beta=0):
@@ -906,23 +912,28 @@ class MultiImgPhotoMetricDistortion(object):
         
         for img in imgs:
             # random brightness
-            img = self.brightness(img)
+            if self.brightness_delta is not None:
+                img = self.brightness(img)
 
             # mode == 0 --> do random contrast first
             # mode == 1 --> do random contrast last
-            mode = random.randint(2)
-            if mode == 1:
-                img = self.contrast(img)
+            if self.contrast_lower is not None:
+                mode = random.randint(2)
+                if mode == 1:
+                    img = self.contrast(img)
 
             # random saturation
-            img = self.saturation(img)
+            if self.saturation_lower is not None:
+                img = self.saturation(img)
 
             # random hue
-            img = self.hue(img)
+            if self.hue_delta is not None:
+                img = self.hue(img)
 
             # random contrast
-            if mode == 0:
-                img = self.contrast(img)
+            if self.contrast_lower is not None:
+                if mode == 0:
+                    img = self.contrast(img)
             
             res_imgs.append(img)
 
