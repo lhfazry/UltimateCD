@@ -3,24 +3,26 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
 ]
 
-embed_dims=[64, 128, 320, 512]
+in_channels=[128, 256, 512, 1024]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_b.pth'),
-        stem_hidden_dim=64, 
-        embed_dims=embed_dims,
-        num_heads=[2, 4, 10, 16], 
-        drop_path_rate=0.3, #0.2, 
-        depths=[3, 4, 12, 3]
+        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_base_lrf.pth'),
+        embed_dim=128,
+        depths=[2, 2, 18, 2],
+        drop_path_rate=0.3,
+        patch_norm=True,
+        use_checkpoint=False,    
+        focal_windows=[9, 9, 9, 9],
+        focal_levels=[2, 2, 2, 2],
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
-        in_channels=[v for v in embed_dims],
+        in_channels=[v for v in in_channels],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=embed_dims[2],
+        in_channels=in_channels[2],
         num_classes=2
     ))
 
