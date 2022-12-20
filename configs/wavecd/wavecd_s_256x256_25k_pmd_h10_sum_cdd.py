@@ -39,9 +39,6 @@ train_pipeline = [
     
     dict(
         type='MultiImgPhotoMetricDistortion',
-        brightness_delta=10,
-        contrast_range=(0.8, 1.2),
-        saturation_range=(0.8, 1.2),
         hue_delta=10),
 
     dict(type='MultiImgNormalize', **img_norm_cfg),
