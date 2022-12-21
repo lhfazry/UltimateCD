@@ -1,6 +1,6 @@
 _base_ = [
     '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
@@ -47,6 +47,8 @@ data = dict(
     workers_per_gpu=8,
     train=dict(pipeline=train_pipeline)
 )
+
+workflow = [('train', 1), ('val', 1)]
 
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
