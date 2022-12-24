@@ -844,6 +844,8 @@ class MultiImgPhotoMetricDistortion(object):
                  hue_delta=None#18
                  ):
         self.brightness_delta = brightness_delta
+        self.contrast_lower, self.contrast_upper = None, None
+        self.saturation_lower, self.saturation_upper = None, None
 
         if contrast_range is not None:  
             self.contrast_lower, self.contrast_upper = contrast_range
