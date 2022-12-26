@@ -356,6 +356,7 @@ class FocalNet(BaseModule):
                  use_conv_embed=False, 
                  use_layerscale=False, 
                  use_checkpoint=False, 
+                 pretrained=None,
                  **kwargs
         ):
         super().__init__(**kwargs)
@@ -406,6 +407,7 @@ class FocalNet(BaseModule):
             self.add_module(layer_name, layer)
 
         self._freeze_stages()
+        self.init_weights(pretrained)
 
     def _freeze_stages(self):
         if self.frozen_stages >= 0:

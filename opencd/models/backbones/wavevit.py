@@ -10,6 +10,9 @@ import pywt
 from torch.autograd import Function
 from mmseg.models.builder import BACKBONES
 from mmcv.runner import BaseModule
+from mmcv.runner import load_checkpoint
+from mmseg.utils import get_root_logger
+
 
 class DWT_Function(Function):
     @staticmethod
@@ -402,7 +405,9 @@ class WaveViT(BaseModule):
         drop_path_rate = 0., 
         depths = [3, 4, 6, 3],
         sr_ratios = [4, 2, 1, 1], 
-        norm_layer = partial(nn.LayerNorm, eps=1e-6), **kwargs):
+        norm_layer = partial(nn.LayerNorm, eps=1e-6), 
+        pretrained=None,
+        **kwargs):
 
         super().__init__(**kwargs)
         self.num_stages = 4
@@ -435,6 +440,7 @@ class WaveViT(BaseModule):
             setattr(self, f"norm{i + 1}", norm)
         
         self.apply(self._init_weights)
+        self.init_weights(pretrained)
            
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
@@ -451,6 +457,32 @@ class WaveViT(BaseModule):
             if m.bias is not None:
                 m.bias.data.zero_()
     
+    def init_weights(self, pretrained=None):
+        """Initialize the weights in backbone.
+
+        Args:
+            pretrained (str, optional): Path to pre-trained weights.
+                Defaults to None.
+        """
+
+        def _init_weights(m):
+            if isinstance(m, nn.Linear):
+                trunc_normal_(m.weight, std=.02)
+                if isinstance(m, nn.Linear) and m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.LayerNorm):
+                nn.init.constant_(m.bias, 0)
+                nn.init.constant_(m.weight, 1.0)
+
+        if isinstance(pretrained, str):
+            self.apply(_init_weights)
+            logger = get_root_logger()
+            load_checkpoint(self, pretrained, strict=False, logger=logger)
+        elif pretrained is None:
+            self.apply(_init_weights)
+        else:
+            raise TypeError('pretrained must be a str or None')
+
     def forward(self, x):
         B = x.shape[0]
         outs = []
