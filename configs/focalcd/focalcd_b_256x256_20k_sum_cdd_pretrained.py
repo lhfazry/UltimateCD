@@ -14,7 +14,7 @@ model = dict(
         drop_path_rate=0.3,
         patch_norm=True,
         use_checkpoint=False,    
-        focal_windows=[9, 9, 9, 9],
+        focal_windows=[3, 3, 3, 3],
         focal_levels=[3, 3, 3, 3],
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
