@@ -13,7 +13,7 @@ import torch.utils.checkpoint as checkpoint
 import numpy as np
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
-from mmcv.runner import load_checkpoint
+from mmcv.runner import load_checkpoint, load_state_dict
 from mmseg.utils import get_root_logger
 from mmseg.models.builder import BACKBONES
 from mmcv.runner import BaseModule
@@ -443,7 +443,12 @@ class FocalNet(BaseModule):
         if isinstance(pretrained, str):
             self.apply(_init_weights)
             logger = get_root_logger()
-            load_checkpoint(self, pretrained, strict=False, logger=logger)
+            checkpoint = load_checkpoint(self, pretrained, strict=False, logger=logger)
+
+            if 'model' in checkpoint:
+                checkpoint = checkpoint['model']
+
+            load_state_dict(self, checkpoint, False, logger)
         elif pretrained is None:
             self.apply(_init_weights)
         else:
