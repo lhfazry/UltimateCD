@@ -29,6 +29,7 @@ for file in `find $1 -name "*.pth" -type f`;do
 
     if [[ "$file" =~ .*"$latest_pth".* ]]; then
         echo "Skip latest pth: $latest_pth"
+        continue
     fi
 
     echo "Delete $file"
