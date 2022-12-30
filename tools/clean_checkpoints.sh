@@ -25,7 +25,11 @@ for file in `find $1 -name "*.pth" -type f`;do
     # Skip the target file in latest.pth
     parent_dir=`dirname $file`
     target_latest_pth=`readlink -f $parent_dir/latest.pth`
-    echo "Target latest.pth: $target_latest_pth"
+    latest_pth=`basename $target_latest_pth`
+
+    if [[ "$file" =~ .*"$latest_pth".* ]]; then
+        echo "Skip latest pth: $latest_pth"
+    fi
 
     echo "Delete $file"
 done
