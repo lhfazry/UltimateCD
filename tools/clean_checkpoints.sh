@@ -23,8 +23,8 @@ for file in `find $1 -name "*.pth" -type f`;do
     fi
 
     # Skip the target file in latest.pth
-    parent_dir = `dirname $file`
-    target_latest_pth = `readlink -f $parent_dir/latest.pth`
+    parent_dir=`dirname $file`
+    target_latest_pth=`readlink -f $parent_dir/latest.pth`
     echo "Target latest.pth: $target_latest_pth"
 
     echo "Delete $file"
