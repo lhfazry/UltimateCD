@@ -50,6 +50,6 @@ python tools/test.py configs/focalcd/focalcd_t_256x256_25k_sum_cdd.py work_dirs/
 
 failed:
 
-python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd --eval mIoU mDice mFscore --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd --eval mIoU mDice mFscore --gpu-id 0 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1 &
 
-python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd --eval mIoU mDice mFscore --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.log 2>&1
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd --eval mIoU mDice mFscore --gpu-id 0 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.log 2>&1 &
