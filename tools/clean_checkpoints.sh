@@ -1,7 +1,8 @@
 #!/bin/bash
 
 for file in `find $1 -name "*.pth" -type f`;do 
-    if [[ "$file" =~ .*"20000".* || "$file" =~ .*"250-0".* || "$file" =~ .*"best".* ]]; then
+    if [[ "$file" =~ .*"20000".* || "$file" =~ .*"25000".* || "$file" =~ .*"50000".* 
+        || "$file" =~ .*"best".* ]]; then
         echo "Skip $file"
         continue
     fi
