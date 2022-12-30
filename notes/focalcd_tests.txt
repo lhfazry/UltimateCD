@@ -1,21 +1,55 @@
-focalcd_b_256x256_20k_sum_cdd_pretrained
-focalcd_b_256x256_50k_sum_cdd
-focalcd_s_128x128_25k_sum_cdd
-focalcd_s_256x256_25k_pmd_absdiff_cdd
-focalcd_s_256x256_25k_pmd_b10_sum_cdd
-focalcd_s_256x256_25k_pmd_b30_sum_cdd
-focalcd_s_256x256_25k_pmd_c02_06_sum_cdd
-focalcd_s_256x256_25k_pmd_c08_12_sum_cdd
-focalcd_s_256x256_25k_pmd_concat_cdd
-focalcd_s_256x256_25k_pmd_diff_cdd
-focalcd_s_256x256_25k_pmd_h10_sum_cdd
-focalcd_s_256x256_25k_pmd_h30_sum_cdd
-focalcd_s_256x256_25k_pmd_s02_06_sum_cdd
-focalcd_s_256x256_25k_pmd_s08_12_sum_cdd '
-focalcd_s_256x256_25k_pmd_sum_cdd
-focalcd_s_256x256_25k_sum_cdd
-focalcd_s_256x256_25k_sum_cdd_lr0006
-focalcd_s_256x256_25k_sum_cdd_lr006
-focalcd_s_256x256_25k_sum_cdd_nopretrained
-focalcd_s_256x256_25k_sum_cdd_srf
-focalcd_t_256x256_25k_sum_cdd
+python tools/test.py configs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained.py work_dirs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained/latest.pth --work-dir test_logs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_b_256x256_50k_sum_cdd.py work_dirs/focalcd/focalcd_b_256x256_50k_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_b_256x256_50k_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_b_256x256_50k_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_128x128_25k_sum_cdd.py work_dirs/focalcd/focalcd_s_128x128_25k_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_128x128_25k_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_128x128_25k_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_absdiff_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_absdiff_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_absdiff_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_absdiff_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_b10_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_b10_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_b10_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_b10_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_b30_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_b30_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_b30_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_b30_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_c02_06_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_c02_06_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_c02_06_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_c02_06_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_c08_12_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_c08_12_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_c08_12_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_c08_12_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_concat_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_concat_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_concat_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_concat_cdd.log 2>&1 &
+
+----
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_diff_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_diff_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_diff_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_diff_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_h10_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_h10_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_h10_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_h10_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_h30_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_h30_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_h30_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_h30_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_s02_06_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_s02_06_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_s02_06_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_s02_06_sum_cdd.log 2>&1 &
+
+
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1 &
+
+
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd.log 2>&1 &
+
+----
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr0006.py work_dirs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr0006/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr0006 --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr0006.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr006.py work_dirs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr006/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr006 --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_lr006.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_sum_cdd_nopretrained.py work_dirs/focalcd/focalcd_s_256x256_25k_sum_cdd_nopretrained/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_nopretrained --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_nopretrained.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_sum_cdd_srf.py work_dirs/focalcd/focalcd_s_256x256_25k_sum_cdd_srf/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_srf --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_sum_cdd_srf.log 2>&1 &
+
+python tools/test.py configs/focalcd/focalcd_t_256x256_25k_sum_cdd.py work_dirs/focalcd/focalcd_t_256x256_25k_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_t_256x256_25k_sum_cdd --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_t_256x256_25k_sum_cdd.log 2>&1 &
+
+failed:
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd --eval mIoU mDice mFscore --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1
+
+python tools/test.py configs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.py work_dirs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd/latest.pth --work-dir test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd --eval mIoU mDice mFscore --gpu-id 1 >> test_logs/focalcd/focalcd_s_256x256_25k_pmd_sum_cdd.log 2>&1
