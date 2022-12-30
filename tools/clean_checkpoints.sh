@@ -16,7 +16,7 @@ for file in `find $1 -name "*.pth" -type f`;do
     fi
 
     if [[ "$file" =~ .*"50k".* ]]; then
-        if [[ "$file" =~ .*"50000".*  || "$file" =~ .*"best".*]]; then
+        if [[ "$file" =~ .*"50000".*  || "$file" =~ .*"best".* ]]; then
             echo "Skip $file"
             continue
         fi
