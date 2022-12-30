@@ -32,6 +32,6 @@ for file in `find $1 -name "*.pth" -type f`;do
         continue
     fi
 
-    echo "Deleting $file"`
+    echo "Deleting $file"
     rm "$file"
 done
