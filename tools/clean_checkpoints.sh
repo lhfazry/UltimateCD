@@ -22,5 +22,5 @@ for file in `find $1 -name "*.pth" -type f`;do
         fi
     fi
 
-    echo "delete $file"
+    echo "Delete $file"
 done
