@@ -1,21 +1,11 @@
 _base_ = [
-    '../_base_/models/siam_upernet_focalnet.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/focalnet/focalnet_base_lrf.py', '../../_base_/datasets/levir_cd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_50k.py'
 ]
 
-in_channels = [96, 192, 384, 768]
+in_channels=[128, 256, 512, 1024]
 
 model = dict(
-    backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/focalnet_small_lrf.pth'),
-        embed_dim=96,
-        depths=[2, 2, 18, 2],
-        drop_path_rate=0.3,
-        patch_norm=True,
-        use_checkpoint=False,    
-        focal_windows=[9, 9, 9, 9],
-        focal_levels=[3, 3, 3, 3],
-    ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
         in_channels=[v for v in in_channels],
@@ -28,7 +18,7 @@ model = dict(
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (128, 128)#(256, 256)
+crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
@@ -67,4 +57,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/focalcd_s_128x128_25k_sum_cdd'
+work_dir = './work_dirs/focalcd/levircd/focalcd_b_256x256_50k_sum_levircd'
