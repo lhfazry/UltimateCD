@@ -15,7 +15,7 @@ train_pipeline = [
     dict(type='MultiImgExchangeTime', prob=0.5),
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
-    dict(type='Collect', keys=['img', 'gt_semantic_seg']),
+    dict(type='Collect', keys=['img', 'gt_semantic_seg']),  
 ]
 test_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
