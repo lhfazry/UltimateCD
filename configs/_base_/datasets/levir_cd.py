@@ -8,8 +8,8 @@ crop_size = (128, 128)#(256, 256)
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotations'),
-    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
@@ -21,7 +21,7 @@ test_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(
         type='MultiImgMultiScaleFlipAug',
-        img_scale=(256, 256),#(1024, 1024),
+        img_scale=(512, 512),#(1024, 1024),
         # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
         flip=False,
         transforms=[
