@@ -1,6 +1,6 @@
 _base_ = [
     '../../_base_/models/focalnet/focalnet_base_lrf.py', '../../_base_/datasets/levir_cd.py',
-    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_50k.py'
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_30k.py'
 ]
 
 in_channels=[128, 256, 512, 1024]
