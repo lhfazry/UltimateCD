@@ -1,6 +1,6 @@
 # dataset settings
-dataset_type = 'CDD_Dataset'
-data_root = 'datasets/cdd'
+dataset_type = 'WHU_Dataset'
+data_root = 'datasets/whu'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (128, 128)#(256, 256)
@@ -40,17 +40,17 @@ data = dict(
         type=dataset_type,
         data_root=data_root,
         img_dir='train',
-        ann_dir='train/OUT',
+        ann_dir='train/label',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='val',
-        ann_dir='val/OUT',
+        img_dir='test',
+        ann_dir='test/label',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         data_root=data_root,
         img_dir='test',
-        ann_dir='test/OUT',
+        ann_dir='test/label',
         pipeline=test_pipeline))

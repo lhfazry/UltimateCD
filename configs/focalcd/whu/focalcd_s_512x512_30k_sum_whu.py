@@ -1,9 +1,9 @@
 _base_ = [
-    '../../_base_/models/focalnet/focalnet_base_lrf.py', '../../_base_/datasets/levir_cd.py',
+    '../../_base_/models/focalnet/focalnet_small_lrf.py', '../../_base_/datasets/whu.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_30k.py'
 ]
 
-in_channels=[128, 256, 512, 1024]
+in_channels = [96, 192, 384, 768]
 
 model = dict(
     neck=dict(type='FeatureFusionNeck', policy='sum'),
@@ -57,4 +57,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/levircd/focalcd_b_512x512_30k_sum_levircd'
+work_dir = './work_dirs/focalcd/whu/focalcd_s_512x512_30k_sum_whu'

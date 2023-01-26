@@ -9,13 +9,13 @@ from mmseg.datasets import DATASETS
 from .custom import CDDataset
 
 @DATASETS.register_module()
-class WHU(CDDataset):
+class WHU_Dataset(CDDataset):
     """WHU dataset"""
 
     def __init__(self, **kwargs):
         super().__init__(
-            sub_dir_1='A',
-            sub_dir_2='B',
+            sub_dir_1='2012',
+            sub_dir_2='2016',
             img_suffix='.jpg',
             seg_map_suffix='.jpg',
             classes=('unchanged', 'changed'),
