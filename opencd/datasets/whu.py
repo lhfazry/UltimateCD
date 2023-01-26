@@ -16,8 +16,8 @@ class WHU_Dataset(CDDataset):
         super().__init__(
             sub_dir_1='2012',
             sub_dir_2='2016',
-            img_suffix='.jpg',
-            seg_map_suffix='.jpg',
+            img_suffix='.tif',
+            seg_map_suffix='.tif',
             classes=('unchanged', 'changed'),
             palette=[[255, 255, 255], [0, 0, 0]],
             **kwargs)
