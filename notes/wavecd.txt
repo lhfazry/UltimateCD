@@ -1,0 +1,2 @@
+/train.sh 6 configs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_sum_levircd.log 2>&1 &
+[3] 58337
