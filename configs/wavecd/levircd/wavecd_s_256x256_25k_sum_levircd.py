@@ -1,11 +1,12 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/levir_cd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/levir_cd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
 
 model = dict(
+    pretrained='./pretrained/wavevit_s.pth',
     backbone=dict(
         init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
         stem_hidden_dim=32, 
