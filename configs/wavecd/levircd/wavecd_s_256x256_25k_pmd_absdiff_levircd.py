@@ -14,7 +14,7 @@ model = dict(
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3]
     ),
-    neck=dict(type='FeatureFusionNeck', policy='sum'),
+    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(
         in_channels=[v for v in embed_dims],
         num_classes=2
@@ -37,6 +37,13 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
     
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=10,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.8, 1.2),
+        hue_delta=10),
+
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
@@ -65,4 +72,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd'
+work_dir = './work_dirs/wavecd/levircd/wavecd_s_256x256_25k_pmd_absdiff_levircd'
