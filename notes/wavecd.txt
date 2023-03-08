@@ -1,1 +1,7 @@
 ./train.sh 6 configs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_sum_levircd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/levircd/wavecd_s_256x256_25k_pmd_sum_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_sum_levircd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/levircd/wavecd_s_256x256_25k_pmd_absdiff_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_absdiff_levircd.log 2>&1 &
+
+./resume_train.sh 2 work_dirs/wavecd/levircd/wavecd_s_256x256_25k_pmd_absdiff_levircd/latest.pth configs/wavecd/levircd/wavecd_s_256x256_25k_pmd_absdiff_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_absdiff_levircd.log 2>&1 &
