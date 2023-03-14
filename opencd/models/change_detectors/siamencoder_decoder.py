@@ -17,7 +17,7 @@ class SiamEncoderDecoder(BaseSegmentor):
     Note that auxiliary_head is only used for deep supervision during training,
     which could be dumped during inference.
     """
-
+    
     def __init__(self,
                  backbone,
                  decode_head,
