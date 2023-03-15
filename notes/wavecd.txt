@@ -9,3 +9,5 @@
 ./train.sh 1 configs/wavecd/levircd/wavecd_s_256x256_25k_concat_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_concat_levircd.log 2>&1 &
 
 ./train.sh 1 configs/wavecd/levircd/wavecd_b_256x256_25k_sum_levircd.py >> logs/wavecd/wavecd_b_256x256_25k_sum_levircd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/levircd/wavecd_b_256x256_25k_absdiff_levircd.py >> logs/wavecd/wavecd_b_256x256_25k_absdiff_levircd.log 2>&1 &
