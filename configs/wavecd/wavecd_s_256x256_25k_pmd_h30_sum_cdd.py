@@ -6,8 +6,8 @@ _base_ = [
 embed_dims=[64, 128, 320, 448]
 
 model = dict(
+    pretrained='./pretrained/wavevit_s.pth',
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
         stem_hidden_dim=32, 
         embed_dims=embed_dims,
         num_heads=[2, 4, 10, 14], 
