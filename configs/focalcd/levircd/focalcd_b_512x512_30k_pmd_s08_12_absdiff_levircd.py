@@ -61,4 +61,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd copy'
+work_dir = './work_dirs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd'
