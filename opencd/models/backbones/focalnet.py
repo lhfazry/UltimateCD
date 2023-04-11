@@ -226,7 +226,7 @@ class BasicLayer(nn.Module):
         # patch merging layer
         if downsample is not None:
             self.downsample = downsample(
-                patch_size=2, 
+                patch_size=2,
                 in_chans=dim, embed_dim=2*dim, 
                 use_conv_embed=use_conv_embed, 
                 norm_layer=norm_layer, 
@@ -297,7 +297,7 @@ class PatchEmbed(nn.Module):
 
     def forward(self, x):
         """Forward function."""
-        _, _, H, W = x.size()
+        _, _, H, W = x.size() # B C H W
         if W % self.patch_size[1] != 0:
             x = F.pad(x, (0, self.patch_size[1] - W % self.patch_size[1]))
         if H % self.patch_size[0] != 0:
@@ -379,11 +379,14 @@ class FocalNet(BaseModule):
         # stochastic depth
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
 
+        num_features = [int(embed_dim * 2 ** i) for i in range(self.num_layers)]
+        self.num_features = num_features
+
         # build layers
         self.layers = nn.ModuleList()
         for i_layer in range(self.num_layers):
             layer = BasicLayer(
-                dim=int(embed_dim * 2 ** i_layer),
+                dim=num_features[i_layer],
                 depth=depths[i_layer],
                 mlp_ratio=mlp_ratio,
                 drop=drop_rate,
@@ -396,9 +399,6 @@ class FocalNet(BaseModule):
                 use_layerscale=use_layerscale, 
                 use_checkpoint=use_checkpoint)
             self.layers.append(layer)
-
-        num_features = [int(embed_dim * 2 ** i) for i in range(self.num_layers)]
-        self.num_features = num_features
 
         # add a norm layer for each output
         for i_layer in out_indices:
@@ -456,23 +456,26 @@ class FocalNet(BaseModule):
 
     def forward(self, x):
         """Forward function."""
+        # x ==> B C H W
         tic = time.time()
         x = self.patch_embed(x)
         Wh, Ww = x.size(2), x.size(3)
 
-        x = x.flatten(2).transpose(1, 2)
+        x = x.flatten(2).transpose(1, 2) # B WhxWw C
         x = self.pos_drop(x)
 
         outs = []
         for i in range(self.num_layers):
             layer = self.layers[i]
-            x_out, H, W, x, Wh, Ww = layer(x, Wh, Ww)            
+            x_out, H, W, x, Wh, Ww = layer(x, Wh, Ww) 
+
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
                 x_out = norm_layer(x_out)
 
-                out = x_out.view(-1, H, W, self.num_features[i]).permute(0, 3, 1, 2).contiguous()
+                out = x_out.view(-1, H, W, self.num_features[i]).permute(0, 3, 1, 2).contiguous() # B C H W
                 outs.append(out)
+
         toc = time.time()
         return tuple(outs)
 

@@ -15,3 +15,24 @@
 ./train.sh 0 configs/wavecd/levircd/wavecd_s_256x256_25k_pmd_diff_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_diff_levircd.log 2>&1 &
 
 ./train.sh 2 configs/wavecd/levircd/wavecd_s_128x128_25k_sum_levircd.py >> logs/wavecd/wavecd_s_128x128_25k_sum_levircd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_b10_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_b10_sum_cdd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_b30_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_b30_sum_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd.log 2>&1 &
+
+./train.sh 4 configs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.log 2>&1 &
+./resume_train 7 work_dirs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/latest.pth configs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.log 2>&1 &
+
+./train.sh 6 configs/wavecd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1 &
