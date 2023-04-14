@@ -2,8 +2,14 @@ CDD
 ----
 ./train.sh 6 configs/focalcd/cdd/focalcd_b_256x256_50k_pmd_s08_12_absdiff_cdd.py >> logs/focalcd/focalcd_b_256x256_50k_pmd_s08_12_absdiff_cdd.log 2>&1 &
 
+./resume_train.sh 0 work_dirs/focalcd/focalcd_b_256x256_50k_pmd_s08_12_absdiff_cdd/latest.pth configs/focalcd/cdd/focalcd_b_256x256_50k_pmd_s08_12_absdiff_cdd.py >> logs/focalcd/focalcd_b_256x256_50k_pmd_s08_12_absdiff_cdd.log 2>&1 &
+
 LEVIR_CD
 -----
-./train.sh 5 configs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd.log 2>&1 &
+./train.sh 6 configs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd.log 2>&1 &
 
-./train.sh 7 configs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd.log 2>&1 &
+./resume_train.sh 6 configs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd/latest.pth configs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd..log 2>&1 &
+
+./train.sh 4 configs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_30k_pmd_s08_12_absdiff_levircd.log 2>&1 &
+
+./resume_train.sh 6 configs/focalcd/levircd/focalcd_b_512x512_30k_absdiff_levircd/latest.pth configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_levircd.log 2>&1 &
