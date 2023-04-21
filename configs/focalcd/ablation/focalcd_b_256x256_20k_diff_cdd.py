@@ -3,7 +3,7 @@ _base_ = [
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
 
-in_channels = [96, 192, 384, 768]
+in_channels=[128, 256, 512, 1024]
 
 model = dict(
     pretrained='./pretrained/focalnet_base_lrf.pth',
