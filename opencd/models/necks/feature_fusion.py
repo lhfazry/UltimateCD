@@ -34,7 +34,7 @@ class FeatureFusionNeck(BaseModule):
     def fusion(x1, x2, policy):
         """Specify the form of feature fusion"""
         
-        _fusion_policies = ['concat', 'sum', 'diff', 'Lp_distance']
+        _fusion_policies = ['concat', 'sum', 'diff', 'Lp_distance', 'L2_distance']
         assert policy in _fusion_policies, 'The fusion policies {} are ' \
             'supported'.format(_fusion_policies)
         
@@ -46,6 +46,8 @@ class FeatureFusionNeck(BaseModule):
             x = x2 - x1
         elif policy == 'Lp_distance':
             x = torch.abs(x1 - x2)
+        elif policy == 'L2_distance':
+            x = torch.norm(x1 - x2)
 
         return x
 
