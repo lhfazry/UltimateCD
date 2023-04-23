@@ -3,7 +3,7 @@ _base_ = [
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
 
-in_channels=[64, 256, 512, 1024]
+in_channels=[64, 128, 256, 512]
 
 model = dict(
     pretrained='./pretrained/focalnet_base_lrf.pth',
@@ -12,7 +12,7 @@ model = dict(
         depths=[2, 2, 18, 2],
         drop_path_rate=0.3,
         patch_norm=True,
-        use_checkpoint=False,    
+        use_checkpoint=False,
         focal_windows=[9, 9, 9, 9],
         focal_levels=[3, 3, 3, 3],
     ),

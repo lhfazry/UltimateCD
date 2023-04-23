@@ -26,3 +26,13 @@ DSIFN
 Ablation
 ---------
 ./train.sh 7 configs/focalcd/ablation/focalcd_b_256x256_20k_concat_cdd.py >> logs/focalcd/ablation/focalcd_b_256x256_20k_concat_cdd.log 2>&1 &
+
+./train.sh 1 configs/focalcd/ablation/focalcd_b_256x256_20k_sum_cdd.py >> logs/focalcd/ablation/focalcd_b_256x256_20k_sum_cdd.log 2>&1 &
+
+./train.sh 7 configs/focalcd/ablation/focalcd_b_256x256_20k_diff_cdd.py >> logs/focalcd/ablation/focalcd_b_256x256_20k_diff_cdd.log 2>&1 &
+
+./train.sh 1 configs/focalcd/ablation/focalcd_b_256x256_20k_fl5_absdiff_cdd.py >> logs/focalcd/ablation/focalcd_b_256x256_20k_fl5_absdiff_cdd.log 2>&1 &
+
+./train.sh 2 configs/focalcd/ablation/focalcd_b_256x256_20k_fl7_absdiff_cdd.py >> logs/focalcd/ablation/focalcd_b_256x256_20k_fl7_absdiff_cdd.log 2>&1 &
+
+focalcd_b_256x256_20k_fl5_absdiff_cdd
