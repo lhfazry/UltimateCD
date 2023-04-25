@@ -1,22 +1,18 @@
 _base_ = [
-    '../../_base_/models/siam_upernet_focalnet.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/models/focalnet_base_lrf.py', '../../_base_/datasets/cdd.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
 
 in_channels=[128, 256, 512, 1024]
 
 model = dict(
-    pretrained='./pretrained/focalnet_base_lrf.pth',
+    pretrained='',
     backbone=dict(
         embed_dim=128,
-        depths=[2, 2, 18, 2],
-        drop_path_rate=0.3,
-        patch_norm=True,
-        use_checkpoint=False,    
-        focal_windows=[9, 9, 9, 9],
-        focal_levels=[3, 3, 3, 3],
+        depths=[2, 2, 18, 2],    
+        focal_levels=[2, 2, 2, 2],
     ),
-    neck=dict(type='FeatureFusionNeck', policy='L2_distance'),
+    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(
         in_channels=[v for v in in_channels],
         num_classes=2
@@ -24,7 +20,8 @@ model = dict(
     auxiliary_head=dict(
         in_channels=in_channels[2],
         num_classes=2
-    ))
+    )
+)
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
@@ -67,4 +64,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/ablation/focalcd_b_256x256_20k_absdiff_cdd'
+work_dir = './work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd'
