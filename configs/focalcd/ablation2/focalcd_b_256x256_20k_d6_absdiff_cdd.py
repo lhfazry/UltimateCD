@@ -6,7 +6,7 @@ _base_ = [
 in_channels=[128, 256, 512, 1024]
 
 model = dict(
-    pretrained='',
+    pretrained=None,
     backbone=dict(
         embed_dim=128,
         depths=[2, 2, 6, 2],    
