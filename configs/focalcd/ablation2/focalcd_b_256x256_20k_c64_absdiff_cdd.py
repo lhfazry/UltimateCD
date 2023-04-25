@@ -1,5 +1,5 @@
 _base_ = [
-    '../../_base_/models/focalnet_base_lrf.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/models/focalnet/focalnet_base_lrf.py', '../../_base_/datasets/cdd.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
 
