@@ -14,11 +14,11 @@ model = dict(
     ),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        in_channels=[v for v in in_channels],
+        in_channels=[2*v for v in in_channels],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=in_channels[2],
+        in_channels=2*in_channels[2],
         num_classes=2
     )
 )
