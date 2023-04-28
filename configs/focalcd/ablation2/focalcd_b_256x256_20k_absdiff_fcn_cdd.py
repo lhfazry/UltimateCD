@@ -1,27 +1,48 @@
 _base_ = [
-    '../../_base_/models/focalnet/focalnet_base_lrf.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/datasets/cdd.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
 
 in_channels=[128, 256, 512, 1024]
 
+norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    pretrained=None,
+    type='SiamEncoderDecoder',
+    pretrained='./pretrained/focalnet_base_lrf.pth',
     backbone=dict(
+        type='FocalNet',
         embed_dim=128,
-        depths=[2, 2, 18, 2],    
+        depths=[2, 2, 18, 2],
+        drop_path_rate=0.2,
         focal_levels=[3, 3, 3, 3],
-    ),
-    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
+        focal_windows=[3, 3, 3, 3]),
     decode_head=dict(
         type='FCNHead',
         in_channels=[v for v in in_channels],
-        num_classes=2
-    ),
+        in_index=[0, 1, 2, 3],
+        channels=128,
+        dropout_ratio=0.1,
+        num_classes=2,
+        norm_cfg=norm_cfg,
+        align_corners=False,
+        loss_decode=dict(
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
     auxiliary_head=dict(
+        type='FCNHead',
         in_channels=in_channels[2],
-        num_classes=2
-    )
+        in_index=2,
+        channels=64,
+        num_convs=1,
+        concat_input=False,
+        dropout_ratio=0.1,
+        num_classes=2,
+        norm_cfg=norm_cfg,
+        align_corners=False,
+        loss_decode=dict(
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)),
+    # model training and testing settings
+    train_cfg=dict(),
+    test_cfg=dict(mode='whole')
 )
 
 img_norm_cfg = dict(
