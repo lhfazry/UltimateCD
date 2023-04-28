@@ -76,3 +76,5 @@ Ablation
 
 ./train.sh 2 configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py >> logs/focalcd/focalcd_b_256x256_50k_absdiff_noaux_cdd.log 2>&1 &
 
+./train.sh 3 configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.py >> logs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.log 2>&1 &
+
