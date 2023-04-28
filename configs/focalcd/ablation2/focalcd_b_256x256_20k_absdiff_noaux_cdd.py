@@ -16,6 +16,7 @@ model = dict(
         drop_path_rate=0.2,
         focal_levels=[3, 3, 3, 3],
         focal_windows=[3, 3, 3, 3]),
+    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(
         type='UPerHead',
         in_channels=[v for v in in_channels],
