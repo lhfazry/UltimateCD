@@ -57,6 +57,21 @@ Ablation
 
 ./train.sh 3 configs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd.log 2>&1 &
 
+./train.sh 3 configs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd.log 2>&1 &
 
-focalcd_b_256x256_20k_diff_cdd
+./train.sh 2 configs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd.log 2>&1 &
+
+./train.sh 3 configs/focalcd/ablation2/focalcd_b_256x256_20k_c64_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_c64_absdiff_cdd.log 2>&1 &
+
+./train.sh 7 configs/focalcd/ablation2/focalcd_b_256x256_20k_c96_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_c96_absdiff_cdd.log 2>&1 &
+
+
+./train.sh 2 configs/focalcd/ablation2/focalcd_b_256x256_20k_d6_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_d6_absdiff_cdd.log 2>&1 &
+
+./train.sh 7 configs/focalcd/ablation2/focalcd_b_256x256_20k_d12_absdiff_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_d12_absdiff_cdd.log 2>&1 &
+
+
+
+
+
 
