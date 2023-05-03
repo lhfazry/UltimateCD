@@ -5,6 +5,8 @@ import os.path as osp
 import shutil
 import time
 import warnings
+import numpy as np
+import tempfile
 
 import mmcv
 import torch
@@ -315,6 +317,25 @@ def main():
             if tmpdir is not None and eval_on_format_results:
                 # remove tmp dir when cityscapes evaluation
                 shutil.rmtree(tmpdir)
+
+def np2tmp(array, temp_file_name=None, tmpdir=None):
+    """Save ndarray to local numpy file.
+
+    Args:
+        array (ndarray): Ndarray to save.
+        temp_file_name (str): Numpy file name. If 'temp_file_name=None', this
+            function will generate a file name with tempfile.NamedTemporaryFile
+            to save ndarray. Default: None.
+        tmpdir (str): Temporary directory to save Ndarray files. Default: None.
+    Returns:
+        str: The numpy file name.
+    """
+
+    if temp_file_name is None:
+        temp_file_name = tempfile.NamedTemporaryFile(
+            suffix='.npy', delete=False, dir=tmpdir).name
+    np.save(temp_file_name, array)
+    return temp_file_name
 
 def single_gpu_test(model,
                     data_loader,
