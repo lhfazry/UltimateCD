@@ -399,12 +399,15 @@ def single_gpu_test(model,
         if show or out_dir:
             img_tensor = data['img'][0]
             img_metas = data['img_metas'][0].data[0]
-            imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])
-            assert len(imgs) == len(img_metas)
+            backbone_inchannels = 3 # `in_channels` is not in the ATTRIBUTE for some backbone CLASS.
+            img1, img2 = torch.split(img_tensor, backbone_inchannels, dim=1)
+            img1s = tensor2imgs(img1, **img_metas[0]['img_norm_cfg'])
+            img2s = tensor2imgs(img2, **img_metas[0]['img_norm_cfg'])
+            assert len(img1s) == len(img_metas)
 
-            for img, img_meta in zip(imgs, img_metas):
+            for img1, img2, img_meta in zip(img1s, img2s, img_metas):
                 h, w, _ = img_meta['img_shape']
-                img_show = img[:h, :w, :]
+                img_show = img1[:h, :w, :]
 
                 ori_h, ori_w = img_meta['ori_shape'][:-1]
                 img_show = mmcv.imresize(img_show, (ori_w, ori_h))
