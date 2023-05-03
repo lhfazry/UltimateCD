@@ -15,10 +15,11 @@ from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
 from mmcv.utils import DictAction
 
 from opencd import digit_version
-from mmseg.apis import multi_gpu_test, single_gpu_test
+from mmseg.apis import multi_gpu_test, np2tmp #, single_gpu_test
 from mmseg.datasets import build_dataloader, build_dataset
 from mmseg.models import build_segmentor
 from mmseg.utils import setup_multi_processes
+from mmcv.image import tensor2imgs
 
 
 def parse_args():
@@ -314,6 +315,112 @@ def main():
             if tmpdir is not None and eval_on_format_results:
                 # remove tmp dir when cityscapes evaluation
                 shutil.rmtree(tmpdir)
+
+def single_gpu_test(model,
+                    data_loader,
+                    show=False,
+                    out_dir=None,
+                    efficient_test=False,
+                    opacity=0.5,
+                    pre_eval=False,
+                    format_only=False,
+                    format_args={}):
+    """Test with single GPU by progressive mode.
+
+    Args:
+        model (nn.Module): Model to be tested.
+        data_loader (utils.data.Dataloader): Pytorch data loader.
+        show (bool): Whether show results during inference. Default: False.
+        out_dir (str, optional): If specified, the results will be dumped into
+            the directory to save output results.
+        efficient_test (bool): Whether save the results as local numpy files to
+            save CPU memory during evaluation. Mutually exclusive with
+            pre_eval and format_results. Default: False.
+        opacity(float): Opacity of painted segmentation map.
+            Default 0.5.
+            Must be in (0, 1] range.
+        pre_eval (bool): Use dataset.pre_eval() function to generate
+            pre_results for metric evaluation. Mutually exclusive with
+            efficient_test and format_results. Default: False.
+        format_only (bool): Only format result for results commit.
+            Mutually exclusive with pre_eval and efficient_test.
+            Default: False.
+        format_args (dict): The args for format_results. Default: {}.
+    Returns:
+        list: list of evaluation pre-results or list of save file names.
+    """
+    if efficient_test:
+        warnings.warn(
+            'DeprecationWarning: ``efficient_test`` will be deprecated, the '
+            'evaluation is CPU memory friendly with pre_eval=True')
+        mmcv.mkdir_or_exist('.efficient_test')
+    # when none of them is set true, return segmentation results as
+    # a list of np.array.
+    assert [efficient_test, pre_eval, format_only].count(True) <= 1, \
+        '``efficient_test``, ``pre_eval`` and ``format_only`` are mutually ' \
+        'exclusive, only one of them could be true .'
+
+    model.eval()
+    results = []
+    dataset = data_loader.dataset
+    prog_bar = mmcv.ProgressBar(len(dataset))
+    # The pipeline about how the data_loader retrieval samples from dataset:
+    # sampler -> batch_sampler -> indices
+    # The indices are passed to dataset_fetcher to get data from dataset.
+    # data_fetcher -> collate_fn(dataset[index]) -> data_sample
+    # we use batch_sampler to get correct data idx
+    loader_indices = data_loader.batch_sampler
+
+    for batch_indices, data in zip(loader_indices, data_loader):
+        with torch.no_grad():
+            result = model(return_loss=False, **data)
+
+        if show or out_dir:
+            img_tensor = data['img'][0]
+            img_metas = data['img_metas'][0].data[0]
+            imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])
+            assert len(imgs) == len(img_metas)
+
+            for img, img_meta in zip(imgs, img_metas):
+                h, w, _ = img_meta['img_shape']
+                img_show = img[:h, :w, :]
+
+                ori_h, ori_w = img_meta['ori_shape'][:-1]
+                img_show = mmcv.imresize(img_show, (ori_w, ori_h))
+
+                if out_dir:
+                    out_file = osp.join(out_dir, img_meta['ori_filename'])
+                else:
+                    out_file = None
+
+                model.module.show_result(
+                    img_show,
+                    result,
+                    palette=dataset.PALETTE,
+                    show=show,
+                    out_file=out_file,
+                    opacity=opacity)
+
+        if efficient_test:
+            result = [np2tmp(_, tmpdir='.efficient_test') for _ in result]
+
+        if format_only:
+            result = dataset.format_results(
+                result, indices=batch_indices, **format_args)
+        if pre_eval:
+            # TODO: adapt samples_per_gpu > 1.
+            # only samples_per_gpu=1 valid now
+            result = dataset.pre_eval(result, indices=batch_indices)
+            results.extend(result)
+        else:
+            results.extend(result)
+
+        batch_size = len(result)
+        for _ in range(batch_size):
+            prog_bar.update()
+
+    return results
+
 
 
 if __name__ == '__main__':

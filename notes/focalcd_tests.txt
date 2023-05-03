@@ -61,3 +61,8 @@ python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_sum_levircd.p
 python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_concat_levircd.py work_dirs/focalcd/levircd/focalcd_s_512x512_30k_concat_levircd/latest.pth --work-dir test_logs/focalcd/levircd/focalcd_s_512x512_30k_concat_levircd --eval mIoU mDice mFscore  --gpu-id 6 >> test_logs/focalcd/levircd/focalcd_s_512x512_30k_concat_levircd.log 2>&1 &
 
 python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd.py work_dirs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd/latest.pth --work-dir test_logs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd --eval mIoU mDice mFscore  --gpu-id 7 >> test_logs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd.log 2>&1 &
+
+-----
+ShowDir
+
+python tools/test.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/latest.pth --show --show-dir results/focalcd/cdd  --gpu-id 1 >> test_logs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.log 2>&1 &

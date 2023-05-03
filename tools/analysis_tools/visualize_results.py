@@ -1,3 +1,4 @@
+import argparse
 import os
 import os.path as osp
 import sys
@@ -142,12 +143,21 @@ class CDVisualization(object):
             
 
 if __name__ == '__main__':
-    gt_dir = '/home/dml307/data/cd_dataset/S2Looking/test/label'
-    pred_dir = '/home/dml307/exp/likyoo/tmp_data/infer_res'
-    dst_dir = './tmp_visual'
-    img_dir = ['/home/dml307/data/cd_dataset/S2Looking/test/Image1', 
-               '/home/dml307/data/cd_dataset/S2Looking/test/Image2']
-    file_name = '127.png'
+    parser = argparse.ArgumentParser(
+        description='opencd test (and eval) a model')
+    parser.add_argument('filename', help='Filename')
+    parser.add_argument('image1_dir', help='Image1 dir')
+    parser.add_argument('image2_dir', help='Image2 dir')
+    parser.add_argument('gt_dir', help='ground truth dir')
+    parser.add_argument('pred_dir', help='prediction dir')
+    parser.add_argument('dst_dir', help='destination dir')
+    args = parser.parse_args()
+
+    gt_dir = args.gt_dir
+    pred_dir = args.pred_dir
+    dst_dir = args.dst_dir
+    img_dir = [args.image1_dir, args.image2_dir]
+    file_name = args.filename
     
     CDVisual = CDVisualization(policy=['compare_pixel'])
     CDVisual(osp.join(pred_dir, file_name), 
