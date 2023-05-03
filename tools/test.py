@@ -17,7 +17,7 @@ from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
 from mmcv.utils import DictAction
 
 from opencd import digit_version
-from mmseg.apis import multi_gpu_test, np2tmp #, single_gpu_test
+from mmseg.apis import multi_gpu_test #, single_gpu_test
 from mmseg.datasets import build_dataloader, build_dataset
 from mmseg.models import build_segmentor
 from mmseg.utils import setup_multi_processes
