@@ -438,7 +438,7 @@ def main():
     for res in results:
         res = res.argmax(dim=0).float().cpu().numpy()
         # change the `target_layers` here
-        target_layers = [model.module.backbone.layers.basicLayers[0]]
+        target_layers = [model.module.backbone.layers[0], model.module.backbone.layers[1], model.module.backbone.layers[2], model.module.backbone.layers[3]]
         # target_layers = [model.module.decode_head.discriminator]
         targets = [SemanticSegmentationTarget(1, res)]
         with MMGradCAM(model=model,
