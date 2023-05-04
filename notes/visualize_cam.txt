@@ -1,0 +1,1 @@
+python tools/analysis_tools/visualize_CAM.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2/latest.pth --gpu-id 2

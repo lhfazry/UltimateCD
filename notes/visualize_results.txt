@@ -1,0 +1,1 @@
+python tools/analysis_tools/visualize_results.py 00037.jpg /workspace/UltimateCD/datasets/cdd/test/A/ /workspace/UltimateCD/datasets/cdd/test/B/ /workspace/UltimateCD/datasets/cdd/test/OUT/
