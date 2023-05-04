@@ -28,9 +28,9 @@ def main():
     args = parse_args()
 
     if len(args.shape) == 1:
-        input_shape = (3, args.shape[0], args.shape[0])
+        input_shape = (6, args.shape[0], args.shape[0])
     elif len(args.shape) == 2:
-        input_shape = (3, ) + tuple(args.shape)
+        input_shape = (6, ) + tuple(args.shape)
     else:
         raise ValueError('invalid input shape')
 
@@ -50,7 +50,7 @@ def main():
             format(model.__class__.__name__))
 
     model.float()
-    flops, params = get_model_complexity_info(model, input_shape)
+    flops, params = get_model_complexity_info(model, input_shape, print_per_layer_stat=True)
     split_line = '=' * 30
     print('{0}\nInput shape: {1}\nFlops: {2}\nParams: {3}\n{0}'.format(
         split_line, input_shape, flops, params))
