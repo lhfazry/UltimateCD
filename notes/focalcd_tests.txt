@@ -63,6 +63,25 @@ python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_concat_levirc
 python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd.py work_dirs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd/latest.pth --work-dir test_logs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd --eval mIoU mDice mFscore  --gpu-id 7 >> test_logs/focalcd/levircd/focalcd_s_512x512_30k_pmd_sum_levircd.log 2>&1 &
 
 -----
-ShowDir
+Inference:
 
-python tools/test.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/latest.pth --show --show-dir results/focalcd/cdd  --gpu-id 1 >> test_logs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.log 2>&1 &
+python tools/test.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/focalcd/cdd/change_maps/ --gpu-id 0 >> test_logs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.log 2>&1 &
+
+python tools/test.py configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd/latest.pth --format-only --eval-options imgfile_prefix=results/focalcd/levircd/change_maps/ --gpu-id 0 >> test_logs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.log 2>&1 &
+
+python tools/test.py configs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu/latest.pth --format-only --eval-options imgfile_prefix=results/focalcd/whu/change_maps/ --gpu-id 6 >> test_logs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu.log 2>&1 &
+
+Inference PKL
+-----
+CDD
+python tools/test.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/latest.pth --out results/focalcd/cdd/change_maps.pkl --gpu-id 0 >> test_logs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.log 2>&1 &
+
+LEVIR
+python tools/test.py configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd/latest.pth --out results/focalcd/levircd/change_maps.pkl --gpu-id 0 >> test_logs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd.log 2>&1 &
+
+WHU
+python tools/test.py configs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu/latest.pth --out results/focalcd/whu/change_maps.pkl --gpu-id 0 >> test_logs/focalcd/whu/focalcd_b_512x512_50k_absdiff_noaux_whu.log 2>&1 &
+
+
+
+
