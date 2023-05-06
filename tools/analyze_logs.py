@@ -50,6 +50,7 @@ def plot_curve(log_dicts, args):
             label = legend[i * num_metrics + j]
             if metric in ['mIoU', 'mAcc', 'aAcc']:
                 #ax.set_xticks(plot_epochs)
+                plt.locator_params(axis='x', nbins=10)
                 plt.xlabel('epoch')
                 plt.plot(plot_epochs, plot_values, label=label, marker='o')
             else:
