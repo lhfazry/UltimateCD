@@ -23,7 +23,8 @@ from mmseg.utils import setup_multi_processes
 
 import numpy as np
 from PIL import Image
-from pytorch_grad_cam.base_cam import BaseCAM
+#from pytorch_grad_cam.base_cam import BaseCAM
+from BaseCAM import BaseCAM
 from typing import Callable, List, Tuple
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 #from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
