@@ -134,15 +134,37 @@ def logit_simple_test(self, img, img_meta, rescale=True):
 
 
 class MMActivationsAndGradients(ActivationsAndGradients):
-    def __init__(self, *args, **kwargs):
-        super(MMActivationsAndGradients, self).__init__(*args, **kwargs)
+    def __init__(self, model,
+            target_layers,
+            use_cuda,
+            reshape_transform):
+        #super(MMActivationsAndGradients, self).__init__(*args, **kwargs)
+        self.model = model
+        self.gradients = []
+        self.activations = []
+        self.reshape_transform = reshape_transform
+        self.handles = []
+        for target_layer in target_layers:
+            self.handles.append(
+                target_layer.register_forward_hook(self.save_activation))
+            # Because of https://github.com/pytorch/pytorch/issues/61519,
+            # we don't use backward hook to record gradients.
+            self.handles.append(
+                target_layer.register_forward_hook(self.save_gradient))
     
     def __call__(self, x):
         
         self.gradients = []
         self.activations = []
         out = self.model(return_loss=False, **x)
-        return out[0]
+        return out
+    
+    def save_activation(self, module, input, output):
+        activation = output
+
+        if self.reshape_transform is not None:
+            activation = self.reshape_transform(activation)
+        self.activations.append(activation[0].cpu().detach())
 
 class MMGradCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
