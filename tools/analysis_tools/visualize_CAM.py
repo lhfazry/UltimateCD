@@ -136,7 +136,6 @@ def logit_simple_test(self, img, img_meta, rescale=True):
 class MMActivationsAndGradients(ActivationsAndGradients):
     def __init__(self, model,
             target_layers,
-            use_cuda,
             reshape_transform):
         #super(MMActivationsAndGradients, self).__init__(*args, **kwargs)
         self.model = model
