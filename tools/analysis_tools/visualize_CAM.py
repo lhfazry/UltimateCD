@@ -26,7 +26,7 @@ from PIL import Image
 from pytorch_grad_cam.base_cam import BaseCAM
 from typing import Callable, List, Tuple
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
-from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
+#from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
 from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image, scale_cam_image
 
 
@@ -133,7 +133,7 @@ def logit_simple_test(self, img, img_meta, rescale=True):
     return seg_pred
 
 
-class MMActivationsAndGradients(ActivationsAndGradients):
+class MMActivationsAndGradients():
     def __init__(self, model,
             target_layers,
             reshape_transform):
@@ -164,6 +164,23 @@ class MMActivationsAndGradients(ActivationsAndGradients):
         if self.reshape_transform is not None:
             activation = self.reshape_transform(activation)
         self.activations.append(activation[0].cpu().detach())
+
+    def save_gradient(self, module, input, output):
+        if not hasattr(output, "requires_grad") or not output.requires_grad:
+            # You can only register hooks on tensor requires grad.
+            return
+
+        # Gradients are computed in reverse order
+        def _store_grad(grad):
+            if self.reshape_transform is not None:
+                grad = self.reshape_transform(grad)
+            self.gradients = [grad.cpu().detach()] + self.gradients
+
+        output.register_hook(_store_grad)
+
+    def release(self):
+        for handle in self.handles:
+            handle.remove()
 
 class MMGradCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
