@@ -144,6 +144,13 @@ class MMActivationsAndGradients(ActivationsAndGradients):
         out = self.model(return_loss=False, **x)
         return out
 
+    def save_activation(self, module, input, output):
+        activation = output
+
+        if self.reshape_transform is not None:
+            activation = self.reshape_transform(activation)
+        self.activations.append(activation[0].cpu().detach())
+
 class MMGradCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
                  reshape_transform=None, use_siam_layer=True):
