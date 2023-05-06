@@ -133,7 +133,7 @@ def logit_simple_test(self, img, img_meta, rescale=True):
     return seg_pred
 
 
-class MMActivationsAndGradients():
+class MMActivationsAndGradient():
     def __init__(self, model, target_layers, reshape_transform):
         self.model = model
         self.gradients = []
@@ -190,7 +190,7 @@ class MMGradCAM(BaseCAM):
             use_cuda,
             reshape_transform)
             
-        self.activations_and_grads = MMActivationsAndGradients(
+        self.activations_and_grads = MMActivationsAndGradient(
             self.model, target_layers, reshape_transform)
         self.use_siam_layer = use_siam_layer
 
