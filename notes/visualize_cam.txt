@@ -1,3 +1,3 @@
-python tools/analysis_tools/visualize_CAM.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2/latest.pth --gpu-id 2
+python tools/analysis_tools/visualize_CAM2.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd2/latest.pth --gpu-id 2
 
-python tools/analysis_tools/visualize_CAM.py configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd_cam.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd/latest.pth --gpu-id 0
+python tools/analysis_tools/visualize_CAM3.py configs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd_cam.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_absdiff_noaux_levircd/latest.pth --gpu-id 0

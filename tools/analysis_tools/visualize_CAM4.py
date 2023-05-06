@@ -26,7 +26,7 @@ from PIL import Image
 from pytorch_grad_cam.base_cam import BaseCAM
 from typing import Callable, List, Tuple
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
-from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
+#from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
 from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image, scale_cam_image
 
 
@@ -133,7 +133,7 @@ def logit_simple_test(self, img, img_meta, rescale=True):
     return seg_pred
 
 
-class MMActivationsAndGradients(ActivationsAndGradients):
+class MMActivationsAndGradients():
     def __init__(self, model, target_layers, reshape_transform):
         self.model = model
         self.gradients = []
