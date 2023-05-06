@@ -142,7 +142,7 @@ class MMActivationsAndGradient():
         self.handles = []
         for target_layer in target_layers:
             self.handles.append(
-                target_layer.register_forward_hook(self.save_activation))
+                target_layer.register_forward_hook(self.set_activation))
             # Because of https://github.com/pytorch/pytorch/issues/61519,
             # we don't use backward hook to record gradients.
             self.handles.append(
@@ -172,7 +172,7 @@ class MMActivationsAndGradient():
         out = self.model(return_loss=False, **x)
         return out
 
-    def save_activation(self, module, input, output):
+    def set_activation(self, module, input, output):
         activation = output
 
         if self.reshape_transform is not None:
