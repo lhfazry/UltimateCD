@@ -1,26 +1,26 @@
 ----
 CDD
 
-python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/20230428_141206.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd_loss.png
+python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd/20221230_223204.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd_loss.png --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/20230428_141206.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd_iou_oa.png
+python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd/20221230_223204.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd_iou_oa.png --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd/20230428_141206.log.json --keys mFscore --legend F1 --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd_f1.png
+python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd/20221230_223204.log.json --keys mFscore --legend F1 --out results/focalcd/cdd/focalcd_b_256x256_50k_absdiff_cdd_f1.png --style white
 
 ----
 LEVIRCD
 
-python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_loss.png
+python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_loss.png  --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_iou_oa.png
+python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_iou_oa.png --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys mFscore --legend F1 --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_f1.png
+python tools/analyze_logs.py work_dirs/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd/20230119_192919.log.json --keys mFscore --legend F1 --out results/focalcd/levircd/focalcd_b_512x512_50k_sum_levircd_f1.png --style white
 
 ------
 WHU
 
-python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_loss.png
+python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys loss loss_val --legend loss val_loss --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_loss.png  --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_iou_oa.png
+python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_iou_oa.png --style white
 
-python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mFscore --legend F1 --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_f1.png
+python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mFscore --legend F1 --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_f1.png --style white
