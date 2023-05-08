@@ -202,7 +202,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        return np.mean(grads, axis=(1, 2))
+        return np.mean(grads, axis=(2, 3))
     
     def get_target_width_height(self,
                                 input_tensor: torch.Tensor) -> Tuple[int, int]:
@@ -284,8 +284,10 @@ class MMGradCAM(BaseCAM):
                                      layer_activations,
                                      layer_grads,
                                      eigen_smooth)
+            print(f"cam: {cam.shape}")
             cam = np.maximum(cam, 0)
             scaled = scale_cam_image(cam, target_size)
+            print(f"scaled: {scaled.shape}")
             cam_per_target_layer.append(scaled[:, None, :])
 
         return cam_per_target_layer
