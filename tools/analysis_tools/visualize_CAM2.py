@@ -202,7 +202,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        return np.mean(grads, axis=(2, 3))
+        return np.mean(grads, axis=(1, 2))
     
     def get_target_width_height(self,
                                 input_tensor: torch.Tensor) -> Tuple[int, int]:
@@ -475,12 +475,12 @@ def main():
         input_tensor = it
     for res in results:
         res = res.argmax(dim=0).float().cpu().numpy()
-        print(f'\nres: {res}')
+        
         # change the `target_layers` here
         target_layers = [model.module.backbone.layers[0], model.module.backbone.layers[1], model.module.backbone.layers[2], model.module.backbone.layers[3]]
         # target_layers = [model.module.decode_head.discriminator]
         targets = [SemanticSegmentationTarget(1, res)]
-        print(f'\targets: {targets.shape}')
+        
         with MMGradCAM(model=model,
                        target_layers=target_layers,
                        use_cuda=torch.cuda.is_available(),
