@@ -178,7 +178,7 @@ class MMActivationsAndGradient():
 
         if self.reshape_transform is not None:
             activation = self.reshape_transform(activation)
-        print(activation[0].cpu().detach().shape)
+        #print(activation[0].cpu().detach().shape)
         self.activations.append(activation[0].cpu().detach())
 
 class MMGradCAM(BaseCAM):
@@ -483,7 +483,7 @@ def main():
                        use_siam_layer=True) as cam:
             grayscale_cam = cam(input_tensor=input_tensor,
                                 targets=targets)# [0, :]
-
+            print(grayscale_cam.shape)
             if len(grayscale_cam) >= 2:
                 for gc_idx, gc in enumerate(grayscale_cam):
                     cam_image = show_cam_on_image(np.ones((1024, 1024, 3)), gc[0, ...], use_rgb=True)
