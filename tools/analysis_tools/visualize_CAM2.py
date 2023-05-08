@@ -470,16 +470,17 @@ def main():
             pre_eval=args.eval is not None and not eval_on_format_results,
             format_only=args.format_only or eval_on_format_results,
             format_args=eval_kwargs)
-    print(len(results))
-    print(results[0].shape)
+    
     for it in data_loader:
         input_tensor = it
     for res in results:
         res = res.argmax(dim=0).float().cpu().numpy()
+        print(f'\nres: {res}')
         # change the `target_layers` here
         target_layers = [model.module.backbone.layers[0], model.module.backbone.layers[1], model.module.backbone.layers[2], model.module.backbone.layers[3]]
         # target_layers = [model.module.decode_head.discriminator]
         targets = [SemanticSegmentationTarget(1, res)]
+        print(f'\targets: {targets.shape}')
         with MMGradCAM(model=model,
                        target_layers=target_layers,
                        use_cuda=torch.cuda.is_available(),
