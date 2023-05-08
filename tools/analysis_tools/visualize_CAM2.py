@@ -221,7 +221,7 @@ class MMGradCAM(BaseCAM):
             input_tensor['img'][0] = torch.autograd.Variable(input_tensor['img'][0],
                                                     requires_grad=True)
         outputs = self.activations_and_grads(input_tensor)
-        print(outputs[0].shape)
+        
         if targets is None:
             target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
             targets = [ClassifierOutputTarget(category) for category in target_categories]
