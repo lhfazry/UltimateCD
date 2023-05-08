@@ -52,7 +52,10 @@ class BaseCAM:
                                        targets,
                                        activations,
                                        grads)
+        print(f"weights: {weights.shape}")
         weighted_activations = weights[:, :, None, None] * activations
+        print(f"weighted_activations: {weighted_activations.shape}")
+        
         if eigen_smooth:
             cam = get_2d_projection(weighted_activations)
         else:
