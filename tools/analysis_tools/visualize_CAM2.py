@@ -470,7 +470,8 @@ def main():
             pre_eval=args.eval is not None and not eval_on_format_results,
             format_only=args.format_only or eval_on_format_results,
             format_args=eval_kwargs)
-
+    print(len(results))
+    print(results[0].shape)
     for it in data_loader:
         input_tensor = it
     for res in results:
