@@ -202,7 +202,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        print(f"grads: {grads.shape}")
+        #print(f"grads: {grads.shape}")
         return np.mean(grads, axis=(2, 3))
     
     def get_target_width_height(self,
@@ -242,7 +242,7 @@ class MMGradCAM(BaseCAM):
         cam_per_layer = self.compute_cam_per_layer(input_tensor,
                                                    targets,
                                                    eigen_smooth)
-        print(cam_per_layer[0].shape)
+        #print(cam_per_layer[0].shape)
         if self.use_siam_layer:
             return [self.aggregate_multi_layers([cam_per_layer[i]]) for i in range(len(cam_per_layer))]
         return self.aggregate_multi_layers(cam_per_layer)
@@ -263,7 +263,9 @@ class MMGradCAM(BaseCAM):
         grads_list = [g.cpu().data.numpy()
                       for g in self.activations_and_grads.gradients]
         target_size = self.get_target_width_height(input_tensor)
-
+        print(activations_list[0].shape)
+        print(grads_list[0].shape)
+        
         cam_per_target_layer = []
         # Loop over the saliency image from every layer
         # For Siamese Network
