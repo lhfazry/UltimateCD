@@ -42,7 +42,7 @@ train_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=32,
+    samples_per_gpu=64,
     workers_per_gpu=4,
     train=dict(pipeline=train_pipeline)
 )
@@ -64,4 +64,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd'
+work_dir = './work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_b64_cdd'

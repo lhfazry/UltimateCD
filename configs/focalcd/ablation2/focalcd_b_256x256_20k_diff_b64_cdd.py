@@ -12,16 +12,38 @@ model = dict(
         depths=[2, 2, 18, 2],    
         focal_levels=[3, 3, 3, 3],
     ),
-    neck=dict(type='FeatureFusionNeck', policy='concat'),
+    neck=dict(type='FeatureFusionNeck', policy='diff'),
     decode_head=dict(
-        in_channels=[2*v for v in in_channels],
+        in_channels=[v for v in in_channels],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=2*in_channels[2],
+        in_channels=in_channels[2],
         num_classes=2
     )
 )
+
+
+model = dict(
+    pretrained='./pretrained/focalnet_base_lrf.pth',
+    backbone=dict(
+        embed_dim=128,
+        depths=[2, 2, 18, 2],
+        drop_path_rate=0.3,
+        patch_norm=True,
+        use_checkpoint=False,    
+        focal_windows=[9, 9, 9, 9],
+        focal_levels=[3, 3, 3, 3],
+    ),
+    neck=dict(type='FeatureFusionNeck', policy='diff'),
+    decode_head=dict(
+        in_channels=[v for v in in_channels],
+        num_classes=2
+    ),
+    auxiliary_head=dict(
+        in_channels=in_channels[2],
+        num_classes=2
+    ))
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
@@ -42,7 +64,7 @@ train_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=32,
+    samples_per_gpu=64,
     workers_per_gpu=4,
     train=dict(pipeline=train_pipeline)
 )
@@ -64,4 +86,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd'
+work_dir = './work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_b64_cdd'

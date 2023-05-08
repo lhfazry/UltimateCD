@@ -24,3 +24,65 @@ python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff
 python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mIoU aAcc --legend IoU OA --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_iou_oa.png --style white
 
 python tools/analyze_logs.py work_dirs/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu/20230415_115111.log.json --keys mFscore --legend F1 --out results/focalcd/whu/focalcd_b_512x512_50k_absdiff_whu_f1.png --style white
+
+
+Ablation
+-------
+Feature fusion:
+- Loss
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd/20230425_234750.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_cdd/20230425_234351.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_sum_cdd/20230425_095211.log.json --keys loss --legend "Lp Distance" "Concat" "Diff" "Sum" --out results/focalcd/ablation2/ff_loss.png  --style white
+
+- Loss Val
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd/20230425_234750.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_cdd/20230425_234351.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_sum_cdd/20230425_095211.log.json --keys loss_val --legend "Lp Distance" "Concat" "Diff" "Sum" --out results/focalcd/ablation2/ff_loss_val.png  --style white
+
+- F1
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd/20230425_234750.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_cdd/20230425_234351.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_sum_cdd/20230425_095211.log.json --keys mFscore --legend "Lp Distance" "Concat" "Diff" "Sum" --out results/focalcd/ablation2/ff_f1.png  --style white
+
+- IoU
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd/20230425_234750.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_cdd/20230425_234351.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_sum_cdd/20230425_095211.log.json --keys mIoU --legend "Lp Distance" "Concat" "Diff" "Sum" --out results/focalcd/ablation2/ff_iou.png  --style white
+
+- Acc
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_concat_cdd/20230425_234750.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_diff_cdd/20230425_234351.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_sum_cdd/20230425_095211.log.json --keys aAcc --legend "Lp Distance" "Concat" "Diff" "Sum" --out results/focalcd/ablation2/ff_acc.png  --style white
+
+Focal Level:
+- Loss
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss.png  --style white
+
+- Loss Val
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss_val --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss_val.png  --style white
+
+- F1
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys mFscore --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_f1.png  --style white
+
+- IoU
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys mIoU --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_iou.png  --style white
+
+- Acc
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys aAcc --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_acc.png  --style white
+
+Focal Window:
+- Loss
+python tools/analyze_logs.py work_dirs/focalcd/ablation/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss.png  --style white
+
+- Loss Val
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss_val --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss_val.png  --style white
+
+- F1
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys mFscore --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_f1.png  --style white
+
+- IoU
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys mIoU --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_iou.png  --style white
+
+- Acc
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys aAcc --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_acc.png  --style white
+
+Drop Rate:
+- Loss
+python tools/analyze_logs.py work_dirs/focalcd/ablation/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss.png  --style white
+
+- Loss Val
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss_val --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss_val.png  --style white
+
+Learning Rate:
+- Loss
+python tools/analyze_logs.py work_dirs/focalcd/cdd/focalcd_s_256x256_25k_sum_cdd_lr006/joined.log.json work_dirs/focalcd/cdd/focalcd_s_256x256_25k_sum_cdd_lr0006/20221224_090128.log.json work_dirs/focalcd/cdd/focalcd_s_256x256_25k_sum_cdd/20221221_073543.log.json --keys loss --legend "Learning Rate 0.006" "Learning Rate 0.0006" "Learning Rate 0.00006" --out results/focalcd/cdd/lr_loss.png  --style white

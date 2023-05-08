@@ -88,6 +88,6 @@ Ablation
 
 ./train.sh 0 configs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do0_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do0_cdd.log 2>&1 &
 
-./train.sh 7 configs/focalcd/cdd/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd.py >> logs/focalcd/cdd/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd.log 2>&1 &
+./train.sh 7 configs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd.log 2>&1 &
 
-./train.sh 3 configs/focalcd/levircd/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd.py >> logs/focalcd/levircd/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd.log 2>&1 &
+./train.sh 6 configs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd.py >> logs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd.log 2>&1 &
