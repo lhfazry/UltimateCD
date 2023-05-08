@@ -221,7 +221,7 @@ class MMGradCAM(BaseCAM):
             input_tensor['img'][0] = torch.autograd.Variable(input_tensor['img'][0],
                                                     requires_grad=True)
         outputs = self.activations_and_grads(input_tensor)
-        print(outputs.shape)
+        print(outputs[0].shape)
         if targets is None:
             target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
             targets = [ClassifierOutputTarget(category) for category in target_categories]
@@ -241,6 +241,7 @@ class MMGradCAM(BaseCAM):
         cam_per_layer = self.compute_cam_per_layer(input_tensor,
                                                    targets,
                                                    eigen_smooth)
+        print(cam_per_layer[0].shape)
         if self.use_siam_layer:
             return [self.aggregate_multi_layers([cam_per_layer[i]]) for i in range(len(cam_per_layer))]
         return self.aggregate_multi_layers(cam_per_layer)
