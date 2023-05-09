@@ -223,6 +223,7 @@ class MMGradCAM(BaseCAM):
             input_tensor['img'][0] = input_tensor['img'][0].cuda()
 
         if self.compute_input_gradient:
+            print("compute_input_gradient")
             input_tensor['img'][0] = torch.autograd.Variable(input_tensor['img'][0],
                                                     requires_grad=True)
         outputs = self.activations_and_grads(input_tensor)
