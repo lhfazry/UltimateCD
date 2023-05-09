@@ -150,7 +150,6 @@ class MMActivationsAndGradient():
                 target_layer.register_forward_hook(self.save_gradient))
 
     def save_gradient(self, module, input, output):
-        print(f"gradients: {output[0].shape}")
         if not hasattr(output, "requires_grad") or not output.requires_grad:
             # You can only register hooks on tensor requires grad.
             return
@@ -161,6 +160,7 @@ class MMActivationsAndGradient():
                 grad = self.reshape_transform(grad)
             self.gradients = [grad.cpu().detach()] + self.gradients
 
+        print(f"gradients: {output[0].shape}")
         output.register_hook(_store_grad)
 
     def release(self):
