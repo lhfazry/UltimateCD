@@ -162,7 +162,7 @@ class MMActivationsAndGradient():
                 grad = self.reshape_transform(grad)
             self.gradients = [grad.cpu().detach()] + self.gradients
 
-        print(f"gradients: {output.shape}")
+        #print(f"gradients: {output.shape}")
         output.register_hook(_store_grad)
 
     def release(self):
@@ -182,7 +182,7 @@ class MMActivationsAndGradient():
 
         if self.reshape_transform is not None:
             activation = self.reshape_transform(activation)
-        print(f"activation: {activation[0].shape}")
+        #print(f"activation: {activation[0].shape}")
         self.activations.append(activation[0].cpu().detach())
 
 class MMGradCAM(BaseCAM):
@@ -209,7 +209,7 @@ class MMGradCAM(BaseCAM):
                         activations,
                         grads):
         #print(f"activations: {activations.shape}")
-        return np.mean(grads, axis=(2, 3))
+        return np.mean(grads, axis=(1, 2))
     
     def get_target_width_height(self,
                                 input_tensor: torch.Tensor) -> Tuple[int, int]:
