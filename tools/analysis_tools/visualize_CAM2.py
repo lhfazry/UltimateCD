@@ -490,7 +490,7 @@ def main():
         res = res.argmax(dim=0).float().cpu().numpy()
         
         # change the `target_layers` here
-        target_layers = [model.module.backbone.layers[0]]
+        target_layers = [model.module.backbone]
         # target_layers = [model.module.decode_head.discriminator]
         targets = [SemanticSegmentationTarget(1, res)]
         
