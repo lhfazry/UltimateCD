@@ -263,9 +263,9 @@ class MMGradCAM(BaseCAM):
         grads_list = [g.cpu().data.numpy()
                       for g in self.activations_and_grads.gradients]
         target_size = self.get_target_width_height(input_tensor)
-        print(activations_list[0].shape)
-        print(grads_list[0].shape)
-        
+        print(f"activations_list: {activations_list[0].shape}")
+        print(f"grads_list: {grads_list[0].shape}")
+
         cam_per_target_layer = []
         # Loop over the saliency image from every layer
         # For Siamese Network
