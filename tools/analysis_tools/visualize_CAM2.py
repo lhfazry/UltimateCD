@@ -208,7 +208,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        #print(f"activations: {activations.shape}")
+        print(f"activations: {activations.shape}")
         return np.mean(grads, axis=(1, 2))
     
     def get_target_width_height(self,
@@ -225,7 +225,6 @@ class MMGradCAM(BaseCAM):
             input_tensor['img'][0] = input_tensor['img'][0].cuda()
 
         if self.compute_input_gradient:
-            print("compute_input_gradient")
             input_tensor['img'][0] = torch.autograd.Variable(input_tensor['img'][0],
                                                     requires_grad=True)
         outputs = self.activations_and_grads(input_tensor)
