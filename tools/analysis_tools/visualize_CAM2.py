@@ -162,7 +162,7 @@ class MMActivationsAndGradient():
                 grad = self.reshape_transform(grad)
             self.gradients = [grad.cpu().detach()] + self.gradients
 
-        print(f"gradients: {output[0].shape}")
+        print(f"gradients: {output.shape}")
         output.register_hook(_store_grad)
 
     def release(self):
