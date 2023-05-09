@@ -202,7 +202,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        #print(f"grads: {grads.shape}")
+        print(f"activations: {activations.shape}")
         return np.mean(activations, axis=(2, 3))
     
     def get_target_width_height(self,
