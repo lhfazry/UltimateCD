@@ -208,7 +208,7 @@ class MMGradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        print(f"activations: {activations.shape}")
+        #print(f"activations: {activations.shape}")
         return np.mean(grads, axis=(2, 3))
     
     def get_target_width_height(self,
@@ -484,9 +484,7 @@ def main():
     
     for it in data_loader:
         input_tensor = it
-        break
-
-    for res in results:
+    for i, res in enumerate(results):
         res = res.argmax(dim=0).float().cpu().numpy()
         
         # change the `target_layers` here
