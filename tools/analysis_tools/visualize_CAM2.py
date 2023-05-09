@@ -171,7 +171,8 @@ class MMActivationsAndGradient():
         
         self.gradients = []
         self.activations = []
-        out = self.model(return_loss=False, **x)
+        #out = self.model(return_loss=False, **x)
+        out = self.model(x)
         return out
 
     def set_activation(self, module, input, output):
