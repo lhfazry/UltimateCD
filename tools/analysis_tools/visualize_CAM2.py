@@ -168,11 +168,11 @@ class MMActivationsAndGradient():
             handle.remove()
 
     def __call__(self, x):
-        
+        print(x)
         self.gradients = []
         self.activations = []
-        #out = self.model(return_loss=False, **x)
-        out = self.model(x)
+        out = self.model(return_loss=False, **x)
+        #out = self.model(x)
         return out
 
     def set_activation(self, module, input, output):
@@ -185,14 +185,16 @@ class MMActivationsAndGradient():
 
 class MMGradCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
-                 reshape_transform=None, use_siam_layer=True):
+                 reshape_transform=None, use_siam_layer=True, 
+                 compute_input_gradient=True):
         super(
             MMGradCAM,
             self).__init__(
             model,
             target_layers,
             use_cuda,
-            reshape_transform)
+            reshape_transform,
+            compute_input_gradient)
             
         self.activations_and_grads = MMActivationsAndGradient(
             self.model, target_layers, reshape_transform)
@@ -480,7 +482,8 @@ def main():
     
     for it in data_loader:
         input_tensor = it
-        print(it)
+        break
+
     for res in results:
         res = res.argmax(dim=0).float().cpu().numpy()
         
@@ -492,7 +495,8 @@ def main():
         with MMGradCAM(model=model,
                        target_layers=target_layers,
                        use_cuda=torch.cuda.is_available(),
-                       use_siam_layer=True) as cam:
+                       use_siam_layer=True,
+                       compute_input_gradient=True) as cam:
             grayscale_cam = cam(input_tensor=input_tensor,
                                 targets=targets)# [0, :]
             
