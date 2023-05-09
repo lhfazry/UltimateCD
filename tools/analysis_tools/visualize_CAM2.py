@@ -480,6 +480,7 @@ def main():
     
     for it in data_loader:
         input_tensor = it
+        print(it.shape)
     for res in results:
         res = res.argmax(dim=0).float().cpu().numpy()
         
