@@ -168,7 +168,7 @@ class MMActivationsAndGradient():
             handle.remove()
 
     def __call__(self, x):
-        print(x)
+        #print(x)
         self.gradients = []
         self.activations = []
         out = self.model(return_loss=False, **x)
