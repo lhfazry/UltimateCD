@@ -209,7 +209,7 @@ class MMGradCAM(BaseCAM):
                         activations,
                         grads):
         print(f"activations: {activations.shape}")
-        return np.mean(grads, axis=(1, 2))
+        return np.mean(grads, axis=(2, 3))
     
     def get_target_width_height(self,
                                 input_tensor: torch.Tensor) -> Tuple[int, int]:
