@@ -1,0 +1,3 @@
+cdd
+----
+python tools/confusion_matrix.py configs/focalcd/cdd/focalcd_b_256x256_50k_absdiff_noaux_cdd.py results/focalcd/cdd/change_maps.pkl results/focalcd/cdd/
