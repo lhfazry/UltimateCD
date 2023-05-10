@@ -472,7 +472,7 @@ class PatchEmbed(nn.Module):
             flops += Ho * Wo * self.embed_dim
         return flops
 
-@BACKBONES.register_module()
+#@BACKBONES.register_module()
 class SwinTransformer(BaseModule):
     r""" Swin Transformer
         A PyTorch impl of : `Swin Transformer: Hierarchical Vision Transformer using Shifted Windows`  -
