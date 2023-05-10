@@ -1,0 +1,68 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+from mmseg.models.builder import NECKS
+from mmcv.runner import BaseModule, auto_fp16
+from models.backbones.swin_transformer import BasicLayer
+
+
+@NECKS.register_module()
+class SwinFusionNeck(BaseModule):
+    """Feature Fusion Neck.
+
+    Args:
+        policy (str): The operation to fuse features. candidates 
+            are `concat`, `sum`, `diff` and `Lp_distance`.
+        in_channels (Sequence(int)): Input channels.
+        channels (int): Channels after modules, before conv_seg.
+        out_indices (tuple[int]): Output from which layer.
+    """
+
+    def __init__(self,
+                 img_size=256,
+                 in_channel=None,
+                 channels=None,
+                 swin_block_depth=2, 
+                 head_attn=6, 
+                 window_size=7,
+                 out_indices=(0, 1, 2, 3)):
+        super(SwinFusionNeck, self).__init__()
+        self.in_channel = in_channel
+        self.channels = channels
+        self.fp16_enabled = False
+        self.out_indices = out_indices
+        self.projection = nn.Linear(in_channel, )
+
+        self.swin_block = BasicLayer(
+            dim=in_channel,
+            input_resolution=(img_size, img_size),
+            depth=swin_block_depth,
+            num_heads=head_attn,
+            window_size=window_size
+        )
+
+    @staticmethod
+    def fusion(x1, x2):
+        x = torch.cat([x1, x2], dim=1)
+
+        return x
+
+    @auto_fp16()
+    def forward(self, x1, x2):
+        """Forward function."""
+
+        assert len(x1) == len(x2), "The features x1 and x2 from the" \
+            "backbone should be of equal shape"
+    
+        outs = []
+        for i in range(len(x1)):
+            if i == 0:
+                out = self.fusion(x1[i], x2[i])
+            else:
+                out = self.fusion(x1[i], x2[i])
+
+            outs.append(out)
+
+        outs = [outs[i] for i in self.out_indices]
+        return tuple(outs)

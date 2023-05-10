@@ -78,7 +78,7 @@ python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_f
 
 Drop Rate:
 - Loss
-python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do0_cdd/20230507_025709.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd/20230507_025709.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd/20230507_025754.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd/20230507_025834.log.json  --keys loss --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss.png  --style white
+python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do0_cdd/20230507_025709.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do04_cdd/20230507_025754.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_noaux_do06_cdd/20230507_025834.log.json  --keys loss --legend "Drop Rate 0.0" "Drop Rate 0.2" "Drop Rate 0.4" "Drop Rate 0.6" --out results/focalcd/ablation2/dr_loss.png  --style white
 
 - Loss Val
 python tools/analyze_logs.py work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl2_absdiff_cdd/20230426_131710.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_absdiff_cdd/20230425_095012.log.json work_dirs/focalcd/ablation2/focalcd_b_256x256_20k_fl4_absdiff_cdd/20230426_232424.log.json --keys loss_val --legend "Focal Level 2" "Focal Level 3" "Focal Level 4" --out results/focalcd/ablation2/fl_loss_val.png  --style white
