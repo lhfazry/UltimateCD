@@ -6,7 +6,7 @@ num_heads = [3, 6, 12, 24]
 
 model = dict(
     type='SiamEncoderDecoder',
-    pretrained='./pretrained/swin_tiny_patch4_window7_224.pth',
+    #pretrained='./pretrained/swin_tiny_patch4_window7_224.pth',
     backbone=dict(
         type='SwinTransformer',
         in_channels=3,
