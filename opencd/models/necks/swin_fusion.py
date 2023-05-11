@@ -31,10 +31,11 @@ class SwinFusionNeck(BaseModule):
     
         outs = []
         for i in range(len(x1)):
-            if i == len(x1) - 1:
-                out = self.fusion(x1[i], x2[i])
-                out = self.projection(out)
+            out = self.fusion(x1[i], x2[i])
 
+            if i == len(x1) - 1:    
+                out = self.projection(out)
+            
             outs.append(out)
 
         outs = [outs[i] for i in self.out_indices]

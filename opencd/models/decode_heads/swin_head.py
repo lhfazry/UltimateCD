@@ -307,14 +307,13 @@ class UMBlock(nn.Module):
         self.channel_attention = ChannelAttention(in_channels=5*dim//4)
         self.output_projection = nn.Linear(5*dim//4, dim//2)
     
-    def forward(self, x, x1, x2):
-        B, C, H, W = x1
-        assert x1.shape == x2.shape, "x1 and x2 must have the same shape"
+    def forward(self, x, x_downsample):
+        _, _, H, W = x.shape
 
-        x = self.upsample(x)
-        assert x[0,0,:,:].shape == (H, W), "x and x1 must have the same shape"
+        x_upsample = self.upsample(x_downsample)
+        assert x_upsample[0,0,:,:].shape == (H, W), "x and x1 must have the same shape"
 
-        x = torch.cat((x, x1, x2), dim=1)
+        x = torch.cat((x, x_upsample), dim=1)
         x = self.channel_attention(x)
         x = self.output_projection(x)
         return x
@@ -353,7 +352,7 @@ class ChannelAttention(nn.Module):
         self.fc2 = nn.Conv2d(in_channels // ratio, in_channels, 1, bias=False)
         self.sigmod = nn.Sigmoid()
 
-    def forward(self,x):
+    def forward(self, x):
         avg_out = self.fc2(self.relu1(self.fc1(self.avg_pool(x))))
         max_out = self.fc2(self.relu1(self.fc1(self.max_pool(x))))
         out = avg_out + max_out
@@ -457,20 +456,23 @@ class BasicUpLayer(nn.Module):
                 norm_layer=norm_layer)
             for i in range(depth)])
 
+        self.upsample = upsample
         # patch merging layer
         #if upsample is None:
         #    self.upsample = PatchExpand(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
         #else:
         #    self.upsample = None
 
-    def forward(self, x):
+    def forward(self, x, x_downsample):
         for blk in self.blocks:
             if self.use_checkpoint:
-                x = checkpoint.checkpoint(blk, x)
+                x = checkpoint.checkpoint(blk, x_downsample)
             else:
-                x = blk(x)
+                x = blk(x_downsample)
+
         if self.upsample is not None:
-            x = self.upsample(x)
+            x = self.upsample(x, x_downsample)
+
         return x
 
 @HEADS.register_module()
@@ -592,14 +594,14 @@ class SwinHead(BaseDecodeHead):
         return {'relative_position_bias_table'}
 
     #Dencoder and Skip connection
-    def forward_up_features(self, x, x_downsample):
-        for inx, layer_up in enumerate(self.layers_up):
-            if inx == 0:
-                x = layer_up(x)
+    def forward_up_features(self, inputs):
+        x = inputs[0]
+
+        for i, layer_up in enumerate(self.layers_up):
+            if i < 3:
+                x = layer_up(inputs[i + 1], x)
             else:
-                x = torch.cat([x,x_downsample[3-inx]],-1)
-                x = self.concat_back_dim[inx](x)
-                x = layer_up(x)
+                x = layer_up(inputs[i], x)
 
         x = self.norm_up(x)  # B L C
   
@@ -618,9 +620,9 @@ class SwinHead(BaseDecodeHead):
             
         return x
     
-    def forward(self, x, x_downsample):
+    def forward(self, inputs):
         #x, x_downsample = self.forward_features(x)
-        x = self.forward_up_features(x, x_downsample)
+        x = self.forward_up_features(inputs)
         x = self.up_x4(x)
 
         return x

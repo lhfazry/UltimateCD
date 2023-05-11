@@ -15,7 +15,11 @@ model = dict(
         window_size=7,
         patch_size=4,  
         depths=depths),
-    neck=dict(type='SwinFusionNeck', in_channel=embed_dim * 2 ** (len(depths) - 1)),
+    neck=dict(
+        type='SwinFusionNeck', 
+        in_channel=embed_dim * 2 ** (len(depths) - 1), 
+        out_indices=[3, 2, 1, 0]
+    ),
     decode_head=dict(
         type='SwinHead',
         in_channels=embed_dim * 2 ** (len(depths) - 1),
