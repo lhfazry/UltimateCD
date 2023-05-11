@@ -610,7 +610,7 @@ class SwinHead(BaseDecodeHead):
                 x = up_layer(x_skip, x)
             else:
                 B, C, H, W = inputs[0].shape
-                x_skip = inputs[0].view(B, H * W, C).permute(0, 2, 1)
+                x_skip = inputs[0].view(B, C, H * W).permute(0, 2, 1)
                 x_skip = x_skip.permute(0, 2, 1)
                 x = up_layer(x_skip, x)
 
