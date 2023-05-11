@@ -25,6 +25,7 @@ class SwinFusionNeck(BaseModule):
     @auto_fp16()
     def forward(self, x1, x2):
         """Forward function."""
+        print(f"x1: {x1.shape}, x2: {x2.shape}")
 
         assert len(x1) == len(x2), "The features x1 and x2 from the" \
             "backbone should be of equal shape"
