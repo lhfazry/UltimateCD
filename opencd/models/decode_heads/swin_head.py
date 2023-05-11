@@ -299,6 +299,50 @@ class SwinTransformerBlock(nn.Module):
         # norm2
         flops += self.dim * H * W
         return flops
+
+class UMBlock(nn.Module):
+    def __init__(self, input_resolution, dim):
+        self.input_resolution = input_resolution
+        self.dim = dim
+        self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim)
+        self.channel_attention = ChannelAttention(in_channels=5*dim//4)
+        self.output_projection = nn.Linear(5*dim//4, dim//2)
+    
+    def forward(self, x, x1, x2):
+        B, C, H, W = x1
+        assert x1.shape == x2.shape, "x1 and x2 must have the same shape"
+
+        x = self.upsample(x)
+        assert x[0,0,:,:].shape == (H, W), "x and x1 must have the same shape"
+
+        x = torch.cat((x, x1, x2), dim=1)
+        x = self.channel_attention(x)
+        x = self.output_projection(x)
+        return x
+
+class PatchReshape(nn.Module):
+    def __init__(self, input_resolution, dim, dim_scale=4, norm_layer=nn.LayerNorm):
+        super().__init__()
+        self.input_resolution = input_resolution
+        self.dim = dim
+        self.expand = nn.Linear(dim, dim, bias=False)
+        self.norm = norm_layer(dim // dim_scale)
+
+    def forward(self, x):
+        """
+        x: B, H*W, C
+        """
+        H, W = self.input_resolution
+        x = self.expand(x)
+        B, L, C = x.shape
+        assert L == H * W, "input feature has wrong size"
+
+        x = x.view(B, H, W, C)
+        x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=C//4)
+        x = x.view(B, -1, C//4)
+        x = self.norm(x)
+
+        return x
     
 class ChannelAttention(nn.Module):
     def __init__(self, in_channels, ratio = 16):
@@ -317,23 +361,6 @@ class ChannelAttention(nn.Module):
 
         return self.sigmod(out)
 
-class UMBlock(nn.Module):
-    def __init__(self, input_resolution, dim):
-        self.input_resolution = input_resolution
-        self.dim = dim
-        self.upsample = PatchExpand(input_resolution=input_resolution, dim=dim, dim_scale=2)
-        self.channel_attention = ChannelAttention()
-    
-    def forward(self, x, x1, x2):
-        B, C, H, W = x1
-        assert x1.shape == x2.shape, "x1 and x2 must have the same shape"
-
-        x = self.upsample(x)
-        assert x[0,0,:,:].shape == (H, W), "x and x1 must have the same shape"
-
-        x = torch.cat((x, x1, x2), dim=1)
-
-
 class PatchExpand(nn.Module):
     def __init__(self, input_resolution, dim, dim_scale=2, norm_layer=nn.LayerNorm):
         super().__init__()
@@ -346,38 +373,15 @@ class PatchExpand(nn.Module):
         """
         x: B, H*W, C
         """
-        H, W = self.input_resolution
-        x = self.expand(x)
         B, L, C = x.shape
         assert L == H * W, "input feature has wrong size"
+
+        H, W = self.input_resolution
+        x = self.expand(x)
 
         x = x.view(B, H, W, C)
         x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=C//4)
         x = x.view(B,-1,C//4)
-        x= self.norm(x)
-
-        return x
-    
-class PatchReshape(nn.Module):
-    def __init__(self, input_resolution, dim, norm_layer=nn.LayerNorm):
-        super().__init__()
-        self.input_resolution = input_resolution
-        self.dim = dim
-        self.expand = nn.Linear(dim, 2, bias=False)
-        self.norm = norm_layer(dim // dim_scale)
-
-    def forward(self, x):
-        """
-        x: B, H*W, C
-        """
-        H, W = self.input_resolution
-        x = self.expand(x)
-        B, L, C = x.shape
-        assert L == H * W, "input feature has wrong size"
-
-        x = x.view(B, H, W, C)
-        x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=C//4)
-        x = x.view(B, -1, C//4)
         x= self.norm(x)
 
         return x
@@ -453,13 +457,13 @@ class BasicUpLayer(nn.Module):
                 attn_drop=attn_drop,
                 drop_path=drop_path[i] if isinstance(drop_path, list) else drop_path,
                 norm_layer=norm_layer)
-                for i in range(depth)])
+            for i in range(depth)])
 
         # patch merging layer
-        if upsample is not None:
-            self.upsample = PatchExpand(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
-        else:
-            self.upsample = None
+        #if upsample is None:
+        #    self.upsample = PatchExpand(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
+        #else:
+        #    self.upsample = None
 
     def forward(self, x):
         for blk in self.blocks:
@@ -532,6 +536,7 @@ class SwinHead(BaseDecodeHead):
         self.final_upsample = final_upsample
 
         patches_resolution = [img_size // patch_size, img_size // patch_size]
+        self.patches_resolution = self.patches_resolution
 
         # stochastic depth
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
@@ -554,36 +559,11 @@ class SwinHead(BaseDecodeHead):
                 attn_drop=attn_drop_rate,
                 drop_path=dpr[sum(depths[:i]):sum(depths[:i + 1])],
                 norm_layer=norm_layer,
-                upsample=PatchExpand,# if (i_layer > self.num_layers - 1) else None,
+                upsample=UMBlock if (i > 0) else None,
                 use_checkpoint=use_checkpoint
             )
 
             self.up_layers.append(up_layer)
-                
-                
-        for i_layer in range(self.num_layers):
-            concat_linear = nn.Linear(2*int(embed_dim*2**(self.num_layers-1-i_layer)),
-            int(embed_dim*2**(self.num_layers-1-i_layer))) if i_layer > 0 else nn.Identity()
-
-            if i_layer == 0:
-                layer_up = PatchExpand(input_resolution=(patches_resolution[0] // (2 ** (self.num_layers-1-i_layer)),
-                patches_resolution[1] // (2 ** (self.num_layers-1-i_layer))), dim=int(embed_dim * 2 ** (self.num_layers-1-i_layer)), dim_scale=2, norm_layer=norm_layer)
-            else:
-                layer_up = BasicLayer_up(dim=int(embed_dim * 2 ** (self.num_layers-1-i_layer)),
-                                input_resolution=(patches_resolution[0] // (2 ** (self.num_layers-1-i_layer)),
-                                                    patches_resolution[1] // (2 ** (self.num_layers-1-i_layer))),
-                                depth=depths[(self.num_layers-1-i_layer)],
-                                num_heads=num_heads[(self.num_layers-1-i_layer)],
-                                window_size=window_size,
-                                mlp_ratio=self.mlp_ratio,
-                                qkv_bias=qkv_bias, qk_scale=qk_scale,
-                                drop=drop_rate, attn_drop=attn_drop_rate,
-                                drop_path=dpr[sum(depths[:(self.num_layers-1-i_layer)]):sum(depths[:(self.num_layers-1-i_layer) + 1])],
-                                norm_layer=norm_layer,
-                                upsample=PatchExpand if (i_layer < self.num_layers - 1) else None,
-                                use_checkpoint=use_checkpoint)
-            self.layers_up.append(layer_up)
-            self.concat_back_dim.append(concat_linear)
 
         self.norm = norm_layer(self.num_features)
         self.norm_up= norm_layer(self.embed_dim)

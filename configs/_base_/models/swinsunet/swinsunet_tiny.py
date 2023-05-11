@@ -15,6 +15,7 @@ model = dict(
         depths=depths, 
         num_heads=num_heads,
         window_size=7),
+    neck=dict(type='FeatureFusionNeck', policy='concat', output_projection=True),
     decode_head=dict(
         type='SwinHead',
         in_channels=embed_dim * 2 ** (len(depths) - 1),

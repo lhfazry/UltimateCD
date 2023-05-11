@@ -22,13 +22,17 @@ class FeatureFusionNeck(BaseModule):
                  policy,
                  in_channels=None,
                  channels=None,
-                 out_indices=(0, 1, 2, 3)):
+                 out_indices=(0, 1, 2, 3),
+                 output_projection=False):
         super(FeatureFusionNeck, self).__init__()
         self.policy = policy
         self.in_channels = in_channels
         self.channels = channels
         self.out_indices = out_indices
         self.fp16_enabled = False
+
+        if output_projection:
+            self.output_projection = nn.Linear(in_channels, in_channels)
 
     @staticmethod
     def fusion(x1, x2, policy):
@@ -60,6 +64,10 @@ class FeatureFusionNeck(BaseModule):
         outs = []
         for i in range(len(x1)):
             out = self.fusion(x1[i], x2[i], self.policy)
+
+            if self.output_projection is not None:
+                out = self.output_projection(out)
+                
             outs.append(out)
 
         outs = [outs[i] for i in self.out_indices]

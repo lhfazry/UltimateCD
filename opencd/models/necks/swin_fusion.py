@@ -9,16 +9,6 @@ from models.backbones.swin_transformer import BasicLayer
 
 @NECKS.register_module()
 class SwinFusionNeck(BaseModule):
-    """Feature Fusion Neck.
-
-    Args:
-        policy (str): The operation to fuse features. candidates 
-            are `concat`, `sum`, `diff` and `Lp_distance`.
-        in_channels (Sequence(int)): Input channels.
-        channels (int): Channels after modules, before conv_seg.
-        out_indices (tuple[int]): Output from which layer.
-    """
-
     def __init__(self,
                  img_size=256,
                  in_channel=None,
