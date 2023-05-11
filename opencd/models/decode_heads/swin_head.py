@@ -160,7 +160,6 @@ class WindowAttention(nn.Module):
         flops += N * self.dim * self.dim
         return flops
 
-
 class SwinTransformerBlock(nn.Module):
     r""" Swin Transformer Block.
 
@@ -211,6 +210,7 @@ class SwinTransformerBlock(nn.Module):
         if self.shift_size > 0:
             # calculate attention mask for SW-MSA
             H, W = self.input_resolution
+            print(f"H: {H}, W: {W}")
             img_mask = torch.zeros((1, H, W, 1))  # 1 H W 1
             h_slices = (slice(0, -self.window_size),
                         slice(-self.window_size, -self.shift_size),
@@ -534,7 +534,7 @@ class SwinHead(BaseDecodeHead):
         self.mlp_ratio = mlp_ratio
         self.final_upsample = final_upsample
 
-        patches_resolution = [img_size // patch_size, img_size // patch_size]
+        patches_resolution = [img_size//patch_size, img_size // patch_size]
         self.patches_resolution = patches_resolution
 
         # stochastic depth
@@ -547,7 +547,7 @@ class SwinHead(BaseDecodeHead):
         for i in range(self.num_layers):
             up_layer = BasicUpLayer(
                 dim=int(embed_dim * 2 ** (i - 1)),
-                input_resolution=(patches_resolution[0] // (2 ** (i-1)), patches_resolution[1] // (2 ** (i-1))),
+                input_resolution=(patches_resolution[0]//(2 ** (i-1)), patches_resolution[1]//(2 ** (i-1))),
                 depth=depths[i],
                 num_heads=num_heads[i],
                 window_size=window_size,

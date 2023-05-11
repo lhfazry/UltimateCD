@@ -25,6 +25,7 @@ model = dict(
         dropout_ratio=0.1,
         norm_cfg=norm_cfg,
         align_corners=False,
+        img_size=256, 
         patch_size=4, 
         embed_dim=embed_dim, 
         depths=depths, 
