@@ -600,10 +600,11 @@ class SwinHead(BaseDecodeHead):
         x = x.view(B, H*W, C)
 
         for i, up_layer in enumerate(reversed(self.up_layers)):
-            print(f"x: {x.shape}, inputs[i + 1]: {inputs[i - 1].shape}")
+            print(f"x: {x.shape}")
             if i < 3:
                 B, C, H, W = inputs[i - 1].shape
                 x_skip = inputs[i - 1].view(B, H*W, C)
+                print(f"x_skip: {x_skip.shape}")
                 x = up_layer(x_skip, x)
             else:
                 B, C, H, W = inputs[0].shape
