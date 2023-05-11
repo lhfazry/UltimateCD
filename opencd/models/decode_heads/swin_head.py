@@ -595,7 +595,7 @@ class SwinHead(BaseDecodeHead):
 
     #Dencoder and Skip connection
     def forward_up_features(self, inputs):
-        x = inputs[0]
+        x = inputs[-1]
         B, C, H, W = x.shape
         x = x.view(B, H*W, C)
 
