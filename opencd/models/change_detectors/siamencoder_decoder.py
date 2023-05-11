@@ -65,6 +65,8 @@ class SiamEncoderDecoder(BaseSegmentor):
         img1, img2 = torch.split(img, backbone_inchannels, dim=1)
         x1 = self.backbone(img1)
         x2 = self.backbone(img2)
+
+        print(f"x1: {x1.shape}, x2: {x2.shape}")
         if self.with_neck:
             x = self.neck(x1, x2)
         else:
