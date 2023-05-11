@@ -301,6 +301,7 @@ class SwinTransformerBlock(nn.Module):
 
 class UMBlock(nn.Module):
     def __init__(self, input_resolution, dim, norm_layer=nn.LayerNorm):
+        super().__init__()
         self.input_resolution = input_resolution
         self.dim = dim
         self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim, norm_layer=norm_layer)
