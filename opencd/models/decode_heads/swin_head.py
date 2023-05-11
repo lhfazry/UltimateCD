@@ -300,10 +300,10 @@ class SwinTransformerBlock(nn.Module):
         return flops
 
 class UMBlock(nn.Module):
-    def __init__(self, input_resolution, dim):
+    def __init__(self, input_resolution, dim, norm_layer=nn.LayerNorm):
         self.input_resolution = input_resolution
         self.dim = dim
-        self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim)
+        self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim, norm_layer=norm_layer)
         self.channel_attention = ChannelAttention(in_channels=5*dim//4)
         self.output_projection = nn.Linear(5*dim//4, dim//2)
     
@@ -456,12 +456,11 @@ class BasicUpLayer(nn.Module):
                 norm_layer=norm_layer)
             for i in range(depth)])
 
-        self.upsample = upsample
         # patch merging layer
-        #if upsample is None:
-        #    self.upsample = PatchExpand(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
-        #else:
-        #    self.upsample = None
+        if upsample is not None:
+            self.upsample = upsample(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
+        else:
+            self.upsample = None
 
     def forward(self, x, x_downsample):
         for blk in self.blocks:
@@ -597,7 +596,7 @@ class SwinHead(BaseDecodeHead):
     def forward_up_features(self, inputs):
         x = inputs[0]
 
-        for i, up_layer in enumerate(self.up_layers):
+        for i, up_layer in reversed(enumerate(self.up_layers)):
             print(f"x: {x.shape}, inputs[i + 1]: {inputs[i + 1].shape}")
             if i < 3:
                 x = up_layer(inputs[i + 1], x)
