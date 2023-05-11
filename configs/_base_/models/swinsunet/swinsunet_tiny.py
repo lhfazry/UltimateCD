@@ -9,12 +9,12 @@ model = dict(
     pretrained='./pretrained/swin_tiny_patch4_window7_224.pth',
     backbone=dict(
         type='SwinTransformer',
-        img_size=256, 
-        patch_size=4, 
-        embed_dim=embed_dim, 
-        depths=depths, 
+        in_channels=3,
+        embed_dims=embed_dim,
         num_heads=num_heads,
-        window_size=7),
+        window_size=7,
+        patch_size=4,  
+        depths=depths),
     neck=dict(type='FeatureFusionNeck', policy='concat', output_projection=True),
     decode_head=dict(
         type='SwinHead',
