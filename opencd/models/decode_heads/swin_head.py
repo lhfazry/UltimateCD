@@ -534,7 +534,7 @@ class SwinHead(BaseDecodeHead):
         self.final_upsample = final_upsample
 
         patches_resolution = [img_size//patch_size, img_size // patch_size]
-        print(f"patches_resolution: {patches_resolution}")
+        #print(f"patches_resolution: {patches_resolution}")
         self.patches_resolution = patches_resolution
 
         # stochastic depth
