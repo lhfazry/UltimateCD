@@ -210,7 +210,6 @@ class SwinTransformerBlock(nn.Module):
         if self.shift_size > 0:
             # calculate attention mask for SW-MSA
             H, W = self.input_resolution
-            print(f"H: {H}, W: {W}")
             img_mask = torch.zeros((1, H, W, 1))  # 1 H W 1
             h_slices = (slice(0, -self.window_size),
                         slice(-self.window_size, -self.shift_size),
@@ -535,6 +534,7 @@ class SwinHead(BaseDecodeHead):
         self.final_upsample = final_upsample
 
         patches_resolution = [img_size//patch_size, img_size // patch_size]
+        print(f"patches_resolution: {patches_resolution}")
         self.patches_resolution = patches_resolution
 
         # stochastic depth
