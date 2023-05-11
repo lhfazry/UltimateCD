@@ -524,7 +524,7 @@ class SwinHead(BaseDecodeHead):
                  final_upsample="expand_first",
                  fused_window_process=False, 
                  **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(num_classes=num_classes, **kwargs)
 
         self.num_classes = num_classes
         self.num_layers = len(depths)
