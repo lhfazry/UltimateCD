@@ -23,7 +23,6 @@ model = dict(
         in_index=3,
         channels=128,
         dropout_ratio=0.1,
-        num_classes=2,
         norm_cfg=norm_cfg,
         align_corners=False,
         img_size=256, 
