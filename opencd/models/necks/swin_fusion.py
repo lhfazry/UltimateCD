@@ -10,27 +10,13 @@ from models.backbones.swin_transformer import BasicLayer
 @NECKS.register_module()
 class SwinFusionNeck(BaseModule):
     def __init__(self,
-                 img_size=256,
                  in_channel=None,
-                 channels=None,
-                 swin_block_depth=2, 
-                 head_attn=6, 
-                 window_size=7,
                  out_indices=(0, 1, 2, 3)):
         super(SwinFusionNeck, self).__init__()
         self.in_channel = in_channel
-        self.channels = channels
         self.fp16_enabled = False
         self.out_indices = out_indices
-        self.projection = nn.Linear(in_channel, )
-
-        self.swin_block = BasicLayer(
-            dim=in_channel,
-            input_resolution=(img_size, img_size),
-            depth=swin_block_depth,
-            num_heads=head_attn,
-            window_size=window_size
-        )
+        self.projection = nn.Linear(in_channel, in_channel)
 
     @staticmethod
     def fusion(x1, x2):
@@ -47,10 +33,9 @@ class SwinFusionNeck(BaseModule):
     
         outs = []
         for i in range(len(x1)):
-            if i == 0:
+            if i == len(x1) - 1:
                 out = self.fusion(x1[i], x2[i])
-            else:
-                out = self.fusion(x1[i], x2[i])
+                out = self.projection(out)
 
             outs.append(out)
 
