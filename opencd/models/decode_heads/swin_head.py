@@ -536,14 +536,14 @@ class SwinHead(BaseDecodeHead):
         self.final_upsample = final_upsample
 
         patches_resolution = [img_size // patch_size, img_size // patch_size]
-        self.patches_resolution = self.patches_resolution
+        self.patches_resolution = patches_resolution
 
         # stochastic depth
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
 
         # build decoder layers
         self.up_layers = nn.ModuleList()
-        self.concat_back_dim = nn.ModuleList()
+        #self.concat_back_dim = nn.ModuleList()
 
         for i in range(self.num_layers):
             up_layer = BasicUpLayer(
