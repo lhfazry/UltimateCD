@@ -546,8 +546,8 @@ class SwinHead(BaseDecodeHead):
 
         for i in range(self.num_layers):
             up_layer = BasicUpLayer(
-                dim=int(embed_dim * 2 ** (i - 1)),
-                input_resolution=(patches_resolution[0]//(2 ** (i-1)), patches_resolution[1]//(2 ** (i-1))),
+                dim=int(embed_dim * 2 ** i),
+                input_resolution=(patches_resolution[0] // (2 ** i), patches_resolution[1] // (2 ** i)),
                 depth=depths[i],
                 num_heads=num_heads[i],
                 window_size=window_size,
