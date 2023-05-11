@@ -1,5 +1,5 @@
 _base_ = [
-    '../../_base_/datasets/cdd.py',
+    '../../_base_/datasets/whu.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_100k.py'
 ]
 
@@ -53,7 +53,7 @@ train_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=32,
+    samples_per_gpu=16,
     workers_per_gpu=4,
     train=dict(pipeline=train_pipeline)
 )
@@ -75,4 +75,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/focalcd/cdd/focalcd_t_256x256_100k_absdiff_noaux_cdd'
+work_dir = './work_dirs/focalcd/levircd/focalcd_t_512x512_100k_absdiff_noaux_whu'
