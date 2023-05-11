@@ -4,8 +4,6 @@ import torch.nn.functional as F
 
 from mmseg.models.builder import NECKS
 from mmcv.runner import BaseModule, auto_fp16
-from models.backbones.swin_transformer import BasicLayer
-
 
 @NECKS.register_module()
 class SwinFusionNeck(BaseModule):
