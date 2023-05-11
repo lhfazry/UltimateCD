@@ -458,7 +458,7 @@ class BasicUpLayer(nn.Module):
 
         # patch merging layer
         if upsample is not None:
-            self.upsample = upsample(input_resolution, dim=dim, dim_scale=2, norm_layer=norm_layer)
+            self.upsample = upsample(input_resolution, dim=dim, norm_layer=norm_layer)
         else:
             self.upsample = None
 
