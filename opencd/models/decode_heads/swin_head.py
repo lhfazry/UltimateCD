@@ -597,11 +597,11 @@ class SwinHead(BaseDecodeHead):
     def forward_up_features(self, inputs):
         x = inputs[0]
 
-        for i, layer_up in enumerate(self.layers_up):
+        for i, up_layer in enumerate(self.up_layers):
             if i < 3:
-                x = layer_up(inputs[i + 1], x)
+                x = up_layer(inputs[i + 1], x)
             else:
-                x = layer_up(inputs[i], x)
+                x = up_layer(inputs[i], x)
 
         x = self.norm_up(x)  # B L C
   
