@@ -1,6 +1,11 @@
 # Copyright (c) Open-CD. All rights reserved.
 from abc import ABCMeta, abstractmethod
 from typing import List, Tuple
+import torch
+from typing import Any, Iterator, Optional, Tuple, Type, Union
+import copy
+import numpy as np
+import warnings
 
 #from mmengine.model import BaseModule
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
@@ -10,192 +15,31 @@ from torch import Tensor, nn
 # from mmseg.models import builder
 from mmseg.ops import resize
 #from mmseg.structures import SegDataSample
-from mmseg.utils import SampleList, add_prefix
+#from mmseg.utils import add_prefix
 #from opencd.registry import MODELS
 from mmseg.models.builder import HEADS
 from addict import Dict
 from typing import Dict, List, Optional, Sequence, Tuple, Union
 
-class ConfigDict(Dict):
-    """A dictionary for config which has the same interface as python's built-
-    in dictionary and can be used as a normal dictionary.
-
-    The Config class would transform the nested fields (dictionary-like fields)
-    in config file into ``ConfigDict``.
-    """
-
-    def __missing__(self, name):
-        raise KeyError(name)
-
-    def __getattr__(self, name):
-        try:
-            value = super().__getattr__(name)
-        except KeyError:
-            raise AttributeError(f"'{self.__class__.__name__}' object has no "
-                                 f"attribute '{name}'")
-        except Exception as e:
-            raise e
-        else:
-            return value
-        
-ConfigType = Union[ConfigDict, dict]
-
-@HEADS.register_module()
-class MultiHeadDecoder(BaseDecodeHead):
-    """Base class for MultiHeadDecoder.
+def add_prefix(inputs, prefix):
+    """Add prefix for dict.
 
     Args:
-        binary_cd_head (dict): The decode head for binary change detection branch.
-        binary_cd_neck (dict): The feature fusion part for binary \
-            change detection branch
-        semantic_cd_head (dict): The decode head for semantic change \
-            detection `from` branch.
-        semantic_cd_head_aux (dict): The decode head for semantic change \
-            detection `to` branch. If None, the siamese semantic head will \
-            be used. Default: None
-        init_cfg (dict or list[dict], optional): Initialization config dict.
+        inputs (dict): The input dict with str keys.
+        prefix (str): The prefix to add.
+
+    Returns:
+
+        dict: The dict with keys updated with ``prefix``.
     """
 
-    def __init__(self,
-                 binary_cd_head,
-                 binary_cd_neck=None,
-                 semantic_cd_head=None,
-                 semantic_cd_head_aux=None,
-                 init_cfg=None):
-        super().__init__(init_cfg)
-        self.binary_cd_head = MODELS.build(binary_cd_head)
-        self.siamese_semantic_head = True
-        if binary_cd_neck is not None:
-            self.binary_cd_neck = MODELS.build(binary_cd_neck)
-        if semantic_cd_head is not None:
-            self.semantic_cd_head = MODELS.build(semantic_cd_head)
-            if semantic_cd_head_aux is not None:
-                self.siamese_semantic_head = False
-                self.semantic_cd_head_aux = MODELS.build(semantic_cd_head_aux)
-            else:
-                self.semantic_cd_head_aux = self.semantic_cd_head
+    outputs = dict()
+    for name, value in inputs.items():
+        outputs[f'{prefix}.{name}'] = value
 
-    @abstractmethod
-    def forward(self, inputs):
-        """Placeholder of forward function.
-        The return value should be a dict() containing: 
-        `seg_logits`, `seg_logits_from` and `seg_logits_to`.
-        
-        For example:
-            return dict(
-                seg_logits=out,
-                seg_logits_from=out1, 
-                seg_logits_to=out2)
-        """
-        pass
+    return outputs
 
-    def loss(self, inputs: Tuple[Tensor], batch_data_samples: SampleList,
-             train_cfg: ConfigType) -> dict:
-        """Forward function for training.
 
-        Args:
-            inputs (Tuple[Tensor]): List of multi-level img features.
-            batch_data_samples (list[:obj:`SegDataSample`]): The seg
-                data samples. It usually includes information such
-                as `img_metas` or `gt_semantic_seg`.
-            train_cfg (dict): The training config.
-
-        Returns:
-            dict[str, Tensor]: a dictionary of loss components
-        """
-        seg_logits = self.forward(inputs)
-        losses = self.loss_by_feat(seg_logits, batch_data_samples)
-        return losses
-    
-    def predict(self, inputs, batch_img_metas: List[dict], test_cfg,
-                **kwargs) -> List[Tensor]:
-        """Forward function for testing."""
-        seg_logits = self.forward(inputs)
-        return self.predict_by_feat(seg_logits, batch_img_metas, **kwargs)
-        
-    def predict_by_feat(self, seg_logits: Tensor,
-                        batch_img_metas: List[dict]) -> Tensor:
-        """Transform a batch of output seg_logits to the input shape.
-
-        Args:
-            seg_logits (Tensor): The output from decode head forward function.
-            batch_img_metas (list[dict]): Meta information of each image, e.g.,
-                image size, scaling factor, etc.
-
-        Returns:
-            Tensor: Outputs segmentation logits map.
-        """
-        assert ['seg_logits', 'seg_logits_from', 'seg_logits_to'] \
-            == list(seg_logits.keys()), "`seg_logits`, `seg_logits_from` \
-            and `seg_logits_to` should be contained."
-
-        self.align_corners = {
-            'seg_logits': self.binary_cd_head.align_corners,
-            'seg_logits_from': self.semantic_cd_head.align_corners,
-            'seg_logits_to': self.semantic_cd_head_aux.align_corners}
-
-        for seg_name, seg_logit in seg_logits.items():
-            seg_logits[seg_name] = resize(
-                input=seg_logit,
-                size=batch_img_metas[0]['img_shape'],
-                mode='bilinear',
-                align_corners=self.align_corners[seg_name])
-        return seg_logits
-    
-    def get_sub_batch_data_samples(self, batch_data_samples: SampleList, 
-                                   sub_metainfo_name: str,
-                                   sub_data_name: str) -> list:
-        sub_batch_sample_list = []
-        for i in range(len(batch_data_samples)):
-            data_sample = SegDataSample()
-
-            gt_sem_seg_data = dict(
-                data=batch_data_samples[i].get(sub_data_name).data)
-            data_sample.gt_sem_seg = PixelData(**gt_sem_seg_data)
-
-            img_meta = {}
-            seg_map_path = batch_data_samples[i].metainfo.get(sub_metainfo_name)
-            for key in batch_data_samples[i].metainfo.keys():
-                if not 'seg_map_path' in key:
-                    img_meta[key] = batch_data_samples[i].metainfo.get(key)
-            img_meta['seg_map_path'] = seg_map_path
-            data_sample.set_metainfo(img_meta)
-
-            sub_batch_sample_list.append(data_sample)
-        return sub_batch_sample_list
-
-    def loss_by_feat(self, seg_logits: dict,
-                     batch_data_samples: SampleList, **kwargs) -> dict:
-        """Compute segmentation loss."""
-        assert ['seg_logits', 'seg_logits_from', 'seg_logits_to'] \
-            == list(seg_logits.keys()), "`seg_logits`, `seg_logits_from` \
-            and `seg_logits_to` should be contained."
-
-        losses = dict()
-        binary_cd_loss_decode = self.binary_cd_head.loss_by_feat(
-            seg_logits['seg_logits'],
-            self.get_sub_batch_data_samples(batch_data_samples,
-                                            sub_metainfo_name='seg_map_path',
-                                            sub_data_name='gt_sem_seg'))
-        losses.update(add_prefix(binary_cd_loss_decode, 'binary_cd'))
-
-        if getattr(self, 'semantic_cd_head'):
-            semantic_cd_loss_decode_from = self.semantic_cd_head.loss_by_feat(
-                seg_logits['seg_logits_from'],
-                self.get_sub_batch_data_samples(batch_data_samples,
-                                                sub_metainfo_name='seg_map_path_from',
-                                                sub_data_name='gt_sem_seg_from'))
-            losses.update(add_prefix(semantic_cd_loss_decode_from, 'semantic_cd_from'))
-
-            semantic_cd_loss_decode_to = self.semantic_cd_head_aux.loss_by_feat(
-                seg_logits['seg_logits_to'],
-                self.get_sub_batch_data_samples(batch_data_samples,
-                                                sub_metainfo_name='seg_map_path_to',
-                                                sub_data_name='gt_sem_seg_to'))
-            losses.update(add_prefix(semantic_cd_loss_decode_to, 'semantic_cd_to'))
-
-        return losses
-    
 class BaseDataElement:
     """A base data interface that supports Tensor-like and dict-like
     operations.
@@ -935,3 +779,273 @@ class PixelData(BaseDataElement):
             return tuple(self.values()[0].shape[-2:])
         else:
             return None
+        
+class SegDataSample(BaseDataElement):
+    """A data structure interface of MMSegmentation. They are used as
+    interfaces between different components.
+
+    The attributes in ``SegDataSample`` are divided into several parts:
+
+        - ``gt_sem_seg``(PixelData): Ground truth of semantic segmentation.
+        - ``pred_sem_seg``(PixelData): Prediction of semantic segmentation.
+        - ``seg_logits``(PixelData): Predicted logits of semantic segmentation.
+
+    Examples:
+         >>> import torch
+         >>> import numpy as np
+         >>> from mmengine.structures import PixelData
+         >>> from mmseg.structures import SegDataSample
+
+         >>> data_sample = SegDataSample()
+         >>> img_meta = dict(img_shape=(4, 4, 3),
+         ...                 pad_shape=(4, 4, 3))
+         >>> gt_segmentations = PixelData(metainfo=img_meta)
+         >>> gt_segmentations.data = torch.randint(0, 2, (1, 4, 4))
+         >>> data_sample.gt_sem_seg = gt_segmentations
+         >>> assert 'img_shape' in data_sample.gt_sem_seg.metainfo_keys()
+         >>> data_sample.gt_sem_seg.shape
+         (4, 4)
+         >>> print(data_sample)
+        <SegDataSample(
+
+            META INFORMATION
+
+            DATA FIELDS
+            gt_sem_seg: <PixelData(
+
+                    META INFORMATION
+                    img_shape: (4, 4, 3)
+                    pad_shape: (4, 4, 3)
+
+                    DATA FIELDS
+                    data: tensor([[[1, 1, 1, 0],
+                                 [1, 0, 1, 1],
+                                 [1, 1, 1, 1],
+                                 [0, 1, 0, 1]]])
+                ) at 0x1c2b4156460>
+        ) at 0x1c2aae44d60>
+
+        >>> data_sample = SegDataSample()
+        >>> gt_sem_seg_data = dict(sem_seg=torch.rand(1, 4, 4))
+        >>> gt_sem_seg = PixelData(**gt_sem_seg_data)
+        >>> data_sample.gt_sem_seg = gt_sem_seg
+        >>> assert 'gt_sem_seg' in data_sample
+        >>> assert 'sem_seg' in data_sample.gt_sem_seg
+    """
+
+    @property
+    def gt_sem_seg(self) -> PixelData:
+        return self._gt_sem_seg
+
+    @gt_sem_seg.setter
+    def gt_sem_seg(self, value: PixelData) -> None:
+        self.set_field(value, '_gt_sem_seg', dtype=PixelData)
+
+    @gt_sem_seg.deleter
+    def gt_sem_seg(self) -> None:
+        del self._gt_sem_seg
+
+    @property
+    def pred_sem_seg(self) -> PixelData:
+        return self._pred_sem_seg
+
+    @pred_sem_seg.setter
+    def pred_sem_seg(self, value: PixelData) -> None:
+        self.set_field(value, '_pred_sem_seg', dtype=PixelData)
+
+    @pred_sem_seg.deleter
+    def pred_sem_seg(self) -> None:
+        del self._pred_sem_seg
+
+    @property
+    def seg_logits(self) -> PixelData:
+        return self._seg_logits
+
+    @seg_logits.setter
+    def seg_logits(self, value: PixelData) -> None:
+        self.set_field(value, '_seg_logits', dtype=PixelData)
+
+    @seg_logits.deleter
+    def seg_logits(self) -> None:
+        del self._seg_logits
+
+class ConfigDict(Dict):
+    """A dictionary for config which has the same interface as python's built-
+    in dictionary and can be used as a normal dictionary.
+
+    The Config class would transform the nested fields (dictionary-like fields)
+    in config file into ``ConfigDict``.
+    """
+
+    def __missing__(self, name):
+        raise KeyError(name)
+
+    def __getattr__(self, name):
+        try:
+            value = super().__getattr__(name)
+        except KeyError:
+            raise AttributeError(f"'{self.__class__.__name__}' object has no "
+                                 f"attribute '{name}'")
+        except Exception as e:
+            raise e
+        else:
+            return value
+        
+ConfigType = Union[ConfigDict, dict]
+SampleList = Sequence[SegDataSample]
+
+@HEADS.register_module()
+class MultiHeadDecoder(BaseDecodeHead):
+    """Base class for MultiHeadDecoder.
+
+    Args:
+        binary_cd_head (dict): The decode head for binary change detection branch.
+        binary_cd_neck (dict): The feature fusion part for binary \
+            change detection branch
+        semantic_cd_head (dict): The decode head for semantic change \
+            detection `from` branch.
+        semantic_cd_head_aux (dict): The decode head for semantic change \
+            detection `to` branch. If None, the siamese semantic head will \
+            be used. Default: None
+        init_cfg (dict or list[dict], optional): Initialization config dict.
+    """
+
+    def __init__(self,
+                 binary_cd_head,
+                 binary_cd_neck=None,
+                 semantic_cd_head=None,
+                 semantic_cd_head_aux=None,
+                 init_cfg=None):
+        super().__init__(init_cfg)
+        self.binary_cd_head = HEADS.build(binary_cd_head)
+        self.siamese_semantic_head = True
+        if binary_cd_neck is not None:
+            self.binary_cd_neck = HEADS.build(binary_cd_neck)
+        if semantic_cd_head is not None:
+            self.semantic_cd_head = HEADS.build(semantic_cd_head)
+            if semantic_cd_head_aux is not None:
+                self.siamese_semantic_head = False
+                self.semantic_cd_head_aux = HEADS.build(semantic_cd_head_aux)
+            else:
+                self.semantic_cd_head_aux = self.semantic_cd_head
+
+    @abstractmethod
+    def forward(self, inputs):
+        """Placeholder of forward function.
+        The return value should be a dict() containing: 
+        `seg_logits`, `seg_logits_from` and `seg_logits_to`.
+        
+        For example:
+            return dict(
+                seg_logits=out,
+                seg_logits_from=out1, 
+                seg_logits_to=out2)
+        """
+        pass
+
+    def loss(self, inputs: Tuple[Tensor], batch_data_samples: SampleList,
+             train_cfg: ConfigType) -> dict:
+        """Forward function for training.
+
+        Args:
+            inputs (Tuple[Tensor]): List of multi-level img features.
+            batch_data_samples (list[:obj:`SegDataSample`]): The seg
+                data samples. It usually includes information such
+                as `img_metas` or `gt_semantic_seg`.
+            train_cfg (dict): The training config.
+
+        Returns:
+            dict[str, Tensor]: a dictionary of loss components
+        """
+        seg_logits = self.forward(inputs)
+        losses = self.loss_by_feat(seg_logits, batch_data_samples)
+        return losses
+    
+    def predict(self, inputs, batch_img_metas: List[dict], test_cfg,
+                **kwargs) -> List[Tensor]:
+        """Forward function for testing."""
+        seg_logits = self.forward(inputs)
+        return self.predict_by_feat(seg_logits, batch_img_metas, **kwargs)
+        
+    def predict_by_feat(self, seg_logits: Tensor,
+                        batch_img_metas: List[dict]) -> Tensor:
+        """Transform a batch of output seg_logits to the input shape.
+
+        Args:
+            seg_logits (Tensor): The output from decode head forward function.
+            batch_img_metas (list[dict]): Meta information of each image, e.g.,
+                image size, scaling factor, etc.
+
+        Returns:
+            Tensor: Outputs segmentation logits map.
+        """
+        assert ['seg_logits', 'seg_logits_from', 'seg_logits_to'] \
+            == list(seg_logits.keys()), "`seg_logits`, `seg_logits_from` \
+            and `seg_logits_to` should be contained."
+
+        self.align_corners = {
+            'seg_logits': self.binary_cd_head.align_corners,
+            'seg_logits_from': self.semantic_cd_head.align_corners,
+            'seg_logits_to': self.semantic_cd_head_aux.align_corners}
+
+        for seg_name, seg_logit in seg_logits.items():
+            seg_logits[seg_name] = resize(
+                input=seg_logit,
+                size=batch_img_metas[0]['img_shape'],
+                mode='bilinear',
+                align_corners=self.align_corners[seg_name])
+        return seg_logits
+    
+    def get_sub_batch_data_samples(self, batch_data_samples: SampleList, 
+                                   sub_metainfo_name: str,
+                                   sub_data_name: str) -> list:
+        sub_batch_sample_list = []
+        for i in range(len(batch_data_samples)):
+            data_sample = SegDataSample()
+
+            gt_sem_seg_data = dict(
+                data=batch_data_samples[i].get(sub_data_name).data)
+            data_sample.gt_sem_seg = PixelData(**gt_sem_seg_data)
+
+            img_meta = {}
+            seg_map_path = batch_data_samples[i].metainfo.get(sub_metainfo_name)
+            for key in batch_data_samples[i].metainfo.keys():
+                if not 'seg_map_path' in key:
+                    img_meta[key] = batch_data_samples[i].metainfo.get(key)
+            img_meta['seg_map_path'] = seg_map_path
+            data_sample.set_metainfo(img_meta)
+
+            sub_batch_sample_list.append(data_sample)
+        return sub_batch_sample_list
+
+    def loss_by_feat(self, seg_logits: dict,
+                     batch_data_samples: SampleList, **kwargs) -> dict:
+        """Compute segmentation loss."""
+        assert ['seg_logits', 'seg_logits_from', 'seg_logits_to'] \
+            == list(seg_logits.keys()), "`seg_logits`, `seg_logits_from` \
+            and `seg_logits_to` should be contained."
+
+        losses = dict()
+        binary_cd_loss_decode = self.binary_cd_head.loss_by_feat(
+            seg_logits['seg_logits'],
+            self.get_sub_batch_data_samples(batch_data_samples,
+                                            sub_metainfo_name='seg_map_path',
+                                            sub_data_name='gt_sem_seg'))
+        losses.update(add_prefix(binary_cd_loss_decode, 'binary_cd'))
+
+        if getattr(self, 'semantic_cd_head'):
+            semantic_cd_loss_decode_from = self.semantic_cd_head.loss_by_feat(
+                seg_logits['seg_logits_from'],
+                self.get_sub_batch_data_samples(batch_data_samples,
+                                                sub_metainfo_name='seg_map_path_from',
+                                                sub_data_name='gt_sem_seg_from'))
+            losses.update(add_prefix(semantic_cd_loss_decode_from, 'semantic_cd_from'))
+
+            semantic_cd_loss_decode_to = self.semantic_cd_head_aux.loss_by_feat(
+                seg_logits['seg_logits_to'],
+                self.get_sub_batch_data_samples(batch_data_samples,
+                                                sub_metainfo_name='seg_map_path_to',
+                                                sub_data_name='gt_sem_seg_to'))
+            losses.update(add_prefix(semantic_cd_loss_decode_to, 'semantic_cd_to'))
+
+        return losses
