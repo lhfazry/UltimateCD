@@ -11,10 +11,10 @@ data_preprocessor = dict(
     test_cfg=dict(size_divisor=32))
 model = dict(
     type='SiamEncoderDecoder',
-    data_preprocessor=data_preprocessor,
+    #data_preprocessor=data_preprocessor,
     pretrained='open-mmlab://resnet18_v1c',
     backbone=dict(
-        type='mmseg.ResNetV1c',
+        type='ResNetV1c',
         depth=18,
         num_stages=4,
         out_indices=(0, 1, 2, 3),
