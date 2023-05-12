@@ -537,7 +537,7 @@ class SwinHead(BaseDecodeHead):
         self.mlp_ratio = mlp_ratio
         self.final_upsample = final_upsample
 
-        patches_resolution = [img_size//patch_size, img_size // patch_size]
+        patches_resolution = [img_size // patch_size, img_size // patch_size]
         #print(f"patches_resolution: {patches_resolution}")
         self.patches_resolution = patches_resolution
 
