@@ -9,6 +9,7 @@ model = dict(
     #pretrained='./pretrained/swin_tiny_patch4_window7_224.pth',
     backbone=dict(
         type='SwinTransformer',
+        pretrain_img_size=256,
         in_channels=3,
         embed_dims=embed_dim,
         num_heads=num_heads,
