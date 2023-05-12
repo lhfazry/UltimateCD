@@ -1,4 +1,4 @@
 CDD
 ----
 ./train.sh 2 configs/swinsunet/swinsunet_t_256x256_25k_cdd.py >> logs/sota/swinsunet_t_256x256_25k_cdd.log 2>&1 &
-./train.sh 5 configs/swinsunet/swinsunet_t_256x256_25k_cdd.py >> logs/sota/swinsunet_t_256x256_25k_cdd.log 2>&1 &
+./train.sh 5 configs/changeformer/changeformer_mit-b1_256x256_40k_levircd.py >> logs/sota/swinsunet_t_256x256_25k_cdd.log 2>&1 &

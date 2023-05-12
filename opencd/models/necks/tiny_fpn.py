@@ -2,14 +2,16 @@
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule
-from mmengine.model import BaseModule
+#from mmengine.model import BaseModule
+from mmcv.runner import BaseModule, auto_fp16
 
 from mmseg.models.utils import resize
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import NECKS
 from ..backbones.tinynet import TinyBlock
 
 
-@MODELS.register_module()
+@NECKS.register_module()
 class TinyFPN(BaseModule):
     """Feature Pyramid Network.
     This neck is the implementation of `Feature Pyramid Networks for Object
