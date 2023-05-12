@@ -10,7 +10,7 @@ from torch import Tensor, nn
 # from mmseg.models import builder
 from mmseg.ops import resize
 #from mmseg.structures import SegDataSample
-from mmseg.utils import ConfigType, SampleList, add_prefix
+from mmseg.utils import SampleList, add_prefix
 #from opencd.registry import MODELS
 from mmseg.models.builder import HEADS
 from addict import Dict
