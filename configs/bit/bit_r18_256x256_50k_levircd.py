@@ -27,4 +27,4 @@ lr_config = dict(policy='poly', power=0.9, min_lr=1e-8, by_epoch=True)
 #runner = dict(type='EpochBasedRunner', max_epochs=200)
 #checkpoint_config = dict(by_epoch=True, interval=10)
 #evaluation = dict(interval=50, metric=['mFscore', 'mIoU'], pre_eval=True, save_best='Fscore.changed', greater_keys=['Fscore'])
-work_dir = './work_dirs/bit/levircd/bit_r18_256x256_50k_levircd'
+work_dir = './work_dirs/bit/bit_r18_256x256_50k_levircd'
