@@ -23,7 +23,7 @@ model = dict(
         num_classes=2,
         out_channels=1, # support single class
         loss_decode=dict(
-            type='mmseg.CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
+            type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
     decode_head=dict(
         type='IdentityHead',
         in_channels=1,
@@ -31,7 +31,7 @@ model = dict(
         num_classes=2,
         out_channels=1, # support single class
         loss_decode=dict(
-            type='mmseg.CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
+            type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
