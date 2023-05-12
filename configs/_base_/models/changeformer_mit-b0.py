@@ -14,7 +14,7 @@ model = dict(
     data_preprocessor=data_preprocessor,
     pretrained=None,
     backbone=dict(
-        type='mmseg.MixVisionTransformer',
+        type='MixVisionTransformer',
         in_channels=3,
         embed_dims=32,
         num_stages=4,
@@ -30,7 +30,7 @@ model = dict(
         drop_path_rate=0.1),
     neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        type='mmseg.SegformerHead',
+        type='SegformerHead',
         in_channels=[v * 2 for v in [32, 64, 160, 256]],
         in_index=[0, 1, 2, 3],
         channels=256,
@@ -39,7 +39,7 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='mmseg.CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
