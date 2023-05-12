@@ -1,34 +1,10 @@
-_base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/levir_cd.py',
+_base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/levir_cd256.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
 crop_size = (256, 256)
 model = dict(
     decode_head=dict(sa_mode='PAM'),
     test_cfg=dict(mode='slide', crop_size=crop_size, stride=(crop_size[0]//2, crop_size[1]//2)),
-    )
-
-img_norm_cfg = dict(
-    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-#crop_size = (512, 512)
-
-train_pipeline = [
-    dict(type='MultiImgLoadImageFromFile'),
-    dict(type='MultiImgLoadAnnotations'),
-    dict(type='MultiImgRandomCrop', crop_size=crop_size),
-    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
-    dict(type='MultiImgExchangeTime', prob=0.5),
-    
-    dict(type='MultiImgNormalize', **img_norm_cfg),
-    dict(type='MultiImgDefaultFormatBundle'),
-    dict(type='Collect', keys=['img', 'gt_semantic_seg'])
-]
-
-data = dict(
-    samples_per_gpu=16,
-    workers_per_gpu=4,
-    train=dict(pipeline=train_pipeline)
 )
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.001, betas=(0.9, 0.999), weight_decay=0.05,
