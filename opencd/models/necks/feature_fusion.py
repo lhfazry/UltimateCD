@@ -33,6 +33,8 @@ class FeatureFusionNeck(BaseModule):
 
         if output_projection:
             self.output_projection = nn.Linear(in_channels, in_channels)
+        else:
+            self.output_projection = None
 
     @staticmethod
     def fusion(x1, x2, policy):
@@ -67,7 +69,7 @@ class FeatureFusionNeck(BaseModule):
 
             if self.output_projection is not None:
                 out = self.output_projection(out)
-                
+
             outs.append(out)
 
         outs = [outs[i] for i in self.out_indices]
