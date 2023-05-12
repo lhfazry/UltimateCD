@@ -5,7 +5,7 @@ from mmcv.cnn import ConvModule
 #from mmengine.model import BaseModule
 from mmcv.runner import BaseModule, auto_fp16
 
-from mmseg.models.utils import resize
+from mmseg.ops import Upsample, resize
 #from opencd.registry import MODELS
 from mmseg.models.builder import NECKS
 from ..backbones.tinynet import TinyBlock
