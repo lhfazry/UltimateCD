@@ -15,10 +15,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.padding import ReplicationPad2d
 
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import BACKBONES
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class FC_EF(nn.Module):
     """FC_EF segmentation network."""
 
