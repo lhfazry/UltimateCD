@@ -11,7 +11,7 @@ data_preprocessor = dict(
     test_cfg=dict(size_divisor=32))
 model = dict(
     type='DIEncoderDecoder',
-    data_preprocessor=data_preprocessor,
+    #data_preprocessor=data_preprocessor,
     pretrained=None,
     backbone=dict(
         type='IFN'),
