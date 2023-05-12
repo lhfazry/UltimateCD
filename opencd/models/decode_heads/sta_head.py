@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
-from mmseg.models.utils import resize
+from mmseg.ops import resize
 #from opencd.registry import MODELS
 from mmseg.models.builder import HEADS
 
