@@ -6,7 +6,7 @@ LEVIR
 -----
 ./train.sh 5 configs/changeformer/changeformer_mit-b1_256x256_40k_levircd.py >> logs/changeformer/changeformer_mit-b1_256x256_40k_levircd.log 2>&1 &
 
-./train.sh 5 configs/bit/bit_r18_256x256_50k_levircd.py >> logs/bit/bit_r18_256x256_50k_levircd.log 2>&1 &
+./train.sh 2 configs/bit/bit_r18_256x256_50k_levircd.py >> logs/bit/bit_r18_256x256_50k_levircd.log 2>&1 &
 
 ./train.sh 5 configs/ifn/ifn_256x256_50k_levircd.py >> logs/ifn/ifn_256x256_50k_levircd.log 2>&1 &
 

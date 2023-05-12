@@ -21,6 +21,7 @@ crop_size = (256, 256)
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotations'),
+    dict(type='MultiImgResize', img_scale=0.5),
     dict(type='MultiImgRandomCrop', crop_size=crop_size),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
