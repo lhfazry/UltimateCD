@@ -4,5 +4,11 @@ from .wavevit import WaveViT
 from .focalnet import FocalNet
 from .efficientnet import EfficientNet
 from .swin_transformer import SwinTransformer
+from .fcsn import FC_EF, FC_Siam_conc, FC_Siam_diff
+from .ifn import IFN
+from .snunet import SNUNet_ECAM
+from .tinynet import TinyNet
 
-__all__ = ['IA_ResNetV1c', 'IA_ResNeSt', 'WaveViT', 'FocalNet', 'EfficientNet', 'SwinTransformer']
+__all__ = ['IA_ResNetV1c', 'IA_ResNeSt', 'WaveViT', 'FocalNet', 'EfficientNet', 
+           'SwinTransformer', 'FC_EF', 'FC_Siam_conc', 'FC_Siam_diff', 'IFN',
+           'SNUNet_ECAM', 'TinyNet']
