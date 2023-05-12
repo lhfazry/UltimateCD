@@ -7,7 +7,8 @@ IEEE Geosci. Remote Sensing Lett., pp. 1-5, 2021, doi: 10.1109/LGRS.2021.3056416
 import torch
 import torch.nn as nn
 
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import BACKBONES
 
 
 class conv_block_nested(nn.Module):
@@ -64,7 +65,7 @@ class ChannelAttention(nn.Module):
         return self.sigmod(out)
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class SNUNet_ECAM(nn.Module):
     # SNUNet-CD with ECAM
     def __init__(self, in_channels, base_channel=32):
