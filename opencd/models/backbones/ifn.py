@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision.models import vgg16
 
-from opencd.registry import MODELS
-
+#from opencd.registry import MODELS
+from mmseg.models.builder import BACKBONES
 
 def get_norm_layer():
     # TODO: select appropriate norm layer
@@ -116,7 +116,7 @@ def conv2d_bn(in_ch, out_ch, with_dropout=True):
     return nn.Sequential(*lst)
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class IFN(nn.Module):
     def __init__(self, use_dropout=False):
         super().__init__()

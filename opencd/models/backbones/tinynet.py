@@ -4,13 +4,15 @@ import warnings
 import torch
 import torch.nn as nn
 from mmcv.cnn import ConvModule, build_activation_layer, build_norm_layer
-from mmengine.model import BaseModule
+#from mmengine.model import BaseModule
 from torch.nn import functional as F
 from torch.nn.modules.batchnorm import _BatchNorm
 from torch.utils import checkpoint as cp
 
 from mmseg.models.utils import SELayer, make_divisible
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import BACKBONES
+from mmcv.runner import BaseModule
 
 
 class AsymGlobalAttn(BaseModule):
@@ -299,7 +301,7 @@ class TinyBlock(BaseModule):
         return out
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class TinyNet(BaseModule):
     """TinyNet backbone.
     This backbone is the implementation of

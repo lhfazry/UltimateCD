@@ -5,10 +5,11 @@ import torch.nn as nn
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
 from mmseg.models.losses import accuracy
 from mmseg.models.utils import resize
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import HEADS
 
 
-@MODELS.register_module()
+@HEADS.register_module()
 class IdentityHead(BaseDecodeHead):
     """Identity Head."""
 

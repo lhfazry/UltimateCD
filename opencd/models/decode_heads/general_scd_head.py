@@ -1,9 +1,10 @@
 # Copyright (c) Open-CD. All rights reserved.
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import HEADS
 from .multi_head import MultiHeadDecoder
 
 
-@MODELS.register_module()
+@HEADS.register_module()
 class GeneralSCDHead(MultiHeadDecoder):
     """The Head of General Semantic Change Detection Head."""
 

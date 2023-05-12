@@ -12,8 +12,8 @@ from torch import Tensor, reshape, stack
 from torch.nn import (Conv2d, InstanceNorm2d, Module, ModuleList, PReLU,
                       Sequential, Upsample)
 
-from opencd.registry import MODELS
-
+#from opencd.registry import MODELS
+from mmseg.models.builder import BACKBONES
 
 class PixelwiseLinear(Module):
     def __init__(
@@ -143,7 +143,7 @@ def _get_backbone(
     return derived_model
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class TinyCD(Module):
     def __init__(
         self,

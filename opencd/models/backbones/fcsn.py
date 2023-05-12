@@ -161,7 +161,7 @@ class FC_EF(nn.Module):
         return (x11d,)
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class FC_Siam_diff(nn.Module):
     """FC_Siam_diff segmentation network."""
 
@@ -325,7 +325,7 @@ class FC_Siam_diff(nn.Module):
         return (x11d,)
 
 
-@MODELS.register_module()
+@BACKBONES.register_module()
 class FC_Siam_conc(nn.Module):
     """FC_Siam_conc segmentation network."""
 

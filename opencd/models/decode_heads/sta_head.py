@@ -7,7 +7,8 @@ from mmcv.cnn import ConvModule
 
 from mmseg.models.decode_heads.decode_head import BaseDecodeHead
 from mmseg.models.utils import resize
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import HEADS
 
 
 class BAM(nn.Module):
@@ -250,7 +251,7 @@ class CDSA(nn.Module):
         return x[:, :, :, 0:height], x[:, :, :, height:]
 
 
-@MODELS.register_module()
+@HEADS.register_module()
 class STAHead(BaseDecodeHead):
     """The Head of STANet.
 
