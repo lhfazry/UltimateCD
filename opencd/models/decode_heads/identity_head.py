@@ -38,7 +38,7 @@ class IdentityHead(BaseDecodeHead):
         return output
 
 
-@MODELS.register_module()
+@HEADS.register_module()
 class DSIdentityHead(BaseDecodeHead):
     """Deep Supervision Identity Head."""
 
