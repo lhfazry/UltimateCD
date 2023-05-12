@@ -2,19 +2,21 @@
 from abc import ABCMeta, abstractmethod
 from typing import List, Tuple
 
-from mmengine.model import BaseModule
+#from mmengine.model import BaseModule
+from mmseg.models.decode_heads.decode_head import BaseDecodeHead
 from mmengine.structures import PixelData
 from torch import Tensor, nn
 
 # from mmseg.models import builder
-from mmseg.models.utils import resize
+from mmseg.ops import resize
 from mmseg.structures import SegDataSample
 from mmseg.utils import ConfigType, SampleList, add_prefix
-from opencd.registry import MODELS
+#from opencd.registry import MODELS
+from mmseg.models.builder import HEADS
 
 
-@MODELS.register_module()
-class MultiHeadDecoder(BaseModule):
+@HEADS.register_module()
+class MultiHeadDecoder(BaseDecodeHead):
     """Base class for MultiHeadDecoder.
 
     Args:
