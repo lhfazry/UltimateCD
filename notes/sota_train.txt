@@ -14,7 +14,7 @@ LEVIR
 
 ./train.sh 2 configs/stanet/stanet_pam_256x256_50k_levircd.py >> logs/stanet/stanet_pam_256x256_50k_levircd.log 2>&1 &
 
-./train.sh 2 configs/fcsn/fc_ef_256x256_50k_levircd.py >> logs/fcsn/fc_ef_256x256_50k_levircd.log 2>&1 &
+./train.sh 6 configs/fcsn/fc_ef_256x256_50k_levircd.py >> logs/fcsn/fc_ef_256x256_50k_levircd.log 2>&1 &
 ./train.sh 2 configs/fcsn/fc_siam_conc_256x256_50k_levircd.py >> logs/fcsn/fc_siam_conc_256x256_50k_levircd.log 2>&1 &
 ./train.sh 2 configs/fcsn/fc_siam_diff_256x256_50k_levircd.py >> logs/fcsn/fc_siam_diff_256x256_50k_levircd.log 2>&1 &
 
