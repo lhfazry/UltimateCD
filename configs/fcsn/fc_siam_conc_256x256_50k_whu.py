@@ -1,11 +1,5 @@
-_base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/cdd.py',
+_base_ = ['../_base_/models/fc_siam_conc.py', '../_base_/datasets/whu256.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
-
-crop_size = (128, 128)
-model = dict(
-    decode_head=dict(sa_mode='PAM'),
-    test_cfg=dict(mode='slide', crop_size=crop_size, stride=(crop_size[0]//2, crop_size[1]//2)),
-)
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.001, betas=(0.9, 0.999), weight_decay=0.05,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
@@ -24,4 +18,4 @@ lr_config = dict(_delete_=True,
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/stanet/stanet_pam_256x256_50k_cdd'
+work_dir = './work_dirs/fcsn/fc_siam_conc_256x256_50k_whu'

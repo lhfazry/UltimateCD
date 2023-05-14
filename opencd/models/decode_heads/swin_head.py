@@ -288,13 +288,13 @@ class ShiftWindowMSA(BaseModule):
         return windows
 
 class UMBlock(nn.Module):
-    def __init__(self, input_resolution, dim, norm_layer=nn.LayerNorm):
+    def __init__(self, in_channels, out_channels, input_resolution, dim, norm_layer=nn.LayerNorm):
         super().__init__()
         self.input_resolution = input_resolution
         self.dim = dim
         self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim, norm_layer=norm_layer)
         self.channel_attention = ChannelAttention(in_channels=5*dim//4)
-        self.output_projection = nn.Linear(5*dim//4, dim//2)
+        self.output_projection = nn.Linear(5 * dim // 4, dim // 2)
     
     def forward(self, x, x_downsample):
         _, _, H, W = x.shape
@@ -480,7 +480,7 @@ class SwinBlockSequence(BaseModule):
                  drop_rate=0.,
                  attn_drop_rate=0.,
                  drop_path_rate=0.,
-                 downsample=None,
+                 upsample=None,
                  act_cfg=dict(type='GELU'),
                  norm_cfg=dict(type='LN'),
                  with_cp=False,
@@ -512,14 +512,14 @@ class SwinBlockSequence(BaseModule):
                 init_cfg=None)
             self.blocks.append(block)
 
-        self.downsample = downsample
+        self.upsample = upsample
 
     def forward(self, x, hw_shape):
         for block in self.blocks:
             x = block(x, hw_shape)
 
-        if self.downsample:
-            x_down, down_hw_shape = self.downsample(x, hw_shape)
+        if self.upsample:
+            x_down, down_hw_shape = self.upsample(x, hw_shape)
             return x_down, down_hw_shape, x, hw_shape
         else:
             return x, hw_shape, x, hw_shape
@@ -661,14 +661,13 @@ class SwinHead(BaseDecodeHead):
         in_channels = embed_dims
         for i in range(num_layers):
             if i < num_layers - 1:
-                downsample = PatchMerging(
+                upsample = UMBlock(
                     in_channels=in_channels,
-                    out_channels=2 * in_channels,
-                    stride=strides[i + 1],
+                    out_channels=in_channels // 2,
                     norm_cfg=norm_cfg if patch_norm else None,
                     init_cfg=None)
             else:
-                downsample = None
+                upsample = None
 
             stage = SwinBlockSequence(
                 embed_dims=in_channels,
@@ -681,14 +680,15 @@ class SwinHead(BaseDecodeHead):
                 drop_rate=drop_rate,
                 attn_drop_rate=attn_drop_rate,
                 drop_path_rate=dpr[sum(depths[:i]):sum(depths[:i + 1])],
-                downsample=downsample,
+                upsample=upsample,
                 act_cfg=act_cfg,
                 norm_cfg=norm_cfg,
                 with_cp=with_cp,
                 init_cfg=None)
             self.stages.append(stage)
-            if downsample:
-                in_channels = downsample.out_channels
+
+            if upsample:
+                in_channels = upsample.out_channels
 
         self.num_features = [int(embed_dims * 2**i) for i in range(num_layers)]
         # Add a norm layer for each output
@@ -699,7 +699,7 @@ class SwinHead(BaseDecodeHead):
 
     def train(self, mode=True):
         """Convert the model into training mode while keep layers freezed."""
-        super(SwinTransformer, self).train(mode)
+        super(SwinHead, self).train(mode)
         self._freeze_stages()
 
     def _freeze_stages(self):
@@ -799,7 +799,7 @@ class SwinHead(BaseDecodeHead):
             load_state_dict(self, state_dict, strict=False, logger=logger)
 
     def forward(self, x):
-        x, hw_shape = self.patch_embed(x)
+        #x, hw_shape = self.patch_embed(x)
 
         if self.use_abs_pos_embed:
             x = x + self.absolute_pos_embed

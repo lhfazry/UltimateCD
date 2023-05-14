@@ -1,4 +1,4 @@
-_base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/cdd.py',
+_base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/whu256.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
 crop_size = (128, 128)
@@ -24,4 +24,4 @@ lr_config = dict(_delete_=True,
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/stanet/stanet_pam_256x256_50k_cdd'
+work_dir = './work_dirs/stanet/stanet_pam_256x256_50k_whu'
