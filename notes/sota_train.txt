@@ -1,5 +1,19 @@
 CDD
 ----
+./train.sh 2 configs/changeformer/changeformer_mit-b1_256x256_50k_cdd.py >> logs/changeformer/changeformer_mit-b1_256x256_50k_cdd.log 2>&1 &
+
+./train.sh 2 configs/bit/bit_r18_256x256_50k_cdd.py >> logs/bit/bit_r18_256x256_50k_cdd.log 2>&1 &
+
+./train.sh 2 configs/bit/ifn_256x256_50k_cdd.py >> logs/bit/ifn_256x256_50k_cdd.log 2>&1 &
+
+./train.sh 2 configs/snunet/snunet_c16_256x256_50k_cdd.py >> logs/snunet/snunet_c16_256x256_50k_cdd.log 2>&1 &
+
+./train.sh 2 configs/stanet/stanet_pam_256x256_50k_cdd.py >> logs/stanet/stanet_pam_256x256_50k_cdd.log 2>&1 &
+
+./train.sh 6 configs/fcsn/fc_ef_256x256_50k_cdd.py >> logs/fcsn/fc_ef_256x256_50k_cdd.log 2>&1 &
+./train.sh 6 configs/fcsn/fc_siam_conc_256x256_50k_cdd.py >> logs/fcsn/fc_siam_conc_256x256_50k_cdd.log 2>&1 &
+./train.sh 2 configs/fcsn/fc_siam_diff_256x256_50k_cdd.py >> logs/fcsn/fc_siam_diff_256x256_50k_cdd.log 2>&1 &
+
 ./train.sh 2 configs/swinsunet/swinsunet_t_256x256_25k_cdd.py >> logs/sota/swinsunet_t_256x256_25k_cdd.log 2>&1 &
 
 LEVIR
@@ -15,6 +29,6 @@ LEVIR
 ./train.sh 2 configs/stanet/stanet_pam_256x256_50k_levircd.py >> logs/stanet/stanet_pam_256x256_50k_levircd.log 2>&1 &
 
 ./train.sh 6 configs/fcsn/fc_ef_256x256_50k_levircd.py >> logs/fcsn/fc_ef_256x256_50k_levircd.log 2>&1 &
-./train.sh 2 configs/fcsn/fc_siam_conc_256x256_50k_levircd.py >> logs/fcsn/fc_siam_conc_256x256_50k_levircd.log 2>&1 &
+./train.sh 6 configs/fcsn/fc_siam_conc_256x256_50k_levircd.py >> logs/fcsn/fc_siam_conc_256x256_50k_levircd.log 2>&1 &
 ./train.sh 2 configs/fcsn/fc_siam_diff_256x256_50k_levircd.py >> logs/fcsn/fc_siam_diff_256x256_50k_levircd.log 2>&1 &
 
