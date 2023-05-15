@@ -24,7 +24,6 @@ model = dict(
         in_channels=embed_dim * 2 ** (len(depths) - 1),
         num_classes=2,
         norm_cfg=norm_cfg,
-        align_corners=False,
         patch_size=4, 
         embed_dim=embed_dim, 
         depths=depths, 
