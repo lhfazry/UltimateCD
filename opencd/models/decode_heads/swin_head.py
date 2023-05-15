@@ -306,7 +306,7 @@ class UMBlock(nn.Module):
         #assert L == intp, W), "x and x1 must have the same shape"
 
         print(f"x: {x.shape}, x_skip: {x_skip.shape}")
-        x = torch.cat((x, x_skip), dim=1)
+        x = torch.cat((x, x_skip), dim=2)
         x = self.channel_attention(x)
         x = self.output_projection(x)
 
@@ -743,7 +743,7 @@ class SwinHead(BaseDecodeHead):
             #x_skip = None
 
             if i < len(input) - 1:
-                x_skip = input[i + 1]
+                x_skip = x_input[i + 1]
                 B, C, H, W = x_skip.shape
                 x_skip = x_skip.view(-1, C, H * W).permute(0, 2, 1)
                 print(f"x_skip {i}: {x_skip.shape}")
