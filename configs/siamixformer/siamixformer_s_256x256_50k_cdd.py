@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/siamixformer/siamix_small.py', '../_base_/datasets/cdd.py',
+    '../_base_/models/siamixformer/siamixformer_small.py', '../_base_/datasets/cdd.py',
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py'
 ]
 
