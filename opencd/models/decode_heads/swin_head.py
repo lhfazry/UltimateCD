@@ -326,7 +326,7 @@ class PatchReshape(nn.Module):
         H, W = input_size
         B, L, C = x.shape
         print(f"self.out_channels: {self.out_channels}, C: {C}")
-        assert self.out_channels == C // 2, f"out channel has wrong size"
+        assert self.out_channels == C // 4, f"out channel has wrong size"
 
         x = self.expand(x)
         
