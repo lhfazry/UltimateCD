@@ -617,6 +617,7 @@ class SwinHead(BaseDecodeHead):
                  patch_size=4,
                  window_size=7,
                  mlp_ratio=4,
+                 num_classes=2,
                  depths=(2, 2, 6, 2),
                  num_heads=(3, 6, 12, 24),
                  strides=(4, 2, 2, 2),
@@ -637,7 +638,7 @@ class SwinHead(BaseDecodeHead):
         self.frozen_stages = frozen_stages
 
         super(SwinHead, self).__init__(init_cfg=init_cfg)
-
+        self.num_classes = num_classes
         num_layers = len(depths)
         self.out_indices = out_indices
         self.use_abs_pos_embed = use_abs_pos_embed
@@ -832,5 +833,5 @@ class SwinHead(BaseDecodeHead):
 
         x = self.up_x4(x)
         print(f"final output: out shape ==> {x.shape}")
-        
+
         return x
