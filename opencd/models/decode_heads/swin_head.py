@@ -325,7 +325,7 @@ class PatchReshape(nn.Module):
         """
         H, W = input_size
         B, L, C = x.shape
-        #assert self.out_channels == C // 2, "out channel has wrong size"
+        assert self.out_channels == C // 2, "out channel has wrong size"
 
         x = self.expand(x)
         
@@ -658,8 +658,8 @@ class SwinHead(BaseDecodeHead):
         for i in range(num_layers):
             if i > 0:
                 upsample = UMBlock(
-                    in_channels=in_channels * 2,
-                    out_channels=in_channels)
+                    in_channels=int(embed_dims * 2 ** i) * 2,
+                    out_channels=int(embed_dims * 2 ** i))
             else:
                 upsample = None
 
