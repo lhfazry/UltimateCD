@@ -656,7 +656,7 @@ class SwinHead(BaseDecodeHead):
         #in_channels = embed_dims
 
         for i in range(num_layers):
-            if i < num_layers - 1:
+            if i > 0:
                 upsample = UMBlock(
                     in_channels=in_channels,
                     out_channels=in_channels // 2)
