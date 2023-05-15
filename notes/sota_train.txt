@@ -19,6 +19,7 @@ CDD
 ./train.sh 3 configs/swinsunet/swinsunet_t_256x256_50k_cdd.py >> logs/swinsunet/swinsunet_t_256x256_25k_cdd.log 2>&1 &
 
 ./train.sh 3 configs/siamixformer/siamixformer_s_256x256_50k_cdd.py >> logs/siamixformer/siamixformer_s_256x256_50k_cdd.log 2>&1 &
+./resume_train.sh 3 work_dirs/siamixformer/siamixformer_s_256x256_50k_cdd/latest.pth configs/siamixformer/siamixformer_s_256x256_50k_cdd.py >> logs/siamixformer/siamixformer_s_256x256_50k_cdd.log 2>&1 &
 
 LEVIR
 -----
@@ -48,7 +49,7 @@ WHU
 
 ./train.sh 2 configs/bit/ifn_256x256_50k_whu.py >> logs/bit/ifn_256x256_50k_whu.log 2>&1 &
 
-./train.sh 4 configs/snunet/snunet_c16_256x256_50k_whu.py >> logs/snunet/snunet_c16_256x256_50k_whu.log 2>&1 &
+./train.sh 3 configs/snunet/snunet_c16_256x256_50k_whu.py >> logs/snunet/snunet_c16_256x256_50k_whu.log 2>&1 &
 
 ./train.sh 3 configs/stanet/stanet_base_256x256_50k_whu.py >> logs/stanet/stanet_base_256x256_50k_whu.log 2>&1 &
 
