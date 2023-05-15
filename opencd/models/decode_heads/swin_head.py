@@ -316,7 +316,7 @@ class PatchReshape(nn.Module):
         super().__init__()
         self.in_channels = in_channels
         self.out_channels = out_channels
-        self.expand = nn.Conv2d(in_channels, 2 * in_channels, kernel_size=1, bias=False)
+        self.expand = nn.Linear(in_channels, 2 * in_channels, bias=False)
         self.norm = norm_layer(out_channels) # in_channels // 4
 
     def forward(self, x, input_size):
