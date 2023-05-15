@@ -325,8 +325,8 @@ class PatchReshape(nn.Module):
         """
         H, W = input_size
         B, L, C = x.shape
-        print(f"self.out_channels: {self.out_channels}, C//4: {C//4}")
-        assert self.out_channels == C // 4, f"out channel has wrong size"
+        print(f"self.out_channels: {self.out_channels}, C: {C}")
+        assert self.out_channels == C // 2, f"out channel has wrong size"
 
         x = self.expand(x)
         
@@ -740,7 +740,7 @@ class SwinHead(BaseDecodeHead):
                 x_skip = input[len(input) - (2 + i)]
                 B, C, H, W = x_skip.shape
                 x_skip = x_skip.view(-1, C, H*W).permute(0, 2, 1)
-                print(f"x_skip {i}: x_skip shape ==> {x_skip.shape}")
+                print(f"x_skip {i}: shape ==> {x_skip.shape}")
 
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape, x_skip)
             print(f"after stage {i}: x shape ==> {x.shape}")
