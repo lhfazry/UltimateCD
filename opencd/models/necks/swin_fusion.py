@@ -13,6 +13,7 @@ class SwinFusionNeck(BaseModule):
                  out_indices=(0, 1, 2, 3)):
         super(SwinFusionNeck, self).__init__()
         self.in_channels = in_channels
+        print(f"in_channels: {in_channels}")
         self.out_channels = out_channels
         self.fp16_enabled = True
         self.out_indices = out_indices
