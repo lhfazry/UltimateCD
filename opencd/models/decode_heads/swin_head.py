@@ -826,12 +826,11 @@ class SwinHead(BaseDecodeHead):
                 norm_layer = getattr(self, f'norm{i}')
                 out = norm_layer(out)
 
-                out = out.view(-1, *out_hw_shape,
-                               self.num_features[i]).permute(0, 3, 1,
-                                                             2).contiguous()
+                out = out.view(-1, *out_hw_shape, self.num_features[i]).permute(0, 3, 1, 2).contiguous()
                 print(f"stage {i}: out shape ==> {out.shape}")
                 #outs.append(out)
 
         x = self.up_x4(x)
+        print(f"final output: out shape ==> {x.shape}")
         
         return x
