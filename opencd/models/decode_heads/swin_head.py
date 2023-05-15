@@ -305,6 +305,7 @@ class UMBlock(nn.Module):
         x, hw_size = self.upsample(x, input_size)
         #assert L == intp, W), "x and x1 must have the same shape"
 
+        print(f"x: {x.shape}, x_skip: {x_skip.shape}")
         x = torch.cat((x, x_skip), dim=1)
         x = self.channel_attention(x)
         x = self.output_projection(x)
