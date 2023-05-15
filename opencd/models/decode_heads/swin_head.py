@@ -728,8 +728,8 @@ class SwinHead(BaseDecodeHead):
             print(f"after stage {i}: x shape ==> {x.shape}")
 
             if i in self.out_indices:
-                norm_layer = getattr(self, f'norm{i}')
-                out = norm_layer(out)
+                #norm_layer = getattr(self, f'norm{i}')
+                #out = norm_layer(out)
 
                 out = out.view(-1, *out_hw_shape, self.num_features[i]).permute(0, 3, 1, 2).contiguous()
                 print(f"stage {i}: out shape ==> {out.shape}")
