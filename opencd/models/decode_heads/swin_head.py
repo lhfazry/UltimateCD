@@ -288,48 +288,56 @@ class ShiftWindowMSA(BaseModule):
         return windows
 
 class UMBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, input_resolution, dim, norm_layer=nn.LayerNorm):
+    def __init__(self, in_channels, out_channels, norm_layer=nn.LayerNorm):
         super().__init__()
-        self.input_resolution = input_resolution
-        self.dim = dim
-        self.upsample = PatchReshape(input_resolution=input_resolution, dim=dim, norm_layer=norm_layer)
-        self.channel_attention = ChannelAttention(in_channels=5*dim//4)
-        self.output_projection = nn.Linear(5 * dim // 4, dim // 2)
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.intermediate_channel = 5 * in_channels // 4
+        self.upsample = PatchReshape(in_channels=in_channels, 
+                                     out_channels=in_channels // 4, 
+                                     norm_layer=norm_layer)
+        self.channel_attention = ChannelAttention(in_channels=self.intermediate_channel) # 5*dim//4
+        self.output_projection = nn.Linear(self.intermediate_channel, self.out_channels) #nn.Linear(5 * dim // 4, dim // 2) #
     
-    def forward(self, x, x_downsample):
+    def forward(self, x, input_size, x_skip):
         _, _, H, W = x.shape
 
-        x_upsample = self.upsample(x_downsample)
-        assert x_upsample[0,0,:,:].shape == (H, W), "x and x1 must have the same shape"
+        x, hw_size = self.upsample(x, input_size)
+        assert hw_size == (H, W), "x and x1 must have the same shape"
 
-        x = torch.cat((x, x_upsample), dim=1)
+        x = torch.cat((x, x_skip), dim=1)
         x = self.channel_attention(x)
         x = self.output_projection(x)
+
         return x
 
 class PatchReshape(nn.Module):
-    def __init__(self, input_resolution, dim, dim_scale=4, norm_layer=nn.LayerNorm):
+    def __init__(self, in_channels, out_channels, norm_layer=nn.LayerNorm):
         super().__init__()
-        self.input_resolution = input_resolution
-        self.dim = dim
-        self.expand = nn.Linear(dim, dim, bias=False)
-        self.norm = norm_layer(dim // dim_scale)
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.expand = nn.Linear(in_channels, out_channels, bias=False)
+        self.norm = norm_layer(out_channels) # in_channels // 4
 
-    def forward(self, x):
+    def forward(self, x, input_size):
         """
         x: B, H*W, C
         """
-        H, W = self.input_resolution
-        x = self.expand(x)
+        H, W = input_size
         B, L, C = x.shape
-        assert L == H * W, "input feature has wrong size"
+        assert self.out_channels == C // 4, "out channel has wrong size"
+
+        x = self.expand(x)
+        
+        assert L == H * W, "input feature has wrong resolution"
 
         x = x.view(B, H, W, C)
-        x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=C//4)
-        x = x.view(B, -1, C//4)
+        x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=self.out_channels)
+        hw_size = x.size[1], x.size[2]
+        x = x.view(B, -1, self.out_channels)
         x = self.norm(x)
-
-        return x
+        
+        return x, hw_size
     
 class ChannelAttention(nn.Module):
     def __init__(self, in_channels, ratio = 16):
@@ -519,11 +527,35 @@ class SwinBlockSequence(BaseModule):
             x = block(x, hw_shape)
 
         if self.upsample:
-            x_down, down_hw_shape = self.upsample(x, hw_shape)
-            return x_down, down_hw_shape, x, hw_shape
+            x_up, up_hw_shape = self.upsample(x, hw_shape)
+            return x_up, up_hw_shape, x, hw_shape
         else:
             return x, hw_shape, x, hw_shape
 
+class FinalPatchExpand_X4(nn.Module):
+    def __init__(self, in_channels, out_channels, norm_layer=nn.LayerNorm):
+        super().__init__()
+        self.in_channels = in_channels
+        self.out_channles = out_channels
+        
+        self.expand = nn.Linear(in_channels, out_channels, bias=False) # 16 * in_channels
+        self.norm = norm_layer(out_channels)
+
+    def forward(self, x, input_size):
+        """
+        x: B, H*W, C
+        """
+        H, W = input_size
+        x = self.expand(x)
+        B, L, C = x.shape
+        assert L == H * W, "input feature has wrong size"
+
+        x = x.view(B, H, W, C)
+        x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=4, p2=4, c=C // (4**2))
+        x = x.view(B, -1, C // (4**2))
+        x= self.norm(x)
+
+        return x
 
 @HEADS.register_module()
 class SwinHead(BaseDecodeHead):
@@ -604,26 +636,6 @@ class SwinHead(BaseDecodeHead):
                  init_cfg=None):
         self.frozen_stages = frozen_stages
 
-        if isinstance(pretrain_img_size, int):
-            pretrain_img_size = to_2tuple(pretrain_img_size)
-        elif isinstance(pretrain_img_size, tuple):
-            if len(pretrain_img_size) == 1:
-                pretrain_img_size = to_2tuple(pretrain_img_size[0])
-            assert len(pretrain_img_size) == 2, \
-                f'The size of image should have length 1 or 2, ' \
-                f'but got {len(pretrain_img_size)}'
-
-        assert not (init_cfg and pretrained), \
-            'init_cfg and pretrained cannot be specified at the same time'
-        if isinstance(pretrained, str):
-            warnings.warn('DeprecationWarning: pretrained is deprecated, '
-                          'please use "init_cfg" instead')
-            init_cfg = dict(type='Pretrained', checkpoint=pretrained)
-        elif pretrained is None:
-            init_cfg = init_cfg
-        else:
-            raise TypeError('pretrained must be a str or None')
-
         super(SwinHead, self).__init__(init_cfg=init_cfg)
 
         num_layers = len(depths)
@@ -632,25 +644,6 @@ class SwinHead(BaseDecodeHead):
 
         assert strides[0] == patch_size, 'Use non-overlapping patch embed.'
 
-        self.patch_embed = PatchEmbed(
-            in_channels=in_channels,
-            embed_dims=embed_dims,
-            conv_type='Conv2d',
-            kernel_size=patch_size,
-            stride=strides[0],
-            padding='corner',
-            norm_cfg=norm_cfg if patch_norm else None,
-            init_cfg=None)
-
-        if self.use_abs_pos_embed:
-            patch_row = pretrain_img_size[0] // patch_size
-            patch_col = pretrain_img_size[1] // patch_size
-            num_patches = patch_row * patch_col
-            self.absolute_pos_embed = nn.Parameter(
-                torch.zeros((1, num_patches, embed_dims)))
-
-        self.drop_after_pos = nn.Dropout(p=drop_rate)
-
         # set stochastic depth decay rule
         total_depth = sum(depths)
         dpr = [
@@ -658,7 +651,8 @@ class SwinHead(BaseDecodeHead):
         ]
 
         self.stages = ModuleList()
-        in_channels = embed_dims
+        #in_channels = embed_dims
+
         for i in range(num_layers):
             if i < num_layers - 1:
                 upsample = UMBlock(
@@ -691,11 +685,15 @@ class SwinHead(BaseDecodeHead):
                 in_channels = upsample.out_channels
 
         self.num_features = [int(embed_dims * 2**i) for i in range(num_layers)]
+
         # Add a norm layer for each output
         for i in out_indices:
             layer = build_norm_layer(norm_cfg, self.num_features[i])[1]
             layer_name = f'norm{i}'
             self.add_module(layer_name, layer)
+
+        self.final_upsample = FinalPatchExpand_X4(in_channels=embed_dims, out_channels=16*embed_dims)
+        self.output = nn.Conv2d(in_channels=embed_dims, out_channels=self.num_classes, kernel_size=1, bias=False)
 
     def train(self, mode=True):
         """Convert the model into training mode while keep layers freezed."""
@@ -798,22 +796,42 @@ class SwinHead(BaseDecodeHead):
             # load state_dict
             load_state_dict(self, state_dict, strict=False, logger=logger)
 
+    def up_x4(self, x):
+        H, W = self.patches_resolution
+        B, L, C = x.shape
+        assert L == H*W, "input features has wrong size"
+
+        x = self.up(x)
+        x = x.view(B, 4*H, 4*W, -1)
+        x = x.permute(0, 3, 1, 2) #B, C, H, W
+        x = self.output(x)
+            
+        return x
+    
     def forward(self, x):
         #x, hw_shape = self.patch_embed(x)
 
-        if self.use_abs_pos_embed:
-            x = x + self.absolute_pos_embed
-        x = self.drop_after_pos(x)
+        #if self.use_abs_pos_embed:
+        #    x = x + self.absolute_pos_embed
+        #x = self.drop_after_pos(x)
 
-        outs = []
-        for i, stage in enumerate(self.stages):
+        hw_shape = x[-1].size[2], x[-1].size[3]
+
+        #outs = []
+        for i, stage in enumerate(reversed(self.stages)):
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
+            print(f"stage {i}: x shape ==> {x.shape}")
+
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
                 out = norm_layer(out)
+
                 out = out.view(-1, *out_hw_shape,
                                self.num_features[i]).permute(0, 3, 1,
                                                              2).contiguous()
-                outs.append(out)
+                print(f"stage {i}: out shape ==> {out.shape}")
+                #outs.append(out)
 
-        return outs
+        x = self.up_x4(x)
+        
+        return x
