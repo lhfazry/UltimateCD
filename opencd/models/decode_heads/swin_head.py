@@ -316,7 +316,7 @@ class PatchReshape(nn.Module):
         super().__init__()
         self.in_channels = in_channels
         self.out_channels = out_channels
-        self.expand = nn.Linear(in_channels, out_channels, bias=False)
+        self.expand = nn.Conv2d(in_channels, 2 * in_channels, kernel_size=1, bias=False)
         self.norm = norm_layer(out_channels) # in_channels // 4
 
     def forward(self, x, input_size):
@@ -326,15 +326,15 @@ class PatchReshape(nn.Module):
         H, W = input_size
         B, L, C = x.shape
         print(f"self.out_channels: {self.out_channels}, C: {C}")
-        assert self.out_channels == C // 4, f"out channel has wrong size"
+        #assert self.out_channels == C // 4, f"out channel has wrong size"
 
-        x = self.expand(x)
+        # x = self.expand(x)
         
         assert L == H * W, "input feature has wrong resolution"
 
-        x = x.view(B, H, W, C)
+        x = x.view(B, H, W, 2 * self.in_channels)
         x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=self.out_channels)
-        hw_size = x.size[1], x.size[2]
+        hw_size = x.shape[1], x.shape[2]
         x = x.view(B, -1, self.out_channels)
         x = self.norm(x)
         
