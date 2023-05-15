@@ -659,9 +659,7 @@ class SwinHead(BaseDecodeHead):
             if i < num_layers - 1:
                 upsample = UMBlock(
                     in_channels=in_channels,
-                    out_channels=in_channels // 2,
-                    norm_cfg=norm_cfg if patch_norm else None,
-                    init_cfg=None)
+                    out_channels=in_channels // 2)
             else:
                 upsample = None
 
