@@ -729,7 +729,7 @@ class SwinHead(BaseDecodeHead):
         #x = x.view(-1, C, H*W).permute(0, 2, 1)
 
         #outs = []
-        for i, stage, x_input in enumerate(zip(reversed(self.stages), reversed(input))):
+        for i, (stage, x_input) in enumerate(zip(reversed(self.stages), reversed(input))):
             if i == 0:
                 x = x_input
 
