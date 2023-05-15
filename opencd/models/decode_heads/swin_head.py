@@ -684,13 +684,13 @@ class SwinHead(BaseDecodeHead):
             if upsample:
                 in_channels = upsample.out_channels
 
-        #self.num_features = [int(embed_dims * 2**i) for i in range(num_layers)]
+        self.num_features = [int(embed_dims * 2**i) for i in range(num_layers)]
 
         # Add a norm layer for each output
-        #for i in out_indices:
-        #    layer = build_norm_layer(norm_cfg, self.num_features[i])[1]
-        #    layer_name = f'norm{i}'
-        #    self.add_module(layer_name, layer)
+        for i in out_indices:
+            layer = build_norm_layer(norm_cfg, self.num_features[i])[1]
+            layer_name = f'norm{i}'
+            self.add_module(layer_name, layer)
 
         self.final_upsample = FinalPatchExpand_X4(in_channels=embed_dims, out_channels=16*embed_dims)
         #self.output = nn.Conv2d(in_channels=embed_dims, out_channels=self.num_classes, kernel_size=1, bias=False)
@@ -731,11 +731,12 @@ class SwinHead(BaseDecodeHead):
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
             print(f"after stage {i}: x shape ==> {x.shape}")
 
-            if i in self.out_indices:
-                #norm_layer = getattr(self, f'norm{i}')
-                #out = norm_layer(out)
+            idx = len(self.stages) - (1 + i)
+            if idx in self.out_indices:
+                norm_layer = getattr(self, f'norm{idx}')
+                out = norm_layer(out)
 
-                out = out.view(-1, *out_hw_shape, self.num_features[i]).permute(0, 3, 1, 2).contiguous()
+                out = out.view(-1, *out_hw_shape, self.num_features[idx]).permute(0, 3, 1, 2).contiguous()
                 print(f"stage {i}: out shape ==> {out.shape}")
                 #outs.append(out)
 
