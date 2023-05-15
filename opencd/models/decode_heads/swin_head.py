@@ -638,7 +638,7 @@ class SwinHead(BaseDecodeHead):
                  **kwargs):
         self.frozen_stages = frozen_stages
 
-        super().__init__(num_classes=num_classes, **kwargs)
+        super().__init__(num_classes=num_classes, channels=in_channels, **kwargs)
         self.num_classes = num_classes
         num_layers = len(depths)
         self.out_indices = out_indices
@@ -695,7 +695,7 @@ class SwinHead(BaseDecodeHead):
             self.add_module(layer_name, layer)
 
         self.final_upsample = FinalPatchExpand_X4(in_channels=embed_dims, out_channels=16*embed_dims)
-        self.output = nn.Conv2d(in_channels=embed_dims, out_channels=self.num_classes, kernel_size=1, bias=False)
+        #self.output = nn.Conv2d(in_channels=embed_dims, out_channels=self.num_classes, kernel_size=1, bias=False)
 
     def train(self, mode=True):
         """Convert the model into training mode while keep layers freezed."""
@@ -806,7 +806,7 @@ class SwinHead(BaseDecodeHead):
         x = self.up(x)
         x = x.view(B, 4*H, 4*W, -1)
         x = x.permute(0, 3, 1, 2) #B, C, H, W
-        x = self.output(x)
+        #x = self.output(x)
             
         return x
     
