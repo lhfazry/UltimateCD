@@ -1,7 +1,7 @@
 _base_ = ['../_base_/models/stanet_r18.py', '../_base_/datasets/levir_cd256.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
-crop_size = (128, 128)
+crop_size = (256, 256)
 model = dict(
     decode_head=dict(sa_mode='None'),
     test_cfg=dict(mode='slide', crop_size=crop_size, stride=(crop_size[0]//2, crop_size[1]//2)),
