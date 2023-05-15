@@ -13,7 +13,7 @@ class SwinFusionNeck(BaseModule):
                  out_indices=(0, 1, 2, 3)):
         super(SwinFusionNeck, self).__init__()
         self.in_channels = in_channels
-        print(f"in_channels: {in_channels}")
+        #print(f"in_channels: {in_channels}")
         self.out_channels = out_channels
         self.fp16_enabled = True
         self.out_indices = out_indices
@@ -35,10 +35,10 @@ class SwinFusionNeck(BaseModule):
         outs = []
         for i in range(len(x1)):
             out = self.fusion(x1[i], x2[i])
-            print(f"{i} == > x1: {x1[i].shape}, x2: {x2[i].shape}, out: {out.shape}")
+            #print(f"{i} == > x1: {x1[i].shape}, x2: {x2[i].shape}, out: {out.shape}")
 
             if i == len(x1) - 1:  
-                print(f"projection on stage {i}")
+                #print(f"projection on stage {i}")
                 out = self.projection(out)
             
             outs.append(out)
