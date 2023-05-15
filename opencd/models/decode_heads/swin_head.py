@@ -713,8 +713,8 @@ class SwinHead(BaseDecodeHead):
         return x
     
     def forward(self, input):
-        for i, x in enumerate(input):
-            print(f"shape {i}: {x.shape}")
+        #for i, x in enumerate(input):
+        #    print(f"shape {i}: {x.shape}")
         #x, hw_shape = self.patch_embed(x)
 
         #if self.use_abs_pos_embed:
@@ -724,8 +724,10 @@ class SwinHead(BaseDecodeHead):
         #outs = []
         for i, stage in enumerate(reversed(self.stages)):
             x = input[len(input) - (1 + i)]
+            B, C, H, W = x.shape
+            x = x.view(-1, C, H*W).permute(0, 2, 1)
             print(f"before stage {i}: x shape ==> {x.shape}")
-            hw_shape = x.shape[2], x.shape[3]
+            hw_shape = H, W
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
             print(f"after stage {i}: x shape ==> {x.shape}")
 

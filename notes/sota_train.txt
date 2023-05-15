@@ -36,6 +36,9 @@ LEVIR
 ./train.sh 6 configs/fcsn/fc_siam_conc_256x256_50k_levircd.py >> logs/fcsn/fc_siam_conc_256x256_50k_levircd.log 2>&1 &
 ./train.sh 2 configs/fcsn/fc_siam_diff_256x256_50k_levircd.py >> logs/fcsn/fc_siam_diff_256x256_50k_levircd.log 2>&1 &
 
+./train.sh 3 configs/siamixformer/siamixformer_s_256x256_50k_levircd.py >> logs/siamixformer/siamixformer_s_256x256_50k_levircd.log 2>&1 &
+
+
 WHU
 -----
 ./train.sh 4 configs/changeformer/changeformer_mit-b1_256x256_50k_whu.py >> logs/changeformer/changeformer_mit-b1_256x256_50k_whu.log 2>&1 &
@@ -54,3 +57,5 @@ WHU
 ./train.sh 4 configs/fcsn/fc_siam_diff_256x256_50k_whu.py >> logs/fcsn/fc_siam_diff_256x256_50k_whu.log 2>&1 &
 
 ./train.sh 2 configs/swinsunet/swinsunet_t_256x256_25k_cdd.py >> logs/sota/swinsunet_t_256x256_25k_cdd.log 2>&1 &
+
+./train.sh 3 configs/siamixformer/siamixformer_s_256x256_50k_whu.py >> logs/siamixformer/siamixformer_s_256x256_50k_whu.log 2>&1 &
