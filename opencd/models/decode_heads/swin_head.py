@@ -743,7 +743,7 @@ class SwinHead(BaseDecodeHead):
             #x_skip = None
 
             if i < len(input) - 1:
-                x_skip = input[i + 1]
+                x_skip = input[i - 1]
                 B, C, H, W = x_skip.shape
                 x_skip = x_skip.view(-1, C, H * W).permute(0, 2, 1)
                 print(f"x_skip {i}: {x_skip.shape}")
