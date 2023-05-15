@@ -661,6 +661,8 @@ class SwinHead(BaseDecodeHead):
                 upsample = UMBlock(
                     in_channels=int(embed_dims * 2 ** (i - 1)) * 2,
                     out_channels=int(embed_dims * 2 ** (i - 1)))
+                
+                print(f"i: {i} : in_channels: {upsample.in_channels}, out_channels: {upsample.out_channels}")
             else:
                 upsample = None
 
