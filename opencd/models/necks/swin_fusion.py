@@ -38,6 +38,7 @@ class SwinFusionNeck(BaseModule):
             print(f"{i} == > x1: {x1[i].shape}, x2: {x2[i].shape}, out: {out.shape}")
 
             if i == len(x1) - 1:  
+                print(f"projection on stage {i}")
                 out = self.projection(out)
             
             outs.append(out)
