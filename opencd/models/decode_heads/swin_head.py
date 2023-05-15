@@ -638,7 +638,7 @@ class SwinHead(BaseDecodeHead):
                  **kwargs):
         self.frozen_stages = frozen_stages
 
-        super().__init__(num_classes=num_classes, channels=in_channels, **kwargs)
+        super().__init__(in_channels=None, channels=in_channels, num_classes=num_classes, **kwargs)
         self.num_classes = num_classes
         num_layers = len(depths)
         self.out_indices = out_indices
