@@ -734,6 +734,7 @@ class SwinHead(BaseDecodeHead):
 
             if i < len(input) - 1:
                 x_skip = input[len(input) - (2 + i)]
+                print(f"x_skip {i}: x_skip shape ==> {x_skip.shape}")
 
             hw_shape = H, W
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape, x_skip)
