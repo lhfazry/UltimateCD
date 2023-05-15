@@ -1,8 +1,5 @@
 # model settings
 norm_cfg = dict(type='SyncBN', requires_grad=True)
-embed_dim = 96
-depths = [2, 2, 6, 2]
-num_heads = [3, 6, 12, 24]
 
 model = dict(
     type='SiamEncoderDecoder',
@@ -10,9 +7,9 @@ model = dict(
     backbone=dict(
         type='MixVisionTransformer',
         in_channels=3,
-        embed_dims=32,
+        embed_dims=64,
         num_stages=4,
-        num_layers=[2, 2, 2, 2],
+        num_layers=[3, 3, 6, 3],
         num_heads=[1, 2, 5, 8],
         patch_sizes=[7, 3, 3, 3],
         sr_ratios=[8, 4, 2, 1],
@@ -25,7 +22,7 @@ model = dict(
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
         type='SegformerHead',
-        in_channels=[32, 64, 160, 256],
+        in_channels=[64, 128, 320, 512],
         in_index=[0, 1, 2, 3],
         channels=256,
         dropout_ratio=0.1,
