@@ -22,6 +22,7 @@ model = dict(
         drop_rate=0.0,
         attn_drop_rate=0.0,
         drop_path_rate=0.1),
+    neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
         type='SegformerHead',
         in_channels=[32, 64, 160, 256],
