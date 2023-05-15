@@ -721,10 +721,11 @@ class SwinHead(BaseDecodeHead):
 
         #outs = []
         for i, stage in enumerate(reversed(self.stages)):
-            x = input[i]
+            x = input[len(input) - i]
+            print(f"before stage {i}: x shape ==> {x.shape}")
             hw_shape = x.shape[2], x.shape[3]
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
-            print(f"stage {i}: x shape ==> {x.shape}")
+            print(f"after stage {i}: x shape ==> {x.shape}")
 
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
