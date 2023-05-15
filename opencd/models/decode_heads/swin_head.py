@@ -721,7 +721,7 @@ class SwinHead(BaseDecodeHead):
 
         #outs = []
         for i, stage in enumerate(reversed(self.stages)):
-            x = input[len(input) - i]
+            x = input[len(input) - (1 + i)]
             print(f"before stage {i}: x shape ==> {x.shape}")
             hw_shape = x.shape[2], x.shape[3]
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
