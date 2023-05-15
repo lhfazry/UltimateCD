@@ -719,7 +719,7 @@ class SwinHead(BaseDecodeHead):
         #    x = x + self.absolute_pos_embed
         #x = self.drop_after_pos(x)
 
-        hw_shape = x[-1].size[2], x[-1].size[3]
+        hw_shape = x[-1].shape[2], x[-1].shape[3]
 
         #outs = []
         for i, stage in enumerate(reversed(self.stages)):
