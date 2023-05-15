@@ -713,6 +713,8 @@ class SwinHead(BaseDecodeHead):
         return x
     
     def forward(self, input):
+        for i, x in enumerate(input):
+            print(f"shape {i}: {x.shape}")
         #x, hw_shape = self.patch_embed(x)
 
         #if self.use_abs_pos_embed:
