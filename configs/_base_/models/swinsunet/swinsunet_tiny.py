@@ -23,7 +23,6 @@ model = dict(
         type='SwinHead',
         in_channels=embed_dim * 2 ** (len(depths) - 1),
         num_classes=2,
-        dropout_ratio=0.1,
         norm_cfg=norm_cfg,
         align_corners=False,
         patch_size=4, 
