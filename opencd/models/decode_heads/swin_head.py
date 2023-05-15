@@ -300,10 +300,10 @@ class UMBlock(nn.Module):
         self.output_projection = nn.Linear(self.intermediate_channel, self.out_channels) #nn.Linear(5 * dim // 4, dim // 2) #
     
     def forward(self, x, input_size, x_skip):
-        _, _, H, W = x.shape
+        B, L, C = x.shape
 
         x, hw_size = self.upsample(x, input_size)
-        assert hw_size == (H, W), "x and x1 must have the same shape"
+        #assert L == intp, W), "x and x1 must have the same shape"
 
         x = torch.cat((x, x_skip), dim=1)
         x = self.channel_attention(x)
@@ -522,12 +522,12 @@ class SwinBlockSequence(BaseModule):
 
         self.upsample = upsample
 
-    def forward(self, x, hw_shape):
+    def forward(self, x, hw_shape, x_skip):
         for block in self.blocks:
             x = block(x, hw_shape)
 
         if self.upsample:
-            x_up, up_hw_shape = self.upsample(x, hw_shape)
+            x_up, up_hw_shape = self.upsample(x, hw_shape, x_skip)
             return x_up, up_hw_shape, x, hw_shape
         else:
             return x, hw_shape, x, hw_shape
@@ -721,23 +721,31 @@ class SwinHead(BaseDecodeHead):
         #    x = x + self.absolute_pos_embed
         #x = self.drop_after_pos(x)
 
+        x = input[-1]
+        B, C, H, W = x.shape
+        x = x.view(-1, C, H*W).permute(0, 2, 1)
+
         #outs = []
         for i, stage in enumerate(reversed(self.stages)):
-            x = input[len(input) - (1 + i)]
-            B, C, H, W = x.shape
-            x = x.view(-1, C, H*W).permute(0, 2, 1)
+            #x = input[len(input) - (1 + i)]
+            
             print(f"before stage {i}: x shape ==> {x.shape}")
+            x_skip = None
+
+            if i < len(input) - 1:
+                x_skip = input[len(input) - (2 + i)]
+
             hw_shape = H, W
-            x, hw_shape, out, out_hw_shape = stage(x, hw_shape)
+            x, hw_shape, out, out_hw_shape = stage(x, hw_shape, x_skip)
             print(f"after stage {i}: x shape ==> {x.shape}")
 
-            idx = len(self.stages) - (1 + i)
-            if idx in self.out_indices:
+            #idx = len(self.stages) - (1 + i)
+            #if idx in self.out_indices:
                 #norm_layer = getattr(self, f'norm{idx}')
                 #out = norm_layer(out)
 
-                out = out.view(-1, *out_hw_shape, self.num_features[idx]).permute(0, 3, 1, 2).contiguous()
-                print(f"stage {i}: out shape ==> {out.shape}")
+            #    out = out.view(-1, *out_hw_shape, self.num_features[idx]).permute(0, 3, 1, 2).contiguous()
+            #    print(f"stage {i}: out shape ==> {out.shape}")
                 #outs.append(out)
 
         x = self.up_x4(x)
