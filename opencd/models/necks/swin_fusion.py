@@ -8,13 +8,14 @@ from mmcv.runner import BaseModule, auto_fp16
 @NECKS.register_module()
 class SwinFusionNeck(BaseModule):
     def __init__(self,
-                 in_channel=None,
+                 in_channels=None,
+                 out_channels=None,
                  out_indices=(0, 1, 2, 3)):
         super(SwinFusionNeck, self).__init__()
-        self.in_channel = in_channel
+        self.in_channels = in_channels
         self.fp16_enabled = False
         self.out_indices = out_indices
-        self.projection = nn.Linear(in_channel, in_channel)
+        self.projection = nn.Linear(in_channels, out_channels)
 
     @staticmethod
     def fusion(x1, x2):
@@ -34,8 +35,8 @@ class SwinFusionNeck(BaseModule):
             out = self.fusion(x1[i], x2[i])
             #print(f"x1: {x1[i].shape}, x2: {x2[i].shape}, out: {out.shape}")
 
-            #if i == len(x1) - 1:    
-            #    out = self.projection(out)
+            if i == len(x1) - 1:    
+                out = self.projection(out)
             
             outs.append(out)
 
