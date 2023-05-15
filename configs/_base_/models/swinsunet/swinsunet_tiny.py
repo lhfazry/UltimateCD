@@ -17,8 +17,8 @@ model = dict(
         depths=depths),
     neck=dict(
         type='SwinFusionNeck', 
-        in_channels=embed_dim * 2 ** (len(depths) - 1),
-        out_channels=embed_dim * 2 ** (len(depths) - 1) // 2
+        in_channels=2 * embed_dim * 2 ** (len(depths) - 1),
+        out_channels=embed_dim * 2 ** (len(depths) - 1)
     ),
     decode_head=dict(
         type='SwinHead',
