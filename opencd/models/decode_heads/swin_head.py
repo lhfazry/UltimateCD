@@ -634,10 +634,11 @@ class SwinHead(BaseDecodeHead):
                  with_cp=False,
                  pretrained=None,
                  frozen_stages=-1,
-                 init_cfg=None):
+                 init_cfg=None,
+                 **kwargs):
         self.frozen_stages = frozen_stages
 
-        super(SwinHead, self).__init__(init_cfg=init_cfg)
+        super(SwinHead, self).__init__(num_classes=num_classes, **kwargs)
         self.num_classes = num_classes
         num_layers = len(depths)
         self.out_indices = out_indices
