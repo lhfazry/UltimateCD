@@ -664,7 +664,7 @@ class SwinHead(BaseDecodeHead):
                 upsample = None
 
             stage = SwinBlockSequence(
-                embed_dims=in_channels,
+                embed_dims=int(embed_dims * 2 ** i),
                 num_heads=num_heads[i],
                 feedforward_channels=int(in_channels // mlp_ratio),
                 depth=depths[i],
