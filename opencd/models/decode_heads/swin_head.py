@@ -644,7 +644,7 @@ class SwinHead(BaseDecodeHead):
         self.out_indices = out_indices
         self.use_abs_pos_embed = use_abs_pos_embed
 
-        assert strides[0] == patch_size, 'Use non-overlapping patch embed.'
+        #assert strides[0] == patch_size, 'Use non-overlapping patch embed.'
 
         # set stochastic depth decay rule
         total_depth = sum(depths)
