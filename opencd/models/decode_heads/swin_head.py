@@ -765,7 +765,7 @@ class SwinHead(BaseDecodeHead):
             #    x_skip = input[len(input) - (2 + i)]
                 
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape, x_skip)
-            print(f"after stage {i}: x shape ==> {x.shape}")
+            print(f"after stage {i}: x shape ==> {x.shape}, hw_shape: {hw_shape}")
 
             #idx = len(self.stages) - (1 + i)
             #if idx in self.out_indices:
