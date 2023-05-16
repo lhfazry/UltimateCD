@@ -307,7 +307,7 @@ class UMBlock(nn.Module):
 
         print(f"x: {x.shape}, x_skip: {x_skip.shape}")
         x = torch.cat((x, x_skip), dim=2)
-        x = self.channel_attention(x)
+        x = self.channel_attention(x, hw_size)
         x = self.output_projection(x)
 
         return x
@@ -351,7 +351,11 @@ class ChannelAttention(nn.Module):
         self.fc2 = nn.Conv2d(in_channels // ratio, in_channels, 1, bias=False)
         self.sigmod = nn.Sigmoid()
 
-    def forward(self, x):
+    def forward(self, x, input_size):
+        print(f"ChannelAttention, x: {x.shape}")
+        B, L, C = x.shape
+
+        x = x.view(B, input_size[0], input_size[1], C).permute(0, 3, 1, 2)
         print(f"ChannelAttention, x: {x.shape}")
         avg_out = self.fc2(self.relu1(self.fc1(self.avg_pool(x))))
         max_out = self.fc2(self.relu1(self.fc1(self.max_pool(x))))
