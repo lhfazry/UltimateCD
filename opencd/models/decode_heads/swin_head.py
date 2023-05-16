@@ -719,7 +719,7 @@ class SwinHead(BaseDecodeHead):
         B, L, C = x.shape
         assert L == H*W, "input features has wrong size"
 
-        x = self.up(x)
+        x = self.final_upsample(x)
         x = x.view(B, 4*H, 4*W, -1)
         x = x.permute(0, 3, 1, 2) #B, C, H, W
         #x = self.output(x)
