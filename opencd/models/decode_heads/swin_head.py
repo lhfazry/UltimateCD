@@ -714,8 +714,8 @@ class SwinHead(BaseDecodeHead):
         super(SwinHead, self).train(mode)
         #self._freeze_stages()
 
-    def up_x4(self, x):
-        H, W = self.patches_resolution
+    def up_x4(self, x, input_size):
+        H, W = input_size
         B, L, C = x.shape
         assert L == H*W, "input features has wrong size"
 
@@ -777,7 +777,7 @@ class SwinHead(BaseDecodeHead):
             #    print(f"stage {i}: out shape ==> {out.shape}")
                 #outs.append(out)
 
-        x = self.up_x4(x)
+        x = self.up_x4(x, hw_shape)
         print(f"final output: out shape ==> {x.shape}")
 
         return x
