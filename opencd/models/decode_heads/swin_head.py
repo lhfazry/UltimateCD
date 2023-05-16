@@ -352,6 +352,7 @@ class ChannelAttention(nn.Module):
         self.sigmod = nn.Sigmoid()
 
     def forward(self, x):
+        print(f"ChannelAttention, x: {x.shape}")
         avg_out = self.fc2(self.relu1(self.fc1(self.avg_pool(x))))
         max_out = self.fc2(self.relu1(self.fc1(self.max_pool(x))))
         out = avg_out + max_out
