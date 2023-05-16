@@ -311,7 +311,7 @@ class UMBlock(nn.Module):
 
         x = self.output_projection(x)
 
-        return x
+        return x, hw_size
 
 class PatchReshape(nn.Module):
     def __init__(self, in_channels, out_channels, norm_layer=nn.LayerNorm):
