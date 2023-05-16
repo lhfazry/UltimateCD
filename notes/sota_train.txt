@@ -5,7 +5,7 @@ CDD
 ./train.sh 4 configs/bit/bit_r18_256x256_50k_cdd.py >> logs/bit/bit_r18_256x256_50k_cdd.log 2>&1 &
 ./resume_train.sh 3 work_dirs/bit/bit_r18_256x256_50k_cdd/latest.pth configs/bit/bit_r18_256x256_50k_cdd.py >> logs/bit/bit_r18_256x256_50k_cdd.log 2>&1 &
 
-./train.sh 2 configs/bit/ifn_256x256_50k_cdd.py >> logs/bit/ifn_256x256_50k_cdd.log 2>&1 &
+./train.sh 2 configs/ifn/ifn_256x256_50k_cdd.py >> logs/ifn/ifn_256x256_50k_cdd.log 2>&1 &
 
 ./train.sh 4 configs/snunet/snunet_c16_256x256_50k_cdd.py >> logs/snunet/snunet_c16_256x256_50k_cdd.log 2>&1 &
 ./resume_train.sh 3 work_dirs/snunet/snunet_c16_256x256_50k_cdd/latest.pth configs/snunet/snunet_c16_256x256_50k_cdd.py >> logs/snunet/snunet_c16_256x256_50k_cdd.log 2>&1 &
@@ -31,7 +31,7 @@ LEVIR
 
 ./train.sh 2 configs/snunet/snunet_c16_256x256_50k_levircd.py >> logs/snunet/snunet_c16_256x256_50k_levircd.log 2>&1 &
 
-./train.sh 4 configs/stanet/stanet_base_256x256_50k_levircd.py >> logs/stanet/stanet_base_256x256_50k_levircd.log 2>&1 &
+./train.sh 3 configs/stanet/stanet_base_256x256_50k_levircd.py >> logs/stanet/stanet_base_256x256_50k_levircd.log 2>&1 &
 
 ./train.sh 6 configs/fcsn/fc_ef_256x256_50k_levircd.py >> logs/fcsn/fc_ef_256x256_50k_levircd.log 2>&1 &
 ./train.sh 6 configs/fcsn/fc_siam_conc_256x256_50k_levircd.py >> logs/fcsn/fc_siam_conc_256x256_50k_levircd.log 2>&1 &
