@@ -744,6 +744,7 @@ class SwinHead(BaseDecodeHead):
             if i == 0:
                 x = x_input
             else: 
+                B, C, _ = x.shape
                 x = x.permute(0, 2, 1).view(-1, C, hw_shape[0], hw_shape[1])
 
             B, C, H, W = x.shape
