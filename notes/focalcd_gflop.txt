@@ -6,3 +6,5 @@ python tools/get_flops.py configs/changeformer/changeformer_mit-b1_256x256_50k_l
 
 SiamixFormer:
 python tools/get_flops.py configs/siamixformer/siamixformer_s_256x256_50k_cdd.py --shape 256
+python tools/get_flops.py configs/siamixformer/siamixformer_b_256x256_50k_cdd.py --shape 256
+
