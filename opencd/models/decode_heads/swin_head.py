@@ -296,7 +296,7 @@ class UMBlock(nn.Module):
         self.upsample = PatchReshape(in_channels=in_channels, 
                                      out_channels=in_channels // 4, 
                                      norm_layer=norm_layer)
-        self.channel_attention = ChannelAttention(in_channels=self.intermediate_channel) # 5*dim//4
+        #self.channel_attention = ChannelAttention(in_channels=self.intermediate_channel) # 5*dim//4
         self.output_projection = nn.Linear(self.intermediate_channel, self.out_channels) #nn.Linear(5 * dim // 4, dim // 2) #
     
     def forward(self, x, input_size, x_skip):
@@ -307,7 +307,7 @@ class UMBlock(nn.Module):
 
         print(f"x: {x.shape}, x_skip: {x_skip.shape}")
         x = torch.cat((x, x_skip), dim=2)
-        x = self.channel_attention(x, hw_size)
+        #x = self.channel_attention(x, hw_size)
 
         x = self.output_projection(x)
 
@@ -364,7 +364,7 @@ class ChannelAttention(nn.Module):
 
         print(f"After channel_attention, out: {out.shape}")
 
-        x = x.view(B, C, input_size[0], input_size[1]).permute(0, 3, 1, 2)
+        x = x.view(B, C, input_size[0] * input_size[1]).permute(0, 3, 1, 2)
 
         return self.sigmod(out)
 
