@@ -305,7 +305,7 @@ class UMBlock(nn.Module):
         x, hw_size = self.upsample(x, input_size)
         #assert L == intp, W), "x and x1 must have the same shape"
 
-        print(f"x: {x.shape}, x_skip: {x_skip.shape}")
+        #print(f"x: {x.shape}, x_skip: {x_skip.shape}")
         x = torch.cat((x, x_skip), dim=2)
         #x = self.channel_attention(x, hw_size)
 
@@ -327,7 +327,7 @@ class PatchReshape(nn.Module):
         """
         H, W = input_size
         B, L, C = x.shape
-        print(f"self.out_channels: {self.out_channels}, C: {C}")
+        #print(f"self.out_channels: {self.out_channels}, C: {C}")
         #assert self.out_channels == C // 4, f"out channel has wrong size"
 
         x = self.expand(x)
@@ -353,16 +353,16 @@ class ChannelAttention(nn.Module):
         self.sigmod = nn.Sigmoid()
 
     def forward(self, x, input_size):
-        print(f"ChannelAttention, x: {x.shape}")
+        #print(f"ChannelAttention, x: {x.shape}")
         B, L, C = x.shape
 
         x = x.view(B, input_size[0], input_size[1], C).permute(0, 3, 1, 2)
-        print(f"ChannelAttention, x: {x.shape}")
+        #print(f"ChannelAttention, x: {x.shape}")
         avg_out = self.fc2(self.relu1(self.fc1(self.avg_pool(x))))
         max_out = self.fc2(self.relu1(self.fc1(self.max_pool(x))))
         out = avg_out + max_out
 
-        print(f"After channel_attention, out: {out.shape}")
+        #print(f"After channel_attention, out: {out.shape}")
 
         x = x.view(B, C, input_size[0] * input_size[1]).permute(0, 3, 1, 2)
 
@@ -673,7 +673,7 @@ class SwinHead(BaseDecodeHead):
                     in_channels=int(embed_dims * 2 ** (i - 1)) * 2,
                     out_channels=int(embed_dims * 2 ** (i - 1)))
                 
-                print(f"i: {i} : in_channels: {upsample.in_channels}, out_channels: {upsample.out_channels}")
+                #print(f"i: {i} : in_channels: {upsample.in_channels}, out_channels: {upsample.out_channels}")
             else:
                 upsample = None
 
@@ -752,21 +752,21 @@ class SwinHead(BaseDecodeHead):
             x = x.view(-1, C, H * W).permute(0, 2, 1)
             #x = input[len(input) - (1 + i)]
         
-            print(f"\nbefore stage {i}: x shape ==> {x.shape}")
+            #print(f"\nbefore stage {i}: x shape ==> {x.shape}")
             #x_skip = None
 
             if i < len(input) - 1:
                 x_skip = input[len(input) - (i + 2)]
                 B, C, H, W = x_skip.shape
-                print(f"x_skip {i}: {x_skip.shape}")
+                #print(f"x_skip {i}: {x_skip.shape}")
                 x_skip = x_skip.view(-1, C, H * W).permute(0, 2, 1)
-                print(f"x_skip {i}: {x_skip.shape}")
+                #print(f"x_skip {i}: {x_skip.shape}")
 
             #if i < len(input) - 1:
             #    x_skip = input[len(input) - (2 + i)]
                 
             x, hw_shape, out, out_hw_shape = stage(x, hw_shape, x_skip)
-            print(f"after stage {i}: x shape ==> {x.shape}, hw_shape: {hw_shape}")
+            #print(f"after stage {i}: x shape ==> {x.shape}, hw_shape: {hw_shape}")
 
             #idx = len(self.stages) - (1 + i)
             #if idx in self.out_indices:
@@ -778,6 +778,6 @@ class SwinHead(BaseDecodeHead):
                 #outs.append(out)
 
         x = self.up_x4(x, hw_shape)
-        print(f"final output: out shape ==> {x.shape}")
+        #print(f"final output: out shape ==> {x.shape}")
 
         return x
