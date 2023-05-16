@@ -329,11 +329,11 @@ class PatchReshape(nn.Module):
         print(f"self.out_channels: {self.out_channels}, C: {C}")
         #assert self.out_channels == C // 4, f"out channel has wrong size"
 
-        # x = self.expand(x)
+        x = self.expand(x)
         
         assert L == H * W, "input feature has wrong resolution"
 
-        x = x.view(B, H, W, self.in_channels)
+        x = x.view(B, H, W, 4 * self.out_channels)
         x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=2, p2=2, c=self.out_channels)
         hw_size = x.shape[1], x.shape[2]
         x = x.view(B, -1, self.out_channels)
