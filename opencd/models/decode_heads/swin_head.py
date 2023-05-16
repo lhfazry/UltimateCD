@@ -565,7 +565,7 @@ class FinalPatchExpand_X4(nn.Module):
         x = x.view(B, H, W, C)
         x = rearrange(x, 'b h w (p1 p2 c)-> b (h p1) (w p2) c', p1=4, p2=4, c=C // (4**2))
         x = x.view(B, -1, C // (4**2))
-        x= self.norm(x)
+        #x = self.norm(x)
 
         return x
 
