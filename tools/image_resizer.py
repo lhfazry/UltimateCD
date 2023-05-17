@@ -34,7 +34,7 @@ def resize_images(input_folder, output_folder, new_size, replace):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Resize images in a folder.")
     parser.add_argument("input_folder", help="Path to the input folder")
-    parser.add_argument("output_folder", help="Path to the output folder")
+    parser.add_argument("--output_folder", help="Path to the output folder")
     parser.add_argument("--width", type=int, default=300, help="Width of the resized images")
     parser.add_argument("--height", type=int, default=300, help="Height of the resized images")
     parser.add_argument("--replace", action="store_true", help="Replace the original images")
