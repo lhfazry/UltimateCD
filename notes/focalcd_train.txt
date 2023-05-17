@@ -29,7 +29,9 @@ WHU
 ./train.sh 7 configs/focalcd/whu/focalcd_t_512x512_100k_absdiff_noaux_whu.py >> logs/focalcd/whu/focalcd_t_512x512_100k_absdiff_noaux_whu.log 2>&1 &
 
 ./train.sh 3 configs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_whu.py >> logs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_whu.log 2>&1 &
+./resume_train.sh 6 work_dirs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_whu/latest.pth configs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_whu.py >> logs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_whu.log 2>&1 &
 
+./train.sh 6 configs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_nodrop_whu.py >> logs/focalcd/whu/focalcd_t_256x256_50k_absdiff_noaux_nodrop_whu.log 2>&1 &
 
 DSIFN
 ------

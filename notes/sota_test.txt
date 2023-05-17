@@ -1,0 +1,19 @@
+CDD
+------
+python tools/test.py configs/fcsn/fc_ef_256x256_50k_cdd.py work_dirs/fcsn/fc_ef_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/fcsn/fc_ef_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/fcsn/fc_ef_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/fcsn/fc_siam_conc_256x256_50k_cdd.py work_dirs/fcsn/fc_siam_conc_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/fcsn/fc_siam_conc_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/fcsn/fc_siam_conc_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/fcsn/fc_siam_diff_256x256_50k_cdd.py work_dirs/fcsn/fc_siam_diff_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/fcsn/fc_siam_diff_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/fcsn/fc_siam_diff_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/bit/bit_r18_256x256_50k_cdd.py work_dirs/bit/bit_r18_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/bit/bit_r18_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/bit/bit_r18_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/changeformer/changeformer_mit-b1_256x256_50k_cdd.py work_dirs/changerformer/changeformer_mit-b1_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/changeformer/changeformer_mit-b1_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/changeformer/changeformer_mit-b1_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/snunet/snunet_c16_256x256_50k_cdd.py work_dirs/snunet/snunet_c16_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/snunet/snunet_c16_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/snunet/snunet_c16_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/stanet/stanet_base_256x256_50k_cdd.py work_dirs/stanet/stanet_base_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/stanet/stanet_base_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/stanet/stanet_base_256x256_50k_cdd.log 2>&1 &
+
+python tools/test.py configs/siamixformer/siamixformer_s_256x256_50k_cdd.py work_dirs/siamixformer/siamixformer_s_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/siamixformer/siamixformer_s_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/siamixformer/siamixformer_s_256x256_50k_cdd.log 2>&1 &
+
+
