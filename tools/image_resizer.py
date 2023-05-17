@@ -10,7 +10,7 @@ def resize_images(input_folder, output_folder, new_size, replace):
 
     # Find all image files in the input folder and its subdirectories
     image_files = glob.glob(os.path.join(input_folder, '**', '*.*'), recursive=True)
-    image_extensions = ('.jpg', '.jpeg', '.png')
+    image_extensions = ('.jpg', '.jpeg', '.png', 'tif')
 
     # Iterate over the image files
     for image_path in image_files:
