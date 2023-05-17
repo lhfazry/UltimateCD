@@ -5,7 +5,7 @@ from PIL import Image
 
 def resize_images(input_folder, output_folder, new_size, replace):
     # Create the output folder if it doesn't exist
-    if not os.path.exists(output_folder) and output_folder is not None:
+    if output_folder is not None and not os.path.exists(output_folder) :
         os.makedirs(output_folder)
 
     # Find all image files in the input folder and its subdirectories
