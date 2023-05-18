@@ -226,7 +226,7 @@ class MixVisionTransformer(BaseModule):
         # patch_embed
         self.patch_embed1 = OverlapPatchEmbed(
             img_size=img_size,
-            patch_size=7,
+            patch_size=patch_size,
             stride=4,
             in_channels=in_channels,
             embed_dim=embed_dims[0])
