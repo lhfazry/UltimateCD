@@ -6,6 +6,7 @@ from .general_scd_head import GeneralSCDHead
 from .identity_head import IdentityHead
 from .multi_head import MultiHeadDecoder
 from .sta_head import STAHead
+from .segformer_head import SegFormerHead2
 
 __all__ = ['BITHead', 'Changer', 'TinyHead', 'SwinHead', 'GeneralSCDHead',
-           'IdentityHead', 'MultiHeadDecoder', 'STAHead']
+           'IdentityHead', 'MultiHeadDecoder', 'STAHead', 'SegFormerHead2']

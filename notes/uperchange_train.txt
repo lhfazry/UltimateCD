@@ -1,0 +1,4 @@
+CDD
+----
+./train.sh 6 configs/uperchange/uperchange_b1_256x256_50k_cdd.py >> logs/uperchange/uperchange_b1_256x256_50k_cdd.log 2>&1 &
+

@@ -17,3 +17,6 @@ python tools/test.py configs/stanet/stanet_base_256x256_50k_cdd.py work_dirs/sta
 python tools/test.py configs/siamixformer/siamixformer_s_256x256_50k_cdd.py work_dirs/siamixformer/siamixformer_s_256x256_50k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/siamixformer/siamixformer_s_256x256_50k_cdd/change_maps/ --gpu-id 0 >> test_logs/siamixformer/siamixformer_s_256x256_50k_cdd.log 2>&1 &
 
 
+python tools/test.py configs/swinsunet/swinsunet_t_256x256_50k_cdd.py work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/swinsunet/swinsunet_t_256x256_50k_cdd/change_maps/ --gpu-id 6 >> test_logs/swinsunet/swinsunet_t_256x256_50k_cdd.log 2>&1 &
+
+
