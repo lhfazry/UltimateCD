@@ -3,9 +3,7 @@ _base_ = ['../_base_/models/changeformer/changeformer_b0.py', '../_base_/dataset
 
 model = dict(
     neck=dict(type='FeatureFusionNeck', policy='diff'),
-    decode_head=dict(
-        type='SegformerHead2',
-        in_channels=[v for v in [32, 64, 160, 256]],)
+    decode_head=dict(in_channels=[v for v in [32, 64, 160, 256]])
 )
 
 
