@@ -283,7 +283,7 @@ class lovit_b0(LocalViT):
 
     def __init__(self, **kwargs):
         super(lovit_b0, self).__init__(
-            patch_size=7,
+            patch_size=4,
             embed_dims=[32, 64, 160, 256],
             num_heads=[1, 2, 5, 8],
             mlp_ratios=[4, 4, 4, 4],

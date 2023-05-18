@@ -399,7 +399,10 @@ class MixVisionTransformer(BaseModule):
         outs = []
 
         # stage 1
+        print(f"before embedding: x = {x.shape}")
         x, H, W = self.patch_embed1(x)
+        print(f"after embedding: x = {x.shape}")
+        
         for i, blk in enumerate(self.block1):
             x = blk(x, H, W)
         x = self.norm1(x)
