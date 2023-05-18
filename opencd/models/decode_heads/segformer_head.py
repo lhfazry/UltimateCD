@@ -162,16 +162,15 @@ class SegFormerMLPHead(BaseDecodeHead):
     SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers
     """
     def __init__(self, **kwargs):
-        super(SegFormerMLPHead, self).__init__(input_transform='multiple_select', **kwargs)
+        super().__init__(input_transform='multiple_select', **kwargs)
         #assert len(feature_strides) == len(self.in_channels)
         #assert min(feature_strides) == feature_strides[0]
         #self.feature_strides = feature_strides
 
         c1_in_channels, c2_in_channels, c3_in_channels, c4_in_channels = self.in_channels
 
-        decoder_params = kwargs['decoder_params']
-        embedding_dim = decoder_params['embed_dim']
-
+        embedding_dim = self.channels
+        
         self.linear_c4 = MLP(input_dim=c4_in_channels, embed_dim=embedding_dim)
         self.linear_c3 = MLP(input_dim=c3_in_channels, embed_dim=embedding_dim)
         self.linear_c2 = MLP(input_dim=c2_in_channels, embed_dim=embedding_dim)
