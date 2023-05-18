@@ -220,7 +220,8 @@ class Block(nn.Module):
         #else:
         x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
         x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
-        #return x
+        
+        return x
 
 
 class LocalViT(MixVisionTransformer):
