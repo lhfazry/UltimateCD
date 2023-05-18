@@ -181,11 +181,11 @@ class LocalViT(PyramidVisionTransformer):
     def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, embed_dims=[64, 128, 256, 512],
                  num_heads=[1, 2, 4, 8], mlp_ratios=[4, 4, 4, 4], qkv_bias=False, qk_scale=None, drop_rate=0.,
                  attn_drop_rate=0., drop_path_rate=0., norm_layer=nn.LayerNorm,
-                 depths=[3, 4, 6, 3], sr_ratios=[8, 4, 2, 1]):
+                 depths=[3, 4, 6, 3], sr_ratios=[8, 4, 2, 1], **kwargs):
         super().__init__(img_size, patch_size, in_chans, num_classes, embed_dims,
                  num_heads, mlp_ratios, qkv_bias, qk_scale, drop_rate,
                  attn_drop_rate, drop_path_rate, norm_layer,
-                 depths, sr_ratios)
+                 depths, sr_ratios, **kwargs)
 
         # transformer encoder
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
