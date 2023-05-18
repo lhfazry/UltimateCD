@@ -205,7 +205,7 @@ class Block(nn.Module):
     def forward(self, x, H, W):
         batch_size, num_token, embed_dim = x.shape  # (B, 197, dim)
         patch_size = int(math.sqrt(num_token))
-        print(f"patch_size: {patch_size}")
+        print(f"x.shape: {x.shape}, patch_size: {patch_size}")
 
         x = x + self.drop_path(self.attn(self.norm1(x), H, W))
         # x = x + self.drop_path(self.mlp(self.norm2(x)))
