@@ -212,11 +212,11 @@ class Block(nn.Module):
         print(f"after attn: x.shape: {x.shape}, patch_size: {patch_size}")
 
         if self.sr_ratio == 1:
-            #cls_token, x = torch.split(x, [1, num_token - 1], dim=1)  # (B, 1, dim), (B, 196, dim)
-            #print(f"cls_token: {cls_token.shape}, x: {x.shape}")
+            cls_token, x = torch.split(x, [1, num_token - 1], dim=1)  # (B, 1, dim), (B, 196, dim)
+            print(f"cls_token: {cls_token.shape}, x: {x.shape}")
             x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
             x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
-            #x = torch.cat([cls_token, x], dim=1)
+            x = torch.cat([cls_token, x], dim=1)
         else:
             x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
             x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
@@ -283,6 +283,7 @@ class lovit_b0(LocalViT):
 
     def __init__(self, **kwargs):
         super(lovit_b0, self).__init__(
+            img_size=128,
             patch_size=4,
             embed_dims=[32, 64, 160, 256],
             num_heads=[1, 2, 5, 8],
