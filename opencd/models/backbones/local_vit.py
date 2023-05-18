@@ -205,22 +205,22 @@ class Block(nn.Module):
     def forward(self, x, H, W):
         batch_size, num_token, embed_dim = x.shape  # (B, 197, dim)
         patch_size = int(math.sqrt(num_token))
-        print(f"before attn: x.shape: {x.shape}, patch_size: {patch_size}")
+        #print(f"before attn: x.shape: {x.shape}, patch_size: {patch_size}")
 
         x = x + self.drop_path(self.attn(self.norm1(x), H, W))
         # x = x + self.drop_path(self.mlp(self.norm2(x)))
-        print(f"after attn: x.shape: {x.shape}, patch_size: {patch_size}")
+        #print(f"after attn: x.shape: {x.shape}, patch_size: {patch_size}")
 
-        if self.sr_ratio == 1:
-            cls_token, x = torch.split(x, [1, num_token - 1], dim=1)  # (B, 1, dim), (B, 196, dim)
-            print(f"cls_token: {cls_token.shape}, x: {x.shape}")
-            x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
-            x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
-            x = torch.cat([cls_token, x], dim=1)
-        else:
-            x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
-            x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
-        return x
+        #if self.sr_ratio == 1:
+        #    cls_token, x = torch.split(x, [1, num_token - 1], dim=1)  # (B, 1, dim), (B, 196, dim)
+        #    print(f"cls_token: {cls_token.shape}, x: {x.shape}")
+        #    x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
+        #    x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
+        #    x = torch.cat([cls_token, x], dim=1)
+        #else:
+        x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
+        x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
+        #return x
 
 
 class LocalViT(MixVisionTransformer):
