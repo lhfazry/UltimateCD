@@ -1,9 +1,12 @@
 _base_ = ['../_base_/models/changeformer/changeformer_b0.py', '../_base_/datasets/cdd.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
-checkpoint = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b1_20220624-02e5a6a1.pth'  # noqa
+model = dict(
+    neck=dict(type='FeatureFusionNeck', policy='diff'),
+    decode_head=dict(
+        in_channels=[v for v in [64, 128, 320, 512]]),
 
-
+)
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),

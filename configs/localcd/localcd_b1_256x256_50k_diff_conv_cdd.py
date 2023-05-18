@@ -1,10 +1,5 @@
-_base_ = ['../_base_/models/localcd/localcd_b0.py', '../_base_/datasets/cdd.py',
+_base_ = ['../_base_/models/localcd/localcd_b1.py', '../_base_/datasets/cdd.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
-
-model = dict(
-    neck=dict(type='FeatureFusionNeck', policy='diff'),
-    decode_head=dict(in_channels=[v for v in [64, 128, 320, 512]])
-)
 
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,

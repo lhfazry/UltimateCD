@@ -1,10 +1,6 @@
-_base_ = ['../_base_/models/localcd/localcd_b1.py', '../_base_/datasets/cdd.py',
+_base_ = ['../_base_/models/changeformer/changeformer_b1.py', '../_base_/datasets/cdd.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
-model = dict(
-    decode_head=dict(
-        type='SegFormerMLPHead')
-)
 
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
@@ -23,4 +19,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/localcd/localcd_b1_256x256_50k_diff_mlp_cdd'
+work_dir = './work_dirs/changeformer/changeformer_b1_256x256_50k_diff_cdd'
