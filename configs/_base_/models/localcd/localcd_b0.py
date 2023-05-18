@@ -18,7 +18,7 @@ model = dict(
         in_channels=3),
     neck=dict(type='FeatureFusionNeck', policy='diff'),
     decode_head=dict(
-        type='SegformerMLPHead',
+        type='SegFormerMLPHead',
         in_channels=[v for v in [32, 64, 160, 256]],
         in_index=[0, 1, 2, 3],
         channels=256,
