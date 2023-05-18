@@ -12,7 +12,7 @@ from functools import partial
 from timm.models.layers import DropPath, trunc_normal_
 from timm.models.registry import register_model
 from timm.models.vision_transformer import _cfg
-from .pvt import Attention, PyramidVisionTransformer
+from .mix_transformer import MixVisionTransformer
 import math
 
 from mmseg.models.builder import BACKBONES
@@ -177,7 +177,7 @@ class Block(nn.Module):
         return x
 
 
-class LocalViT(PyramidVisionTransformer):
+class LocalViT(MixVisionTransformer):
     def __init__(self, img_size=224, patch_size=16, in_channels=3, num_classes=1000, embed_dims=[64, 128, 256, 512],
                  num_heads=[1, 2, 4, 8], mlp_ratios=[4, 4, 4, 4], qkv_bias=False, qk_scale=None, drop_rate=0.,
                  attn_drop_rate=0., drop_path_rate=0., norm_layer=nn.LayerNorm,
