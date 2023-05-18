@@ -1,0 +1,5 @@
+CDD
+----
+./train.sh 6 configs/changeformer/changeformer_b0_256x256_50k_concat_cdd.py >> logs/changeformer/changeformer_b0_256x256_50k_concat_cdd.log 2>&1 &
+
+./train.sh 6 configs/changeformer/changeformer_b0_256x256_50k_diff_cdd.py >> logs/changeformer/changeformer_b0_256x256_50k_diff_cdd.log 2>&1 &
