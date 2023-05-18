@@ -36,9 +36,9 @@ class SegFormerHead2(BaseDecodeHead):
     """
     def __init__(self, feature_strides, **kwargs):
         super(SegFormerHead2, self).__init__(input_transform='multiple_select', **kwargs)
-        assert len(feature_strides) == len(self.in_channels)
-        assert min(feature_strides) == feature_strides[0]
-        self.feature_strides = feature_strides
+        #assert len(feature_strides) == len(self.in_channels)
+        #assert min(feature_strides) == feature_strides[0]
+        #self.feature_strides = feature_strides
 
         c1_in_channels, c2_in_channels, c3_in_channels, c4_in_channels = self.in_channels
 
