@@ -3,9 +3,7 @@ _base_ = ['../_base_/models/changeformer/changeformer_b0.py', '../_base_/dataset
 
 model = dict(
     neck=dict(type='FeatureFusionNeck', policy='diff'),
-    decode_head=dict(
-        type='SegformerMLPHead',
-        in_channels=[v for v in [32, 64, 160, 256]])
+    decode_head=dict(in_channels=[v for v in [32, 64, 160, 256]])
 )
 
 
@@ -25,4 +23,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/changeformer/changeformer_b0_256x256_50k_concat_cdd'
+work_dir = './work_dirs/changeformer/changeformer_b0_256x256_50k_diff_mlp_cdd'
