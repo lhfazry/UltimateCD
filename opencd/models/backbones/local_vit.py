@@ -211,7 +211,7 @@ class Block(nn.Module):
 
         if self.sr_ratio == 1:
             cls_token, x = torch.split(x, [1, num_token - 1], dim=1)  # (B, 1, dim), (B, 196, dim)
-            # print(cls_token.shape, x.shape)
+            print(f"cls_token: {cls_token.shape}, x: {x.shape}")
             x = x.transpose(1, 2).view(batch_size, embed_dim, patch_size, patch_size)  # (B, dim, 14, 14)
             x = self.conv(x).flatten(2).transpose(1, 2)  # (B, 196, dim)
             x = torch.cat([cls_token, x], dim=1)
