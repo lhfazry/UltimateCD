@@ -12,7 +12,7 @@ from functools import partial
 from timm.models.layers import DropPath, trunc_normal_
 from timm.models.registry import register_model
 from timm.models.vision_transformer import _cfg
-from .mix_transformer import MixVisionTransformer
+from .mix_transformer import Attention, MixVisionTransformer
 import math
 
 from mmseg.models.builder import BACKBONES
