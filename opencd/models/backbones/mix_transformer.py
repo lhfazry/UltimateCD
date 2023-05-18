@@ -157,7 +157,7 @@ class OverlapPatchEmbed(nn.Module):
                  img_size=224,
                  patch_size=7,
                  stride=4,
-                 in_chans=3,
+                 in_channels=3,
                  embed_dim=768):
         super().__init__()
         img_size = to_2tuple(img_size)
@@ -169,7 +169,7 @@ class OverlapPatchEmbed(nn.Module):
             1] // patch_size[1]
         self.num_patches = self.H * self.W
         self.proj = nn.Conv2d(
-            in_chans,
+            in_channels,
             embed_dim,
             kernel_size=patch_size,
             stride=stride,
@@ -191,7 +191,7 @@ class MixVisionTransformer(BaseModule):
     def __init__(self,
                  img_size=224,
                  patch_size=16,
-                 in_chans=3,
+                 in_channels=3,
                  num_classes=1000,
                  embed_dims=[64, 128, 256, 512],
                  num_heads=[1, 2, 4, 8],
@@ -228,25 +228,25 @@ class MixVisionTransformer(BaseModule):
             img_size=img_size,
             patch_size=7,
             stride=4,
-            in_chans=in_chans,
+            in_channels=in_channels,
             embed_dim=embed_dims[0])
         self.patch_embed2 = OverlapPatchEmbed(
             img_size=img_size // 4,
             patch_size=3,
             stride=2,
-            in_chans=embed_dims[0],
+            in_channels=embed_dims[0],
             embed_dim=embed_dims[1])
         self.patch_embed3 = OverlapPatchEmbed(
             img_size=img_size // 8,
             patch_size=3,
             stride=2,
-            in_chans=embed_dims[1],
+            in_channels=embed_dims[1],
             embed_dim=embed_dims[2])
         self.patch_embed4 = OverlapPatchEmbed(
             img_size=img_size // 16,
             patch_size=3,
             stride=2,
-            in_chans=embed_dims[2],
+            in_channels=embed_dims[2],
             embed_dim=embed_dims[3])
         if freeze_patch_embed:
             self.freeze_patch_emb()
