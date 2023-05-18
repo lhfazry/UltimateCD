@@ -136,7 +136,7 @@ class PatchEmbed(nn.Module):
 
 
 class PyramidVisionTransformer(BaseModule):
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=1000, embed_dims=[64, 128, 256, 512],
+    def __init__(self, img_size=224, patch_size=16, in_channels=3, num_classes=1000, embed_dims=[64, 128, 256, 512],
                  num_heads=[1, 2, 4, 8], mlp_ratios=[4, 4, 4, 4], qkv_bias=False, qk_scale=None, drop_rate=0.,
                  attn_drop_rate=0., drop_path_rate=0., norm_layer=nn.LayerNorm,
                  depths=[3, 4, 6, 3], sr_ratios=[8, 4, 2, 1], **kwargs):
@@ -145,7 +145,7 @@ class PyramidVisionTransformer(BaseModule):
         self.depths = depths
 
         # patch_embed
-        self.patch_embed1 = PatchEmbed(img_size=img_size, patch_size=patch_size, in_chans=in_chans,
+        self.patch_embed1 = PatchEmbed(img_size=img_size, patch_size=patch_size, in_chans=in_channels,
                                        embed_dim=embed_dims[0])
         self.patch_embed2 = PatchEmbed(img_size=img_size // 4, patch_size=2, in_chans=embed_dims[0],
                                        embed_dim=embed_dims[1])
