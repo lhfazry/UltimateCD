@@ -7,3 +7,7 @@ CDD
 ./train.sh 6 configs/localcd/localcd_b1_256x256_50k_diff_mlp_cdd.py >> logs/localcd/localcd_b1_256x256_50k_diff_mlp_cdd.log 2>&1 &
 
 ./train.sh 6 configs/localcd/localcd_b1_256x256_50k_diff_conv_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_50k_diff_conv_nocrop_cdd.log 2>&1 &
+
+./train.sh 6 configs/localcd/localcd_b1_256x256_20k_diff_mlp_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_20k_diff_mlp_nocrop_cdd.log 2>&1 &
+
+./train.sh 6 configs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.log 2>&1 &
