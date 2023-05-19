@@ -2,8 +2,7 @@ _base_ = ['../_base_/models/localcd/localcd_b1.py', '../_base_/datasets/cdd256.p
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py']
 
 model = dict(
-    neck=dict(type='FeatureFusionNeck', policy='diff'),
-    decode_head=dict(in_channels=[v for v in [32, 64, 160, 256]])
+    decode_head=dict(type='SegformerMLPHead',)
 )
 
 
