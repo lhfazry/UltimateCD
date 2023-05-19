@@ -2,7 +2,7 @@ _base_ = ['../_base_/models/localcd/localcd_b1.py', '../_base_/datasets/cdd256.p
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_20k.py']
 
 model = dict(
-    decode_head=dict(type='SegformerMLPHead',)
+    decode_head=dict(type='SegFormerMLPHead')
 )
 
 
