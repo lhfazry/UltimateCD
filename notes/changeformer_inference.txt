@@ -2,5 +2,6 @@ CDD
 ----
 python tools/test.py configs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.py work_dirs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd/change_maps/ --gpu-id 0 >> test_logs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.log 2>&1 &
 
+python tools/test.py configs/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd.py work_dirs/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd/change_maps/ --gpu-id 0 >> test_logs/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd.log 2>&1 &
 
 python tools/get_flops.py configs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.py --shape 256
