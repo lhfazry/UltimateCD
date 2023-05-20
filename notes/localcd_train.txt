@@ -11,3 +11,6 @@ CDD
 ./train.sh 6 configs/localcd/localcd_b1_256x256_20k_diff_mlp_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_20k_diff_mlp_nocrop_cdd.log 2>&1 &
 
 ./train.sh 6 configs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.log 2>&1 &
+
+./resume_train.sh 6 work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd/latest.pth config/localcd/localcd_b1_256x256_100k_absdiff_conv_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.log 2>&1 &
+

@@ -15,3 +15,6 @@ CDD
 
 ./resume_train.sh 6 work_dirs/changeformer/changeformer_b1_256x256_10k_diff_mlp_no_crop_cdd.py/latest.pth configs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.py >> logs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.log 2>&1 &
 
+./resume_train.sh 6 work_dirs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd/latest.pth configs/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd.py >> logs/changeformer/changeformer_b1_256x256_100k_diff_mlp_no_crop_cdd.log 2>&1 &
+
+
