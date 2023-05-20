@@ -16,8 +16,6 @@ class LEVIR_CD_Dataset(CDDataset):
         super().__init__(
             sub_dir_1='A',
             sub_dir_2='B',
-            img_suffix='.png',
-            seg_map_suffix='.png',
             classes=('unchanged', 'changed'),
             palette=[[255, 255, 255], [0, 0, 0]],
             **kwargs)
