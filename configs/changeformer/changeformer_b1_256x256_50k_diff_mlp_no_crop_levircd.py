@@ -1,10 +1,8 @@
-_base_ = ['../_base_/models/localcd/localcd_b1.py', '../_base_/datasets/levir_cd256.py',
+_base_ = ['../_base_/models/changeformer/changeformer_b1.py', '../_base_/datasets/levir_cd256.py',
         '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py']
 
-
 model = dict(
-    neck=dict(type='FeatureFusionNeck', policy='Lp_distance')
-)
+    decode_head=dict(type='SegFormerMLPHead'))
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
@@ -22,4 +20,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_levircd'
+work_dir = './work_dirs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_levircd'
