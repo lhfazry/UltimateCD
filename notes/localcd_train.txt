@@ -19,3 +19,5 @@ CDD
 
 ./train.sh 2 configs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_levircd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_levircd.log 2>&1 &
 
+./train.sh 2 configs/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd.py >> logs/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd.log 2>&1 &
+
