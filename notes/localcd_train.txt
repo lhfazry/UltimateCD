@@ -15,6 +15,9 @@ CDD
 ./resume_train.sh 6 work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd/latest.pth configs/localcd/localcd_b1_256x256_100k_absdiff_conv_nocrop_cdd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.log 2>&1 &
 
 
+LEVIR-CD
+--------
+
 ./train.sh 7 configs/localcd/localcd_b1_256x256_100k_absdiff_conv_nocrop_levircd.py >> logs/localcd/localcd_b1_256x256_100k_absdiff_conv_nocrop_levircd.log 2>&1 &
 
 ./train.sh 2 configs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_levircd.py >> logs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_levircd.log 2>&1 &
@@ -24,3 +27,14 @@ CDD
 ./train.sh 2 configs/localcd/localcd_b2_512x512_50k_absdiff_conv_nocrop_levircd.py >> logs/localcd/localcd_b2_512x512_50k_absdiff_conv_nocrop_levircd.log 2>&1 &
 
 
+Ablation
+------
+./train.sh 7 configs/localcd/ablation/localcd_b2_256x256_25k_locality_absdiff_conv_cdd.py >> logs/localcd/ablation/localcd_b2_256x256_25k_locality_absdiff_conv_cdd.log 2>&1 &
+
+./train.sh 7 configs/localcd/ablation/localcd_b2_256x256_25k_locality_diff_mlp_cdd.py >> logs/localcd/ablation/localcd_b2_256x256_25k_locality_diff_mlp_cdd.log 2>&1 &
+
+./train.sh 7 configs/localcd/ablation/localcd_b2_256x256_25k_nolocality_absdiff_mlp_cdd.py >> logs/localcd/ablation/localcd_b2_256x256_25k_nolocality_absdiff_mlp_cdd.log 2>&1 &
+
+./train.sh 7 configs/localcd/ablation/localcd_b2_256x256_25k_nolocality_diff_conv_cdd.py >> logs/localcd/ablation/localcd_b2_256x256_25k_nolocality_diff_conv_cdd.log 2>&1 &
+
+./train.sh 7 configs/localcd/ablation/localcd_b2_256x256_25k_nolocality_diff_mlp_cdd.py >> logs/localcd/ablation/localcd_b2_256x256_25k_nolocality_diff_mlp_cdd.log 2>&1 &

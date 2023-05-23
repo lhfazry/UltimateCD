@@ -1,11 +1,11 @@
-_base_ = ['../../_base_/models/changeformer/changeformer_b2.py', '../../_base_/datasets/cdd256.py',
-        '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py']
+_base_ = ['../../_base_/models/localcd/localcd_b2.py', '../../_base_/datasets/cdd256.py',
+        '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py']
 
 
 model = dict(
-    backbone=dict(type='changeformer_b2'),
+    backbone=dict(type='lovit_b2'),
     neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
-    decode_head=dict(type='SegFormerMLPHead')
+    decode_head=dict(type='SegformerConvHead')
 )
 
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
@@ -24,4 +24,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/localcd/ablation/localcd_b2_256x256_25k_nolocality_absdiff_mlp_cdd'
+work_dir = './work_dirs/localcd/ablation/localcd_b2_256x256_20k_locality_absdiff_conv_cdd'
