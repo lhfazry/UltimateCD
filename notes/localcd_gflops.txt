@@ -1,0 +1,5 @@
+LocalCD:
+python tools/get_flops.py configs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd.py --shape 256
+
+ChangeFormer:
+python tools/get_flops.py configs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.py --shape 256

@@ -296,7 +296,7 @@ class TransformerEncoderLayer(BaseModule):
 
 
 @BACKBONES.register_module()
-class MixViT(BaseModule):
+class LocalMixViT(BaseModule):
     """The backbone of Segformer.
 
     This backbone is the implementation of `SegFormer: Simple and
@@ -357,7 +357,7 @@ class MixViT(BaseModule):
                  pretrained=None,
                  init_cfg=None,
                  with_cp=False):
-        super(MixViT, self).__init__(init_cfg=init_cfg)
+        super(LocalMixViT, self).__init__(init_cfg=init_cfg)
 
         assert not (init_cfg and pretrained), \
             'init_cfg and pretrained cannot be set at the same time'
@@ -433,7 +433,7 @@ class MixViT(BaseModule):
                     normal_init(
                         m, mean=0, std=math.sqrt(2.0 / fan_out), bias=0)
         else:
-            super(MixVisionTransformer, self).init_weights()
+            super(MixViT, self).init_weights()
 
     def forward(self, x):
         outs = []
@@ -450,16 +450,30 @@ class MixViT(BaseModule):
         return outs
 
 @BACKBONES.register_module()
-class mixvit_b1(MixViT):
+class lomixvit_b1(LocalMixViT):
 
     def __init__(self, **kwargs):
-        super(mixvit_b1, self).__init__(
+        super(lomixvit_b1, self).__init__(
             patch_size=4,
             embed_dims=[64, 128, 320, 512],
             num_heads=[1, 2, 5, 8],
             mlp_ratios=[4, 4, 4, 4],
             qkv_bias=True,
             depths=[2, 2, 2, 2],
+            sr_ratios=[8, 4, 2, 1],
+            **kwargs)
+        
+@BACKBONES.register_module()
+class lomixvit_b2(LocalMixViT):
+
+    def __init__(self, **kwargs):
+        super(lomixvit_b2, self).__init__(
+            patch_size=4,
+            embed_dims=[64, 128, 320, 512],
+            num_heads=[1, 2, 5, 8],
+            mlp_ratios=[4, 4, 4, 4],
+            qkv_bias=True,
+            depths=[3, 4, 6, 3],
             sr_ratios=[8, 4, 2, 1],
             **kwargs)
         
