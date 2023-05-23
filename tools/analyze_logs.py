@@ -54,7 +54,7 @@ def plot_curve(log_dicts, args):
                 plt.xlabel('epoch')
                 plt.plot(plot_epochs, plot_values, label=label, marker='o')
             else:
-                plt.xlabel('iter')
+                plt.xlabel('iteration')
                 plt.plot(plot_iters, plot_values, label=label)
 
         plt.legend()
