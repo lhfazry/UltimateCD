@@ -1,0 +1,4 @@
+python tools/analyze_logs.py work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd/20230519_085402.log.json --keys loss loss_val --legend "Training loss" "Validation loss" --out results/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd_loss.png --style white
+
+
+python tools/analyze_logs.py work_dirs/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd/20230521_205728.log.json --keys loss loss_val --legend "Training loss" "Validation loss" --out results/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd.png --style white
