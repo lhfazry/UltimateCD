@@ -43,3 +43,6 @@ LEVIRCD
 ./train.sh 0 configs/wavecd/levircd/wavecd_s_256x256_25k_pmd_diff_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_pmd_diff_levircd.log 2>&1 &
 
 ./train.sh 2 configs/wavecd/levircd/wavecd_s_128x128_25k_sum_levircd.py >> logs/wavecd/wavecd_s_128x128_25k_sum_levircd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/levircd/wavecd_s_256x256_50k_absdiff_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_absdiff_levircd.log 2>&1 &
+

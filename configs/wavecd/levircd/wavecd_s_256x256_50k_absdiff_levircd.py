@@ -16,7 +16,7 @@ model = dict(
     ),
     neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(
-        in_channels=[2 * v for v in embed_dims],
+        in_channels=[v for v in embed_dims],
         num_classes=2
     ),
     auxiliary_head=dict(
