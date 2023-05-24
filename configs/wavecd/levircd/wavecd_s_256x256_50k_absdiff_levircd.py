@@ -1,5 +1,5 @@
 _base_ = [
-    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/levir_cd256.py',
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/levir_cd512.py',
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_50k.py'
 ]
 
