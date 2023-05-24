@@ -1,13 +1,13 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
+        #init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
         stem_hidden_dim=32, 
         embed_dims=embed_dims,
         num_heads=[2, 4, 10, 14], 
@@ -49,7 +49,7 @@ data = dict(
 )
 
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
-optimizer = dict(_delete_=True, type='AdamW', lr=0.006, betas=(0.9, 0.999), weight_decay=0.01,
+optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),
                                                  'norm': dict(decay_mult=0.)}))
@@ -65,4 +65,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_s_256x256_25k_sum_cdd_lr006'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd_nopretrained'

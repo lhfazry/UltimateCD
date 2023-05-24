@@ -1,18 +1,18 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
-embed_dims=[64, 128, 320, 512]
+embed_dims=[64, 128, 320, 448]
 
 model = dict(
+    pretrained='./pretrained/wavevit_s.pth',
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_b.pth'),
-        stem_hidden_dim=64, 
+        stem_hidden_dim=32, 
         embed_dims=embed_dims,
-        num_heads=[2, 4, 10, 16], 
+        num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
-        depths=[3, 4, 12, 3]
+        depths=[3, 4, 6, 3]
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
@@ -37,6 +37,10 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
     
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        hue_delta=30),
+
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
@@ -65,4 +69,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_b_256x256_50k_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd'

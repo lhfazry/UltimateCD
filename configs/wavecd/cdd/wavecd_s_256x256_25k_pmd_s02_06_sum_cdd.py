@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
@@ -39,7 +39,7 @@ train_pipeline = [
     
     dict(
         type='MultiImgPhotoMetricDistortion',
-        brightness_delta=10),
+        saturation_range=(0.2, 0.6)),
 
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
@@ -69,4 +69,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_s_256x256_25k_pmd_b10_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd'

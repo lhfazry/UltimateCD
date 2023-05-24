@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_50k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
@@ -14,13 +14,13 @@ model = dict(
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3]
     ),
-    neck=dict(type='FeatureFusionNeck', policy='sum'),
+    neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        in_channels=[v for v in embed_dims],
+        in_channels=[v*2 for v in embed_dims],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=embed_dims[2],
+        in_channels=embed_dims[2]*2,
         num_classes=2
     ))
 
@@ -37,6 +37,13 @@ train_pipeline = [
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
     
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=10,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.8, 1.2),
+        hue_delta=10),
+
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
@@ -47,8 +54,6 @@ data = dict(
     workers_per_gpu=8,
     train=dict(pipeline=train_pipeline)
 )
-
-workflow = [('train', 1), ('val', 1)]
 
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
@@ -67,4 +72,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_s_128x128_25k_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_25k_pmd_concat_cdd'

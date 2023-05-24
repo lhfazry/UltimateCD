@@ -1,18 +1,18 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_50k.py'
 ]
 
-embed_dims=[64, 128, 320, 512]
+embed_dims=[64, 128, 320, 448]
 
 model = dict(
     backbone=dict(
-        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_b.pth'),
-        stem_hidden_dim=64, 
+        init_cfg = dict(type='Pretrained', checkpoint='./pretrained/wavevit_s.pth'),
+        stem_hidden_dim=32, 
         embed_dims=embed_dims,
-        num_heads=[2, 4, 10, 16], 
+        num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
-        depths=[3, 4, 12, 3]
+        depths=[3, 4, 6, 3]
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
@@ -26,7 +26,7 @@ model = dict(
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (256, 256)
+crop_size = (128, 128)#(256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
@@ -48,6 +48,8 @@ data = dict(
     train=dict(pipeline=train_pipeline)
 )
 
+workflow = [('train', 1), ('val', 1)]
+
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
@@ -65,4 +67,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_b_256x256_25k_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_25k_sum_cdd'

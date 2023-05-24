@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
@@ -14,19 +14,19 @@ model = dict(
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3]
     ),
-    neck=dict(type='FeatureFusionNeck', policy='sum'),
+    neck=dict(type='FeatureFusionNeck', policy='concat'),
     decode_head=dict(
-        in_channels=[v for v in embed_dims],
+        in_channels=[v*2 for v in embed_dims],
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=embed_dims[2],
+        in_channels=embed_dims[2]*2,
         num_classes=2
     ))
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (128, 128)#(256, 256)
+crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
@@ -65,4 +65,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_s_128x128_25k_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_256x256_25k_concat_cdd'

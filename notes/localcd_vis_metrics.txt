@@ -1,4 +1,15 @@
+Loss
+----
+CDD
 python tools/analyze_logs.py work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd/20230519_085402.log.json --keys loss loss_val --legend "Training loss" "Validation loss" --out results/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd_loss.png --style white
 
-
+LEVIR-CD
 python tools/analyze_logs.py work_dirs/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd/20230521_205728.log.json --keys loss loss_val --legend "Training loss" "Validation loss" --out results/localcd/localcd_b1_512x512_50k_absdiff_conv_nocrop_levircd.png --style white
+
+F1
+----
+CDD
+python tools/analyze_logs.py work_dirs/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd/edited.log.json work_dirs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd/20230519_134137.log.json --keys mFscore --legend "LocalCD" "ChangeFormer" --out results/localcd/localcd_b1_256x256_50k_absdiff_conv_nocrop_cdd_f1.png --style white
+
+LEVIR
+python tools/analyze_logs.py work_dirs/localcd/localcd_b2_512x512_50k_absdiff_conv_nocrop_levircd/20230522_200231.log.json work_dirs/changeformer/changeformer_b2_512x512_50k_diff_mlp_no_crop_levircd/edited.log.json --keys mFscore --legend "LocalCD" "ChangeFormer" --out results/localcd/localcd_b2_512x512_50k_absdiff_conv_nocrop_levircd_f1.png --style white

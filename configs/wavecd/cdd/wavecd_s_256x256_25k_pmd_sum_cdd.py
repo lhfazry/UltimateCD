@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/siam_upernet_wavevit.py', '../_base_/datasets/cdd.py',
-    '../_base_/default_runtime.py', '../_base_/schedules/schedule_25k.py'
+    '../../_base_/models/siam_upernet_wavevit.py', '../../_base_/datasets/cdd.py',
+    '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_25k.py'
 ]
 
 embed_dims=[64, 128, 320, 448]
@@ -14,7 +14,7 @@ model = dict(
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3]
     ),
-    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
+    neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
         in_channels=[v for v in embed_dims],
         num_classes=2
@@ -72,4 +72,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/wavecd_s_256x256_25k_pmd_absdiff_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd'
