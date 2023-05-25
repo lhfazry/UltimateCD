@@ -1,0 +1,7 @@
+F1
+----
+CDD
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_25k_sum_cdd/20221221_103010.log.json work_dirs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/20221216_000802.log.json  work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/joined.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_50k_sum_cdd_f1.png --style white
+
+LEVIR-CD
+python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_128x128_25k_sum_levircd/20230315_211934.log.json work_dirs/wavecd/levircd/wavecd_b_256x256_25k_sum_levircd/20230310_200353.log.json  work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_25k_sum_levircd_f1.png --style white

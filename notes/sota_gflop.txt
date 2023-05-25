@@ -1,0 +1,1 @@
+python tools/get_flops.py configs/swinsunet/swinsunet_t_256x256_50k_cdd.py --shape 256
