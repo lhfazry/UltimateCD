@@ -23,6 +23,10 @@ CDD
 
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_256x256_50k_absdiff_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_absdiff_cdd.log 2>&1 &
 
+./resume_train.sh 1 work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/latest.pth configs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.log 2>&1 &
+
+wavecd_s_256x256_50k_sum_cdd
+
 
 LEVIRCD
 ----
