@@ -15,7 +15,7 @@ class SwinFusionNeck(BaseModule):
         self.in_channels = in_channels
         #print(f"in_channels: {in_channels}")
         self.out_channels = out_channels
-        self.fp16_enabled = True
+        self.fp16_enabled = False
         self.out_indices = out_indices
         self.projection = nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False)
 
