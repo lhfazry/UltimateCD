@@ -413,10 +413,9 @@ class SwinBlock(BaseModule):
 
         self.with_cp = with_cp
 
-        print(f"norm_cfg: {norm_cfg}")
-        print(f"embed_dims: {embed_dims}")
-        
         self.norm1 = build_norm_layer(norm_cfg, embed_dims)[1]
+        print(f"self.norm1: {self.norm1}")
+        
         self.attn = ShiftWindowMSA(
             embed_dims=embed_dims,
             num_heads=num_heads,
