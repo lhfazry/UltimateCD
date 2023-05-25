@@ -50,3 +50,7 @@ LEVIRCD
 
 ./train.sh 1 configs/wavecd/levircd/wavecd_s_256x256_50k_absdiff_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_absdiff_levircd.log 2>&1 &
 
+./resume_train.sh 1 work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/latest.pth configs/wavecd/levircd/wavecd_s_256x256_50k_sum_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_sum_levircd.log 2>&1 &
+
+
+
