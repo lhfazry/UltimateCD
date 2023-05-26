@@ -3,8 +3,14 @@ from collections import OrderedDict
 import argparse
 
 def print_pretrained(args):
+    
     state_dict = torch.load(args.pretrained)
     print(state_dict)
+    
+    for k, v in state_dict['state_dict'].items():
+        print(f"{k} ==> {v.shape}")
+
+    
 
 def main():
     parser = argparse.ArgumentParser(description='Fix pretrained')
