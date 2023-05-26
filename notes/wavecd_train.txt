@@ -25,8 +25,7 @@ CDD
 
 ./resume_train.sh 1 work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/latest.pth configs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.log 2>&1 &
 
-wavecd_s_256x256_50k_sum_cdd
-
+./train.sh 1 configs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_cdd.log 2>&1 &
 
 LEVIRCD
 ----

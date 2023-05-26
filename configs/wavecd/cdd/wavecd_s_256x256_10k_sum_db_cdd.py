@@ -28,13 +28,13 @@ model = dict(
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (256, 256)
+#crop_size = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotations'),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    #dict(type='MultiImgRandomCrop', crop_size=crop_size),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
@@ -45,7 +45,7 @@ train_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=64,
+    samples_per_gpu=32,
     workers_per_gpu=8,
     train=dict(pipeline=train_pipeline)
 )
