@@ -14,7 +14,7 @@ model = dict(
         num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3],
-        wave='db'
+        wave='db1'
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
