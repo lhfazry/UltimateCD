@@ -292,6 +292,7 @@ class Block(nn.Module):
             self.attn = Attention(dim, num_heads)
         else:
             self.attn = WaveAttention(dim, num_heads, sr_ratio, wave)
+            
         self.mlp = PVT2FFN(in_features=dim, hidden_features=int(dim * mlp_ratio))
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.apply(self._init_weights)
