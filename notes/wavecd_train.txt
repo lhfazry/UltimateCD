@@ -30,10 +30,17 @@ CDD
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_pretrained_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_pretrained_cdd.log 2>&1 &
 
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.log 2>&1 &
+./resume_train.sh 1 work_dirs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd/latest.pth configs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.log 2>&1 &
 
-./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
+./train.sh 1 work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/latest.pth configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
 
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_noet_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_noet_cdd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_clahe_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_clahe_cdd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cj_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cj_cdd.log 2>&1 &
+
+./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cs_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cs_cdd.log 2>&1 &
 
 
 
