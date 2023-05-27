@@ -33,6 +33,9 @@ CDD
 
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
 
+./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_noet_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_noet_cdd.log 2>&1 &
+
+
 
 LEVIRCD
 ----

@@ -29,6 +29,12 @@ for file in `find $1 -name "*.pth" -type f`;do
 
     if [[ "$file" =~ .*"$latest_pth".* ]]; then
         echo "Skip latest pth: $latest_pth"
+
+        if [[-f "best_Fscore.changed_$latest_pth"]]; then
+            rm "best_Fscore.changed_$latest_pth"
+            echo "Delete best score latest pth: best_Fscore.changed_$latest_pth"
+        fi
+
         continue
     fi
 
