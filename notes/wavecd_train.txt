@@ -44,6 +44,7 @@ CDD
 
 ./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_ag_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_ag_cdd.log 2>&1 &
 
+./train.sh 1 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_pmd_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_pmd_cdd.log 2>&1 &
 
 
 

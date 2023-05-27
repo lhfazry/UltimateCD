@@ -33,11 +33,15 @@ train_pipeline = [
     dict(type='MultiImgLoadAnnotations'),
     dict(type='MultiImgRandomCrop', crop_size=crop_size),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    dict(type='MultiImgAlbu', transforms=[dict(type='ColorJitter')]),
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=5,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.2, 0.6),
+        hue_delta=5),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     dict(type='MultiImgExchangeTime', prob=0.5),
-    
     dict(type='MultiImgNormalize', **img_norm_cfg),
     dict(type='MultiImgDefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
@@ -68,4 +72,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cj_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_pmd_cdd'
