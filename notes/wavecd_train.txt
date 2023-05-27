@@ -54,6 +54,7 @@ CDD
 
 ./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_bc_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_bc_cdd.log 2>&1 &
 
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_woaug_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_woaug_cdd.log 2>&1 &
 
 LEVIRCD
 ----
