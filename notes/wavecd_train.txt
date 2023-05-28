@@ -60,6 +60,16 @@ CDD
 
 ./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd.log 2>&1 &
 
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd.log 2>&1 &
+
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd.log 2>&1 &
+
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd.log 2>&1 &
+
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_noaux_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_noaux_cdd.log 2>&1 &
+
+
+
 LEVIRCD
 ----
 ./train.sh 6 configs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd.py >> logs/wavecd/wavecd_s_256x256_25k_sum_levircd.log 2>&1 &

@@ -10,3 +10,5 @@ CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_128
 CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_cdd.py --shape 256
 
 CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.py --shape 256
+
+CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd.py --shape 256
