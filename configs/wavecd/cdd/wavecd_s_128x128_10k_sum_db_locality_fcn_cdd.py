@@ -5,28 +5,50 @@ _base_ = [
 
 embed_dims=[64, 128, 320, 448]
 
+norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
+    type='SiamEncoderDecoder',
+    pretrained=None,
     backbone=dict(
         pretrained='./pretrained/wavevit_s.pth',
+        type='WaveViT',
         stem_hidden_dim=32, 
         embed_dims=embed_dims,
         num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3],
         wave='db1',
-        locality_ffn=True
-    ),
+        locality_ffn=True),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
     decode_head=dict(
         type='FCNHead',
         in_channels=embed_dims[2],
         in_index=2,
         num_convs=1,
-        concat_input=False),
+        concat_input=False,
+        channels=128,
+        dropout_ratio=0.1,
+        num_classes=2,
+        norm_cfg=norm_cfg,
+        align_corners=False,
+        loss_decode=dict(
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
     auxiliary_head=dict(
+        type='FCNHead',
         in_channels=embed_dims[2],
-        num_classes=2
-    ))
+        in_index=2,
+        channels=64,
+        num_convs=1,
+        concat_input=False,
+        dropout_ratio=0.1,
+        num_classes=2,
+        norm_cfg=norm_cfg,
+        align_corners=False,
+        loss_decode=dict(
+            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)),
+    # model training and testing settings
+    train_cfg=dict(),
+    test_cfg=dict(mode='whole'))
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
