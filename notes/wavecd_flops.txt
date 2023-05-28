@@ -1,5 +1,12 @@
 CDD
 ----
 
-
 python tools/get_flops.py configs/changeformer/changeformer_b1_256x256_50k_diff_mlp_no_crop_cdd.py --shape 256
+
+CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py --shape 256
+
+CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd.py --shape 256
+
+CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_256x256_10k_sum_db_cdd.py --shape 256
+
+CUDA_VISIBLE_DEVICES=4 python tools/get_flops.py configs/wavecd/cdd/wavecd_s_256x256_10k_sum_cdd.py --shape 256
