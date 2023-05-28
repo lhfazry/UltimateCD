@@ -13,7 +13,7 @@ model = dict(
         num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3],
-        wave='db2',
+        wave='coif1',
         locality_ffn=True
     ),
     neck=dict(type='FeatureFusionNeck', policy='sum'),
@@ -69,4 +69,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db2_locality_cdd'
+work_dir = './work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_coif_locality_cdd'
