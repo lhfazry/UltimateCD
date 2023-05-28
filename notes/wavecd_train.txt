@@ -68,6 +68,8 @@ CDD
 
 ./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_noaux_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_noaux_cdd.log 2>&1 &
 
+./train.sh 4 configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_noaux_cdd.py >> logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_noaux_cdd.log 2>&1 &
+
 
 
 LEVIRCD
