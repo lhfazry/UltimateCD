@@ -342,7 +342,8 @@ class WaveAttention(nn.Module):
         q = self.q(x).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3)
 
         x = x.view(B, H, W, C).permute(0, 3, 1, 2)
-        x_dwt = self.dwt(self.reduce(x))
+        x_reduced = self.reduce(x)
+        x_dwt = self.dwt(x_reduced)
         x_dwt = self.filter(x_dwt)
 
         if self.global_context == 'idwt':
@@ -360,7 +361,7 @@ class WaveAttention(nn.Module):
         if self.global_context == 'idwt':
             x = self.proj(torch.cat([x, x_idwt], dim=-1))
         elif self.global_context == 'skip':
-            x = self.proj(torch.cat([x, x_idwt], dim=-1))
+            x = self.proj(torch.cat([x, x_reduced], dim=-1))
         else:
             x = self.proj(x)
 
