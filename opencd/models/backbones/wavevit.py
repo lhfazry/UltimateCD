@@ -283,15 +283,18 @@ class PVT2FFN(nn.Module):
         return x
 
 class WaveAttention(nn.Module):
-    def __init__(self, dim, num_heads, sr_ratio, wave='haar'):
+    def __init__(self, dim, num_heads, sr_ratio, wave='haar', global_context='idwt'):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
         self.scale = head_dim**-0.5
         self.sr_ratio = sr_ratio
+        self.global_context = global_context
 
         self.dwt = DWT_2D(wave=wave)
-        self.idwt = IDWT_2D(wave=wave)
+
+        if global_context == 'idwt':
+            self.idwt = IDWT_2D(wave=wave)
 
         self.reduce = nn.Sequential(
             nn.Conv2d(dim, dim//4, kernel_size=1, padding=0, stride=1),
@@ -311,7 +314,12 @@ class WaveAttention(nn.Module):
             nn.LayerNorm(dim),
             nn.Linear(dim, dim * 2)
         )
-        self.proj = nn.Linear(dim+dim//4, dim)
+
+        if global_context == 'idwt' or global_context == 'skip':
+            self.proj = nn.Linear(dim+dim//4, dim)
+        else:
+            self.proj = nn.Linear(dim, dim)
+
         self.apply(self._init_weights)
 
     def _init_weights(self, m):
@@ -337,8 +345,9 @@ class WaveAttention(nn.Module):
         x_dwt = self.dwt(self.reduce(x))
         x_dwt = self.filter(x_dwt)
 
-        x_idwt = self.idwt(x_dwt)
-        x_idwt = x_idwt.view(B, -1, x_idwt.size(-2)*x_idwt.size(-1)).transpose(1, 2)
+        if self.global_context == 'idwt':
+            x_idwt = self.idwt(x_dwt)
+            x_idwt = x_idwt.view(B, -1, x_idwt.size(-2)*x_idwt.size(-1)).transpose(1, 2)
 
         kv = self.kv_embed(x_dwt).reshape(B, C, -1).permute(0, 2, 1)
         kv = self.kv(kv).reshape(B, -1, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
@@ -347,7 +356,14 @@ class WaveAttention(nn.Module):
         attn = (q @ k.transpose(-2, -1)) * self.scale
         attn = attn.softmax(dim=-1)
         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
-        x = self.proj(torch.cat([x, x_idwt], dim=-1))
+
+        if self.global_context == 'idwt':
+            x = self.proj(torch.cat([x, x_idwt], dim=-1))
+        elif self.global_context == 'skip':
+            x = self.proj(torch.cat([x, x_idwt], dim=-1))
+        else:
+            x = self.proj(x)
+
         return x
 
 class Attention(nn.Module):
@@ -401,7 +417,8 @@ class Block(nn.Module):
         sr_ratio=1, 
         block_type = 'wave',
         wave='haar',
-        locality_ffn=False
+        locality_ffn=False,
+        global_context='idwt'
     ):
         super().__init__()
         self.locality_ffn = locality_ffn
@@ -410,7 +427,8 @@ class Block(nn.Module):
         if block_type == 'std_att':
             self.attn = Attention(dim, num_heads)
         else:
-            self.attn = WaveAttention(dim, num_heads, sr_ratio, wave)
+            self.attn = WaveAttention(dim, num_heads, sr_ratio, wave, 
+                                      global_context=global_context)
 
         if locality_ffn:
             self.conv = LocalityFeedForward(dim, dim, 1, mlp_ratio, reduction=dim)
@@ -543,6 +561,7 @@ class WaveViT(BaseModule):
         norm_layer = partial(nn.LayerNorm, eps=1e-6), 
         wave='haar',
         locality_ffn=False,
+        global_context='idwt',
         pretrained=None,
         **kwargs):
 
@@ -568,7 +587,8 @@ class WaveViT(BaseModule):
                 sr_ratio=sr_ratios[i], 
                 block_type='wave' if i < 2 else 'std_att',
                 wave=wave,
-                locality_ffn=locality_ffn)
+                locality_ffn=locality_ffn,
+                global_context=global_context)
             for j in range(depths[i])])
             
             norm = norm_layer(embed_dims[i])
