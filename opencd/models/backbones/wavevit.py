@@ -361,6 +361,7 @@ class WaveAttention(nn.Module):
         if self.global_context == 'idwt':
             x = self.proj(torch.cat([x, x_idwt], dim=-1))
         elif self.global_context == 'skip':
+            x_reduced = x_reduced.view(B, -1, x_reduced.size(-2)*x_reduced.size(-1)).transpose(1, 2)
             x = self.proj(torch.cat([x, x_reduced], dim=-1))
         else:
             x = self.proj(x)
