@@ -84,7 +84,7 @@ CDD
 
 ./train.sh 6 configs/wavecd/cdd/wavecd_s_256x256_100k_sum_locality_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_100k_sum_locality_cdd.log 2>&1 &
 
-./train.sh 5 configs/wavecd/cdd/wavecd_s_256x256_25k_sum_locality_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_25k_sum_locality_cdd.log 2>&1 &
+./train.sh 5 configs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_cdd.log 2>&1 &
 
 
 

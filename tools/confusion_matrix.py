@@ -5,6 +5,7 @@ import os
 import matplotlib.pyplot as plt
 import mmcv
 import numpy as np
+import torch
 from matplotlib.ticker import MultipleLocator
 from mmcv import Config, DictAction
 
@@ -155,7 +156,8 @@ def main():
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 
-    results = mmcv.load(args.prediction_path)
+    #results = mmcv.load(args.prediction_path)
+    results = torch.load(args.prediction_path)
 
     assert isinstance(results, list)
     if isinstance(results[0], np.ndarray):
