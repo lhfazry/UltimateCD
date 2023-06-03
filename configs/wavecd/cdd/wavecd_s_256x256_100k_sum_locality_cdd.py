@@ -19,6 +19,10 @@ model = dict(
     decode_head=dict(
         in_channels=[v for v in embed_dims],
         num_classes=2
+    ),
+    auxiliary_head=dict(
+        in_channels=embed_dims[2],
+        num_classes=2
     ))
 
 img_norm_cfg = dict(
