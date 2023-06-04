@@ -1,49 +1,40 @@
-import sys
-import os
+import argparse
 import numpy as np
 from sklearn.metrics import confusion_matrix
-import cv2
 
-def calculate_confusion_matrix(predicted_folder, target_folder):
-    predicted_files = os.listdir(predicted_folder)
-    target_files = os.listdir(target_folder)
+def compute_confusion_matrix(target_folder, predicted_folder):
+    # Load the ground-truth and predicted images
+    target_images = load_images_from_folder(target_folder)
+    predicted_images = load_images_from_folder(predicted_folder)
 
-    if len(predicted_files) != len(target_files):
-        raise ValueError("Number of predicted files and target files do not match.")
+    # Flatten the images
+    target_flat = np.concatenate(target_images).ravel()
+    predicted_flat = np.concatenate(predicted_images).ravel()
 
-    predicted_labels = []
-    target_labels = []
-
-    for file in predicted_files:
-        image_path = os.path.join(predicted_folder, file)
-        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        predicted_labels.append(image.flatten())
-
-    for file in target_files:
-        image_path = os.path.join(target_folder, file)
-        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        target_labels.append(image.flatten())
-
-    predicted_labels = np.array(predicted_labels)
-    target_labels = np.array(target_labels)
-
-    all_labels = np.unique(np.concatenate((predicted_labels, target_labels)))
-    label_mapping = {label: i for i, label in enumerate(all_labels)}
-
-    predicted_labels = np.array([label_mapping[label] for label in predicted_labels])
-    target_labels = np.array([label_mapping[label] for label in target_labels])
-
-    cm = confusion_matrix(target_labels, predicted_labels)
+    # Compute the confusion matrix
+    cm = confusion_matrix(target_flat, predicted_flat)
 
     return cm
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python confusion_matrix.py predicted_folder target_folder")
-        sys.exit(1)
+def load_images_from_folder(folder):
+    # Load binary images from the specified folder
+    images = []
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder, filename), cv2.IMREAD_GRAYSCALE)
+        if img is not None:
+            images.append(img)
+    return images
 
-    predicted_folder = sys.argv[1]
-    target_folder = sys.argv[2]
+if __name__ == '__main__':
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description='Compute confusion matrix for image segmentation')
+    parser.add_argument('target_folder', help='Folder containing ground-truth binary images')
+    parser.add_argument('predicted_folder', help='Folder containing segmentation result images')
+    args = parser.parse_args()
 
-    confusion_matrix = calculate_confusion_matrix(predicted_folder, target_folder)
-    print(confusion_matrix)
+    # Compute the confusion matrix
+    cm = compute_confusion_matrix(args.target_folder, args.predicted_folder)
+
+    # Print the confusion matrix
+    print('Confusion Matrix:')
+    print(cm)
