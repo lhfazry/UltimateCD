@@ -10,11 +10,11 @@ def compute_confusion_matrix(target_folder, predicted_folder):
     predicted_images = load_images_from_folder(predicted_folder)
 
     # Flatten the images
-    target_flat = np.concatenate(target_images).ravel()
-    predicted_flat = np.concatenate(predicted_images).ravel()
+    target_flat = np.concatenate(target_images).ravel() // 255
+    predicted_flat = np.concatenate(predicted_images).ravel() // 255
 
     # Compute the confusion matrix
-    cm = confusion_matrix(target_flat, predicted_flat, labels=[0, 255])
+    cm = confusion_matrix(target_flat, predicted_flat)
     return cm
 
 def load_images_from_folder(folder):
