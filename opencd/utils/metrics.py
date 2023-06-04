@@ -301,7 +301,7 @@ def mean_fscore(results,
 def get_key_values(data, key):
     res = []
     for item in data:
-        res.append(item[key])
+        res.append(np.mean(item[key]))
     return res
 
 def mean_confidence_interval(data, key, confidence=0.95):
@@ -410,6 +410,15 @@ def pre_eval_to_metrics(pre_eval_results,
     pre_eval_results = tuple(zip(*pre_eval_results))
     assert len(pre_eval_results) == 4
 
+    total_area_intersect = sum(pre_eval_results[0])
+    total_area_union = sum(pre_eval_results[1])
+    total_area_pred_label = sum(pre_eval_results[2])
+    total_area_label = sum(pre_eval_results[3])
+
+    ret_metrics = total_area_to_metrics(total_area_intersect, total_area_union,
+                                    total_area_pred_label,
+                                    total_area_label, metrics, nan_to_num,
+                                    beta)
     confidences = {}
     if confidence is not None:
         tmp_metrics = []
@@ -422,28 +431,15 @@ def pre_eval_to_metrics(pre_eval_results,
                                     total_area_pred_label,
                                     total_area_label, metrics, nan_to_num,
                                     beta)
-            print(ret_metric)
             tmp_metrics.append(ret_metric)
 
             if not keys:
                 keys = list(ret_metric)
 
-        ret_metrics = {}
-
         for key in keys:
             m, h = mean_confidence_interval(tmp_metrics, key, confidence=confidence)
-            ret_metrics[key] = m
-            confidences[key] = h
-    else:
-        total_area_intersect = sum(pre_eval_results[0])
-        total_area_union = sum(pre_eval_results[1])
-        total_area_pred_label = sum(pre_eval_results[2])
-        total_area_label = sum(pre_eval_results[3])
-
-        ret_metrics = total_area_to_metrics(total_area_intersect, total_area_union,
-                                        total_area_pred_label,
-                                        total_area_label, metrics, nan_to_num,
-                                        beta)
+            confidences[key] = m, h
+        
 
     return ret_metrics, confidences
 
