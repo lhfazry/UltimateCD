@@ -7,6 +7,7 @@ from packaging.version import parse
 from .version import __version__, version_info
 from .models import *
 from .datasets import *
+from .utils import *
 
 MMCV_MIN = '1.3.13'
 MMCV_MAX = '1.6.0'
