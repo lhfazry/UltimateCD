@@ -422,6 +422,7 @@ def pre_eval_to_metrics(pre_eval_results,
                                     total_area_pred_label,
                                     total_area_label, metrics, nan_to_num,
                                     beta)
+            print(ret_metric)
             tmp_metrics.append(ret_metric)
 
             if not keys:
