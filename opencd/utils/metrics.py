@@ -426,9 +426,8 @@ def pre_eval_to_metrics(pre_eval_results,
 
             if not keys:
                 keys = list(ret_metric)
-                
-        ret_metrics = dict()
-        confidences = dict()
+
+        ret_metrics = {}
 
         for key in keys:
             m, h = mean_confidence_interval(tmp_metrics, key, confidence=confidence)
