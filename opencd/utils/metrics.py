@@ -341,7 +341,7 @@ def eval_metrics(results,
         ndarray: Per category evaluation metrics, shape (num_classes, ).
     """
 
-    confidences = None
+    confidences = {}
     if confidence is not None:
         total_area_intersects, total_area_unions, total_area_pred_labels, \
         total_area_labels = total_intersect_and_union_per_sample(
@@ -385,12 +385,11 @@ def eval_metrics(results,
     return ret_metrics, confidences
 
 
-
-
 def pre_eval_to_metrics(pre_eval_results,
                         metrics=['mIoU'],
                         nan_to_num=None,
-                        beta=1):
+                        beta=1,
+                        confidence=None):
     """Convert pre-eval results to metrics.
 
     Args:
@@ -411,17 +410,42 @@ def pre_eval_to_metrics(pre_eval_results,
     pre_eval_results = tuple(zip(*pre_eval_results))
     assert len(pre_eval_results) == 4
 
-    total_area_intersect = sum(pre_eval_results[0])
-    total_area_union = sum(pre_eval_results[1])
-    total_area_pred_label = sum(pre_eval_results[2])
-    total_area_label = sum(pre_eval_results[3])
+    confidences = {}
+    if confidence is not None:
+        tmp_metrics = []
+        keys = []
+        
+        for total_area_intersect, total_area_union, total_area_pred_label, \
+            total_area_label in zip(pre_eval_results[0], pre_eval_results[1], \
+                                    pre_eval_results[2], pre_eval_results[3]):
+            ret_metric = total_area_to_metrics(total_area_intersect, total_area_union,
+                                    total_area_pred_label,
+                                    total_area_label, metrics, nan_to_num,
+                                    beta)
+            tmp_metrics.append(ret_metric)
 
-    ret_metrics = total_area_to_metrics(total_area_intersect, total_area_union,
+            if not keys:
+                keys = list(ret_metric)
+                
+        ret_metrics = dict()
+        confidences = dict()
+
+        for key in keys:
+            m, h = mean_confidence_interval(tmp_metrics, key, confidence=confidence)
+            ret_metrics[key] = m
+            confidences[key] = h
+    else:
+        total_area_intersect = sum(pre_eval_results[0])
+        total_area_union = sum(pre_eval_results[1])
+        total_area_pred_label = sum(pre_eval_results[2])
+        total_area_label = sum(pre_eval_results[3])
+
+        ret_metrics = total_area_to_metrics(total_area_intersect, total_area_union,
                                         total_area_pred_label,
                                         total_area_label, metrics, nan_to_num,
                                         beta)
 
-    return ret_metrics
+    return ret_metrics, confidences
 
 
 def total_area_to_metrics(total_area_intersect,

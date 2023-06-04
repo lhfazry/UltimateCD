@@ -11,12 +11,12 @@ from pyparsing import restOfLine
 from pytest import Item
 from torch.utils.data import Dataset
 
-from mmseg.core import intersect_and_union, pre_eval_to_metrics
+from mmseg.core import intersect_and_union
 from mmseg.utils import get_root_logger
 from mmseg.datasets import CustomDataset, DATASETS
 from mmseg.datasets.pipelines import Compose
 from opencd.datasets.pipelines import MultiImgLoadAnnotations
-from opencd.utils.metrics import eval_metrics
+from opencd.utils.metrics import eval_metrics, pre_eval_to_metrics
 
 @DATASETS.register_module()
 class CDDataset(Dataset):
@@ -453,6 +453,8 @@ class CDDataset(Dataset):
         # test a list of files
         if mmcv.is_list_of(results, np.ndarray) or mmcv.is_list_of(
                 results, str):
+            print('goes eval_metrics')
+
             if gt_seg_maps is None:
                 gt_seg_maps = self.get_gt_seg_maps()
             num_classes = len(self.CLASSES)
@@ -467,8 +469,8 @@ class CDDataset(Dataset):
                 confidence=0.95)
         # test a list of pre_eval_results
         else:
-            ret_metrics = pre_eval_to_metrics(results, metric)
-            print('goes here')
+            print('goes pre_eval_to_metrics')
+            ret_metrics = pre_eval_to_metrics(results, metric, confidence=0.95)
 
         # Because dataset.CLASSES is required for per-eval.
         if self.CLASSES is None:
