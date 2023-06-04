@@ -1,5 +1,7 @@
 import argparse
 import numpy as np
+import os
+import cv2
 from sklearn.metrics import confusion_matrix
 
 def compute_confusion_matrix(target_folder, predicted_folder):
