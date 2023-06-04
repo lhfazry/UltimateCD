@@ -1,4 +1,4 @@
-cdd
+CDD
 ----
 python tools/confusion_matrix2.py results/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd/change_maps/ datasets/cdd/test/OUT/
 
@@ -7,4 +7,5 @@ Confusion Matrix:
 [[151741495  20717858]
  [ 21669334   2479313]]
 
- 
+LEVIRCD
+---
