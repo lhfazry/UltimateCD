@@ -2,6 +2,7 @@ import sys
 import os
 import numpy as np
 from sklearn.metrics import confusion_matrix
+import cv2
 
 def calculate_confusion_matrix(predicted_folder, target_folder):
     predicted_files = os.listdir(predicted_folder)
@@ -14,11 +15,19 @@ def calculate_confusion_matrix(predicted_folder, target_folder):
     target_labels = []
 
     for file in predicted_files:
-        predicted_labels.append(os.path.splitext(file)[0])
-    for file in target_files:
-        target_labels.append(os.path.splitext(file)[0])
+        image_path = os.path.join(predicted_folder, file)
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        predicted_labels.append(image.flatten())
 
-    labels = np.unique(predicted_labels + target_labels)
+    for file in target_files:
+        image_path = os.path.join(target_folder, file)
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        target_labels.append(image.flatten())
+
+    predicted_labels = np.array(predicted_labels)
+    target_labels = np.array(target_labels)
+
+    labels = np.unique(np.concatenate((predicted_labels, target_labels)))
 
     predicted_labels = np.array([np.where(labels == label)[0][0] for label in predicted_labels])
     target_labels = np.array([np.where(labels == label)[0][0] for label in target_labels])
