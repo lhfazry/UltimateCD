@@ -301,7 +301,7 @@ def mean_fscore(results,
 def get_key_values(data, key):
     res = []
     for item in data:
-        res.append(np.nanmean(item[key]))
+        res.append(np.round(np.nanmean(item[key]) * 100, 2))
     return res
 
 def mean_confidence_interval(data, key, confidence=0.95):
