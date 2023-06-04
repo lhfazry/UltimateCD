@@ -1,0 +1,16 @@
+CDD
+---
+python tools/test.py configs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained.py work_dirs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained/latest.pth --work-dir test_logs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained --eval mIoU mDice mFscore  --gpu-id 1 >> test_logs/focalcd/focalcd_b_256x256_20k_sum_cdd_pretrained.log 2>&1 &
+
+
+
+LEVIRCD
+---
+
+python tools/test.py configs/focalcd/levircd/focalcd_s_512x512_30k_sum_levircd.py work_dirs/focalcd/levircd/focalcd_s_512x512_30k_sum_levircd/latest.pth --work-dir test_logs/focalcd/levircd/focalcd_s_512x512_30k_sum_levircd --eval mIoU mDice mFscore  --gpu-id 5 >> test_logs/focalcd/levircd/focalcd_s_512x512_30k_sum_levircd.log 2>&1 &
+
+
+-----
+Inference:
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd/change_maps/ --gpu-id 0 >> test_logs/wavecd/cdd/wavecd_s_256x256_50k_sum_cdd.log 2>&1 &

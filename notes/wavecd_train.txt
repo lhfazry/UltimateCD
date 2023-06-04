@@ -86,7 +86,7 @@ CDD
 
 ./train.sh 5 configs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_cdd.log 2>&1 &
 
-
+./resume_train.sh 1 work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_cdd/latest.pth configs/wavecd/cdd/wavecd_s_256x256_100k_sum_locality_cdd2.py >> logs/wavecd/cdd/wavecd_s_256x256_100k_sum_locality_cdd2.log 2>&1 &
 
 
 LEVIRCD
