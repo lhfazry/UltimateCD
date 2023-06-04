@@ -470,7 +470,7 @@ class CDDataset(Dataset):
         # test a list of pre_eval_results
         else:
             print('goes pre_eval_to_metrics')
-            ret_metrics = pre_eval_to_metrics(results, metric, confidence=0.95)
+            ret_metrics, confidences = pre_eval_to_metrics(results, metric, confidence=0.95)
 
         # Because dataset.CLASSES is required for per-eval.
         if self.CLASSES is None:
