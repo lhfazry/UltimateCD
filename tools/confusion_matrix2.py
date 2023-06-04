@@ -27,10 +27,11 @@ def calculate_confusion_matrix(predicted_folder, target_folder):
     predicted_labels = np.array(predicted_labels)
     target_labels = np.array(target_labels)
 
-    labels = np.unique(np.concatenate((predicted_labels, target_labels)))
+    all_labels = np.unique(np.concatenate((predicted_labels, target_labels)))
+    label_mapping = {label: i for i, label in enumerate(all_labels)}
 
-    predicted_labels = np.array([np.where(labels == label)[0][0] for label in predicted_labels])
-    target_labels = np.array([np.where(labels == label)[0][0] for label in target_labels])
+    predicted_labels = np.array([label_mapping[label] for label in predicted_labels])
+    target_labels = np.array([label_mapping[label] for label in target_labels])
 
     cm = confusion_matrix(target_labels, predicted_labels)
 
