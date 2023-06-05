@@ -20,6 +20,10 @@ python tools/test.py configs/siamixformer/siamixformer_s_256x256_50k_cdd.py work
 python tools/test.py configs/swinsunet/swinsunet_t_256x256_50k_cdd.py work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/swinsunet/swinsunet_t_256x256_50k_cdd/change_maps/ --gpu-id 6 >> test_logs/swinsunet/swinsunet_t_256x256_50k_cdd.log 2>&1 &
 
 
+eval:
+-----
+python tools/test.py configs/swinsunet/swinsunet_t_256x256_50k_cdd.py work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/latest.pth --work-dir test_logs/swinsunet/swinsunet_t_256x256_50k_cdd --eval mIoU mDice mFscore  --gpu-id 5 >> test_logs/swinsunet/swinsunet_t_256x256_50k_cdd.log 2>&1 &
+
 LEVIR_CD
 
 python tools/test.py configs/fcsn/fc_ef_256x256_50k_levircd.py work_dirs/fcsn/fc_ef_256x256_50k_levircd/latest.pth --format-only --eval-options imgfile_prefix=results/fcsn/fc_ef_256x256_50k_levircd/change_maps/ --gpu-id 6 >> test_logs/fcsn/fc_ef_256x256_50k_levircd.log 2>&1 &
@@ -38,3 +42,7 @@ python tools/test.py configs/siamixformer/siamixformer_s_256x256_50k_levircd.py 
 
 
 python tools/test.py configs/swinsunet/swinsunet_t_256x256_50k_levircd.py work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/latest.pth --format-only --eval-options imgfile_prefix=results/swinsunet/swinsunet_t_256x256_50k_levircd/change_maps/ --gpu-id 6 >> test_logs/swinsunet/swinsunet_t_256x256_50k_levircd.log 2>&1 &
+
+eval:
+-----
+python tools/test.py configs/swinsunet/swinsunet_t_256x256_50k_levircd.py work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/latest.pth --work-dir test_logs/swinsunet/swinsunet_t_256x256_50k_levircd --eval mIoU mDice mFscore  --gpu-id 5 >> test_logs/swinsunet/swinsunet_t_256x256_50k_levircd.log 2>&1 &
