@@ -3,5 +3,33 @@ F1
 CDD
 python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_25k_sum_cdd/20221221_103010.log.json work_dirs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/20221216_000802.log.json  work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/joined.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_50k_sum_cdd_f1.png --style white
 
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/20221221_203440.log.json  --keys loss loss_val --legend "Training Loss" "Validation Loss" --out results/wavecd/wavecd_s_256x256_25k_sum_cdd_loss.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/20221221_203440.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/joined.log.json --keys mFscore --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_cdd_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/20221221_203440.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/joined.log.json --keys mIoU --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_cdd_iou.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/20230526_123955.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mFscore --legend "Tanpa LFF" "Dengan LFF" --out results/wavecd/wavecd_s_128x128_10k_sum_locality_cdd_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd/20230528_064117.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd/20230528_085108.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd/20230528_085505.log.json  work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd/20230528_085641.log.json --keys mFscore --legend "FPN + PPM" "Conv Decoder" "FCN" "MLP Decoder" --out results/wavecd/wavecd_s_128x128_10k_sum_decoder_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd/head10k.log.json  --keys mFscore --legend "Brightness (-10,10)" "Brightness (-30, 30)" "Contrast (0.2, 0.6)" "Contrast (0.8, 1.2)" "Saturation (0.2, 0.6)" "Saturation (0.8, 1.2)" "Hue (-10,10)" "Hue (-30, 30)" "Tanpa Augmentasi" --out results/wavecd/wavecd_s_128x128_10k_sum_pmd_f1.png --style white
+
+
+IoU
+----
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/20230526_123955.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Tanpa LFF" "Dengan LFF" --out results/wavecd/wavecd_s_128x128_10k_sum_locality_cdd_iou.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd/20230528_064117.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd/20230528_085108.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd/20230528_085505.log.json  work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd/20230528_085641.log.json --keys mIoU --legend "FPN + PPM" "Conv Decoder" "FCN" "MLP Decoder" --out results/wavecd/wavecd_s_128x128_10k_sum_decoder_miou.png --style white
+
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd/head10k.log.json --keys mIoU --legend "Brightness (-10,10)" "Brightness (-30, 30)" "Contrast (0.2, 0.6)" "Contrast (0.8, 1.2)" "Saturation (0.2, 0.6)" "Saturation (0.8, 1.2)" "Hue (-10,10)" "Hue (-30, 30)" "Tanpa Augmentasi" --out results/wavecd/wavecd_s_128x128_10k_sum_pmd_iou.png --style white
+
 LEVIR-CD
-python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_128x128_25k_sum_levircd/20230315_211934.log.json work_dirs/wavecd/levircd/wavecd_b_256x256_25k_sum_levircd/20230310_200353.log.json  work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_25k_sum_levircd_f1.png --style white
+python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_128x128_10k_sum_cdd/20230315_211934.log.json work_dirs/wavecd/levircd/wavecd_b_256x256_25k_sum_levircd/20230310_200353.log.json  work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_25k_sum_levircd_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/20230301_200440.log.json  --keys loss loss_val --legend "Training Loss" "Validation Loss" --out results/wavecd/wavecd_s_256x256_25k_sum_levircd_loss.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/20230301_200440.log.json work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_levircd_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/20230301_200440.log.json work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mIoU --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_levircd_iou.png --style white

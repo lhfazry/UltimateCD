@@ -10,3 +10,5 @@ seaborn==0.12.1
 grad-cam
 einops
 albumentations
+statsmodels
+mlxtend

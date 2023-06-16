@@ -1,0 +1,8 @@
+CDD
+----
+python tools/confusion_matrix2.py results/swinsunet/swinsunet_t_256x256_50k_cdd/change_maps/ datasets/cdd/test/OUT/
+
+
+LEVIRCD
+---
+python tools/confusion_matrix2.py results/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/change_maps/ datasets/levir-cd/test/label/

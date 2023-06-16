@@ -453,7 +453,6 @@ class CDDataset(Dataset):
         # test a list of files
         if mmcv.is_list_of(results, np.ndarray) or mmcv.is_list_of(
                 results, str):
-            print('goes eval_metrics')
 
             if gt_seg_maps is None:
                 gt_seg_maps = self.get_gt_seg_maps()
@@ -469,7 +468,6 @@ class CDDataset(Dataset):
                 confidence=0.95)
         # test a list of pre_eval_results
         else:
-            print('goes pre_eval_to_metrics')
             ret_metrics, confidences = pre_eval_to_metrics(results, metric, confidence=0.95)
 
         # Because dataset.CLASSES is required for per-eval.
