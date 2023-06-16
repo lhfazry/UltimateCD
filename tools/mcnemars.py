@@ -79,6 +79,7 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth):
             pred_path1 = os.path.join(pred_folder1, file)
             pred_path2 = os.path.join(pred_folder2, file)
 
+            print(gt_path, pred_path1, pred_path2)
             target_label = np.array(Image.open(gt_path))# // 255
             print(target_label)
             pred1 = np.array(Image.open(pred_path1)) // 255
