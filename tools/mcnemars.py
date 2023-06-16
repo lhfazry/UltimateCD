@@ -8,6 +8,7 @@ import torch
 #from statsmodels.stats.contingency_tables import mcnemar
 from mlxtend.evaluate import mcnemar_table
 from mlxtend.evaluate import mcnemar
+from path import Path
 
 def intersect_and_union(pred1,
                         pred2,
@@ -70,26 +71,26 @@ def intersect_and_union(pred1,
     return area_n00, area_n01, area_n10, area_n11
 
 
-def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth):
+def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, gt_prefix):
     contingency_table = np.zeros((2, 2))
 
     for file in os.listdir(ground_truth):
-        #if file.endswith(".png"):
-        gt_path = os.path.join(ground_truth, file)
-        pred_path1 = os.path.join(pred_folder1, file)
-        pred_path2 = os.path.join(pred_folder2, file)
+        if file.endswith(gt_prefix):
+            filename = Path(file).stem
+            gt_path = os.path.join(ground_truth, filename + gt_prefix)
+            pred_path1 = os.path.join(pred_folder1, filename + pred_prefix)
+            pred_path2 = os.path.join(pred_folder2, filename + pred_prefix)
 
-        print(gt_path, pred_path1, pred_path2)
-        target_label = np.array(Image.open(gt_path))# // 255
-        print(target_label)
-        pred1 = np.array(Image.open(pred_path1)) // 255
-        pred2 = np.array(Image.open(pred_path2)) // 255
+            target_label = np.array(Image.open(gt_path))
+            print(target_label)
+            pred1 = np.array(Image.open(pred_path1))
+            pred2 = np.array(Image.open(pred_path2))
 
-        ct = mcnemar_table(y_target=target_label.flatten(), 
-                y_model1=pred1.flatten(), 
-                y_model2=pred2.flatten())
-        
-        contingency_table = contingency_table + ct
+            ct = mcnemar_table(y_target=target_label.flatten(), 
+                    y_model1=pred1.flatten(), 
+                    y_model2=pred2.flatten())
+            
+            contingency_table = contingency_table + ct
         
     chi2, p = mcnemar(ary=contingency_table)
     
@@ -101,12 +102,16 @@ if __name__ == "__main__":
     parser.add_argument("pred_folder1", help="Path to prediction folder 1")
     parser.add_argument("pred_folder2", help="Path to prediction folder 2")
     parser.add_argument("ground_truth", help="Path to ground truth folder")
+    parser.add_argument("--pred_prefix", default='.png',help="Path to ground truth folder")
+    parser.add_argument("--gt_prefix", default='.jpg',help="Path to ground truth folder")
     args = parser.parse_args()
 
     pred_folder1 = args.pred_folder1
     pred_folder2 = args.pred_folder2
     ground_truth = args.ground_truth
+    pred_prefix = args.pred_prefix
+    gt_prefix = args.gt_prefix
 
-    chi2, p = perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth)
+    chi2, p = perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, gt_prefix)
     print("chi2:", chi2)
     print("p:", p)
