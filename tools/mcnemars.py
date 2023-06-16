@@ -8,7 +8,7 @@ import torch
 #from statsmodels.stats.contingency_tables import mcnemar
 from mlxtend.evaluate import mcnemar_table
 from mlxtend.evaluate import mcnemar
-from path import Path
+from pathlib import Path
 
 def intersect_and_union(pred1,
                         pred2,
