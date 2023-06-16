@@ -80,10 +80,6 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             pred_path1 = os.path.join(pred_folder1, filename + pred_prefix)
             pred_path2 = os.path.join(pred_folder2, filename + pred_prefix)
 
-            print(gt_path)
-            print(pred_path1)
-            print(pred_path2)
-            
             target_label = np.array(Image.open(gt_path))
             pred1 = np.array(Image.open(pred_path1))
             pred2 = np.array(Image.open(pred_path2))
@@ -91,6 +87,8 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             ct = mcnemar_table(y_target=target_label.flatten(), 
                     y_model1=pred1.flatten(), 
                     y_model2=pred2.flatten())
+            
+            print(ct)
             
             contingency_table = contingency_table + ct
     
