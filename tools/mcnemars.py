@@ -70,7 +70,6 @@ def intersect_and_union(pred1,
 
     return area_n00, area_n01, area_n10, area_n11
 
-
 def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, gt_prefix):
     contingency_table = np.zeros((2, 2))
 
@@ -81,6 +80,10 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             pred_path1 = os.path.join(pred_folder1, filename + pred_prefix)
             pred_path2 = os.path.join(pred_folder2, filename + pred_prefix)
 
+            print(gt_path)
+            print(pred_path1)
+            print(pred_path2)
+            
             target_label = np.array(Image.open(gt_path))
             pred1 = np.array(Image.open(pred_path1))
             pred2 = np.array(Image.open(pred_path2))
