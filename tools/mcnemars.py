@@ -88,8 +88,6 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
                     y_model1=pred1.flatten(), 
                     y_model2=pred2.flatten())
             
-            print(ct)
-            
             contingency_table = contingency_table + ct
     
     print(contingency_table)
