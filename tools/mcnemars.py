@@ -91,7 +91,7 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             
             contingency_table = contingency_table + ct
     
-    print(contingency_table)
+    print(contingency_table, corrected=True)
     chi2, p = mcnemar(ary=contingency_table)
     
     return chi2, p
