@@ -74,22 +74,22 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth):
     contingency_table = np.zeros((2, 2))
 
     for file in os.listdir(ground_truth):
-        if file.endswith(".png"):
-            gt_path = os.path.join(ground_truth, file)
-            pred_path1 = os.path.join(pred_folder1, file)
-            pred_path2 = os.path.join(pred_folder2, file)
+        #if file.endswith(".png"):
+        gt_path = os.path.join(ground_truth, file)
+        pred_path1 = os.path.join(pred_folder1, file)
+        pred_path2 = os.path.join(pred_folder2, file)
 
-            print(gt_path, pred_path1, pred_path2)
-            target_label = np.array(Image.open(gt_path))# // 255
-            print(target_label)
-            pred1 = np.array(Image.open(pred_path1)) // 255
-            pred2 = np.array(Image.open(pred_path2)) // 255
+        print(gt_path, pred_path1, pred_path2)
+        target_label = np.array(Image.open(gt_path))# // 255
+        print(target_label)
+        pred1 = np.array(Image.open(pred_path1)) // 255
+        pred2 = np.array(Image.open(pred_path2)) // 255
 
-            ct = mcnemar_table(y_target=target_label.flatten(), 
-                   y_model1=pred1.flatten(), 
-                   y_model2=pred2.flatten())
-            
-            contingency_table = contingency_table + ct
+        ct = mcnemar_table(y_target=target_label.flatten(), 
+                y_model1=pred1.flatten(), 
+                y_model2=pred2.flatten())
+        
+        contingency_table = contingency_table + ct
         
     chi2, p = mcnemar(ary=contingency_table)
     
