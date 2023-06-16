@@ -1,1 +1,1 @@
-python tools/mcnemars.py 
+python tools/mcnemars.py results/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/change_maps results/swinsunet/swinsunet_t_256x256_50k_cdd/change_maps datasets/cdd/test/OUT
