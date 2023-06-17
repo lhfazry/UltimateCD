@@ -102,7 +102,7 @@ if __name__ == "__main__":
     parser.add_argument("pred_folder2", help="Path to prediction folder 2")
     parser.add_argument("ground_truth", help="Path to ground truth folder")
     parser.add_argument("--pred_prefix", default='.png',help="Path to ground truth folder")
-    parser.add_argument("--gt_prefix", default='.jpg',help="Path to ground truth folder")
+    parser.add_argument("--gt_prefix", default='.png',help="Path to ground truth folder")
     args = parser.parse_args()
 
     pred_folder1 = args.pred_folder1
