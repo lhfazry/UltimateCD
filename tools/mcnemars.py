@@ -81,12 +81,12 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             pred_path2 = os.path.join(pred_folder2, filename + pred_prefix)
 
             target_label = np.array(Image.open(gt_path).convert("L"))
-            pred1 = np.array(Image.open(pred_path1))
+            pred1 = np.array(Image.open(pred_path1).resize((256, 256)))
             pred2 = np.array(Image.open(pred_path2))
 
-            print(f"target_label: {target_label.shape}")
-            print(f"pred1: {pred1.shape}")
-            print(f"pred2: {pred2.shape}")            
+            #print(f"target_label: {target_label.shape}")
+            #print(f"pred1: {pred1.shape}")
+            #print(f"pred2: {pred2.shape}")            
 
             ct = mcnemar_table(y_target=target_label.flatten(), 
                     y_model1=pred1.flatten(), 
