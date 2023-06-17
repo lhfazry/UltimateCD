@@ -1,3 +1,3 @@
 python tools/mcnemars.py results/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/change_maps results/swinsunet/swinsunet_t_256x256_50k_cdd/change_maps datasets/cdd/test/OUT
 
-python tools/mcnemars.py results/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/change_maps results/swinsunet/swinsunet_t_256x256_50k_levircd/change_maps datasets/levir-cd/test/label
+python tools/mcnemars.py results/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/change_maps results/swinsunet/swinsunet_t_256x256_50k_levircd/change_maps datasets/levir-cd256/test/label --gt_prefix .png

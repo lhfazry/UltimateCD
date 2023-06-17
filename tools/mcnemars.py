@@ -84,6 +84,10 @@ def perform_mcnemar_test(pred_folder1, pred_folder2, ground_truth, pred_prefix, 
             pred1 = np.array(Image.open(pred_path1))
             pred2 = np.array(Image.open(pred_path2))
 
+            print(f"target_label: {target_label.shape}")
+            print(f"pred1: {pred1.shape}")
+            print(f"pred2: {pred2.shape}")            
+
             ct = mcnemar_table(y_target=target_label.flatten(), 
                     y_model1=pred1.flatten(), 
                     y_model2=pred2.flatten())
