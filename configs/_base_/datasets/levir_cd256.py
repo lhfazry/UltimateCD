@@ -3,14 +3,14 @@ data_root = 'datasets/levir-cd256'
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-#crop_size = (128, 128)
+crop_size = (128, 128)
 img_scale = (256, 256)
 
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotations'),
     #dict(type='MultiImgResize', img_scale=img_scale),
-    #dict(type='MultiImgRandomCrop', crop_size=crop_size),
+    dict(type='MultiImgRandomCrop', crop_size=crop_size),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
