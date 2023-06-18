@@ -122,6 +122,9 @@ LEVIRCD
 
 
 Latest:
-./train.sh 2 configs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.py >> logs/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.log 2>&1 &
+./train.sh 2 configs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.py >> logs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.log 2>&1 &
 
-./train.sh 2 configs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_levircd.py >> logs/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_levircd.log 2>&1 &
+./train.sh 2 configs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_levircd.log 2>&1 &
+
+./train.sh 2 configs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_levircd.log 2>&1 &
+
