@@ -2,6 +2,14 @@ CDD
 ----
 python tools/test.py configs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/change_maps/ --gpu-id 2 >> test_logs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd.log 2>&1 &
 
+
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
+
+
+
 LEVIR-CD
 ----
 python tools/test.py configs/wavecd/levircd/wavecd_b_256x256_25k_absdiff_levircd.py work_dirs/wavecd/levircd/wavecd_b_256x256_25k_absdiff_levircd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/levircd/wavecd_b_256x256_25k_absdiff_levircd/change_maps/ --gpu-id 2 >> test_logs/wavecd/levircd/wavecd_b_256x256_25k_absdiff_levircd.log 2>&1 &
