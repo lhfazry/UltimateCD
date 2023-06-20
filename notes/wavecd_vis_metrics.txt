@@ -25,6 +25,7 @@ python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_lo
 
 python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd/head10k.log.json work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd/head10k.log.json  work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd/head10k.log.json --keys mIoU --legend "Brightness (-10,10)" "Brightness (-30, 30)" "Contrast (0.2, 0.6)" "Contrast (0.8, 1.2)" "Saturation (0.2, 0.6)" "Saturation (0.8, 1.2)" "Hue (-10,10)" "Hue (-30, 30)" "Tanpa Augmentasi" --out results/wavecd/wavecd_s_128x128_10k_sum_pmd_iou.png --style white
 
+
 LEVIR-CD
 python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_128x128_10k_sum_cdd/20230315_211934.log.json work_dirs/wavecd/levircd/wavecd_b_256x256_25k_sum_levircd/20230310_200353.log.json  work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD small" "WaveCD base" "SwinSUNet" --out results/wavecd/wavecd_b_256x256_25k_sum_levircd_f1.png --style white
 
@@ -33,3 +34,10 @@ python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_l
 python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/20230301_200440.log.json work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mFscore --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_levircd_f1.png --style white
 
 python tools/analyze_logs.py work_dirs/wavecd/levircd/wavecd_s_256x256_25k_sum_levircd/20230301_200440.log.json work_dirs/swinsunet/swinsunet_t_256x256_50k_levircd/edited.log.json --keys mIoU --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_25k_sum_levircd_iou.png --style white
+
+
+WaveCD vs SwinSUNet
+---------------
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd/20230617_073008.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/all.log.json --keys mFscore --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_cdd_f1.png --style white
+
+python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd/20230617_073008.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/all.log.json --keys mIoU --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_cdd__iou.png --style white
