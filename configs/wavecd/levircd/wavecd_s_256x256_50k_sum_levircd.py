@@ -28,26 +28,6 @@ img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 #crop_size = (256, 256)
 
-train_pipeline = [
-    dict(type='MultiImgLoadImageFromFile'),
-    dict(type='MultiImgLoadAnnotations'),
-    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    #dict(type='MultiImgRandomCrop', crop_size=crop_size),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
-    dict(type='MultiImgExchangeTime', prob=0.5),
-    
-    dict(type='MultiImgNormalize', **img_norm_cfg),
-    dict(type='MultiImgDefaultFormatBundle'),
-    dict(type='Collect', keys=['img', 'gt_semantic_seg'])
-]
-
-data = dict(
-    samples_per_gpu=16,
-    workers_per_gpu=4,
-    train=dict(pipeline=train_pipeline)
-)
-
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
 optimizer = dict(_delete_=True, type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),

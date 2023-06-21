@@ -2,11 +2,50 @@ CDD
 ----
 python tools/test.py configs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd/change_maps/ --gpu-id 2 >> test_logs/wavecd/cdd/wavecd_b_256x256_50k_sum_cdd.log 2>&1 &
 
-
+---- locality
 
 python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd.log 2>&1 &
 
 python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
+
+------ feature fusion
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_diff_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_diff_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_diff_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_diff_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_concat_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_concat_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_concat_cdd/change_maps/ --gpu-id 0 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_concat_cdd.log 2>&1 &
+
+----- decoder
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_mlp_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_conv_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_fcn_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd.py work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd/change_maps/ --gpu-id 0 >> test_logs/wavecd/cdd/wavecd_s_128x128_10k_sum_db_locality_cdd.log 2>&1 &
+
+----- photometric distortion
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd/change_maps/ --gpu-id 3 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b10_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_b30_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c02_06_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_c08_12_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s02_06_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_s08_12_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h10_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_h30_sum_cdd.log 2>&1 &
+
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd/latest.pth --format-only --eval-options imgfile_prefix=results/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd/change_maps/ --gpu-id 6 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_pmd_absdiff_cdd.log 2>&1 &
 
 
 
