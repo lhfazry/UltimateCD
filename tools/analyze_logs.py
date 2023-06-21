@@ -58,7 +58,8 @@ def plot_curve(log_dicts, args):
                 plt.plot(plot_iters, plot_values, label=label)
 
             ax.set_ylim(bottom=0)
-            
+
+        plt.yscale('log')
         plt.legend()
         if args.title is not None:
             plt.title(args.title)
