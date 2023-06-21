@@ -42,10 +42,27 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_semantic_seg'])
 ]
 
+test_pipeline = [
+    dict(type='MultiImgLoadImageFromFile'),
+    dict(
+        type='MultiImgMultiScaleFlipAug',
+        img_scale=(1024, 1024),
+        # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
+        flip=False,
+        transforms=[
+            dict(type='MultiImgResize', keep_ratio=True),
+            dict(type='MultiImgRandomFlip'),
+            dict(type='MultiImgNormalize', **img_norm_cfg),
+            dict(type='MultiImgImageToTensor', keys=['img']),
+            dict(type='Collect', keys=['img']),
+        ])
+]
+
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=8,
-    train=dict(pipeline=train_pipeline)
+    train=dict(pipeline=train_pipeline),
+    test=dict(pipeline=test_pipeline)
 )
 
 # AdamW optimizer, no weight decay for position embedding & layer norm in backbone
