@@ -20,7 +20,7 @@ model = dict(
         num_classes=2
     ),
     auxiliary_head=dict(
-        in_channels=embed_dims[2],
+        in_channels=2*embed_dims[2],
         num_classes=2
     ))
 

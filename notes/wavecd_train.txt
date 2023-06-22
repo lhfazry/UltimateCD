@@ -136,3 +136,5 @@ Latest:
 
 ./resume_train.sh 2 work_dirs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_b32_levircd/latest.pth configs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_b32_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_50k_sum_locality_noaux_b32_levircd.log 2>&1 &
 
+
+./train.sh 1 configs/wavecd/levircd/wavecd_s_256x256_10k_concat_levircd.py >> logs/wavecd/levircd/wavecd_s_256x256_10k_concat_levircd.log 2>&1 &
