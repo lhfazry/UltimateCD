@@ -2,6 +2,8 @@ CDD
 ---
 python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd/latest.pth --work-dir test_logs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd --eval mIoU mDice mFscore  --gpu-id 5 >> test_logs/wavecd/cdd/wavecd_s_256x256_25k_sum_cdd.log 2>&1 &
 
+python tools/test.py configs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd/latest.pth --work-dir test_logs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd --eval mIoU mDice mFscore  --gpu-id 5 >> test_logs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd.log 2>&1 &
+
 
 
 LEVIRCD
