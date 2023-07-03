@@ -1,0 +1,10 @@
+FocalCD:
+python tools/get_flops.py configs/focalcd/cdd/focalcd_t_256x256_100k_absdiff_noaux_cdd.py --shape 256
+
+ChangeFormer:
+python tools/get_flops.py configs/changeformer/changeformer_mit-b1_256x256_50k_levircd.py --shape 256
+
+SiamixFormer:
+python tools/get_flops.py configs/siamixformer/siamixformer_s_256x256_50k_cdd.py --shape 256
+python tools/get_flops.py configs/siamixformer/siamixformer_b_256x256_50k_cdd.py --shape 256
+
