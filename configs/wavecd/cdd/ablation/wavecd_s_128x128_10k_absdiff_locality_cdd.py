@@ -13,9 +13,9 @@ model = dict(
         num_heads=[2, 4, 10, 14], 
         drop_path_rate=0.3, #0.2, 
         depths=[3, 4, 6, 3],
-        locality_ffn=False
+        locality_ffn=True
     ),
-    neck=dict(type='FeatureFusionNeck', policy='sum'),
+    neck=dict(type='FeatureFusionNeck', policy='Lp_distance'),
     decode_head=dict(
         in_channels=[v for v in embed_dims],
         num_classes=2
@@ -68,4 +68,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 optimizer_config = dict(type='Fp16OptimizerHook', loss_scale=512.)
 fp16 = dict()
-work_dir = './work_dirs/wavecd/cdd/ablation/wavecd_s_128x128_10k_sum_cdd'
+work_dir = './work_dirs/wavecd/cdd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd'
