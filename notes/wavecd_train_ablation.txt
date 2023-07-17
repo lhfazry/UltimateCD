@@ -1,10 +1,28 @@
 CDD
 ----
+Locality:
 ./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
+./resume_train.sh 7 work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd/latest.pth configs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
 
+Feature fusion:
 ./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd.log 2>&1 &
-
 ./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_concat_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_concat_locality_cdd.log 2>&1 &
-
 ./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_diff_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_diff_locality_cdd.log 2>&1 &
+
+Decoder:
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_conv_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_conv_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_fcn_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_fcn_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_mlp_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_mlp_cdd.log 2>&1 &
+
+Photometric Distortion:
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b10_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b10_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b30_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b30_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c02_06_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c02_06_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c08_12_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c08_12_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h10_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h10_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h30_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h30_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s02_06_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s02_06_cdd.log 2>&1 &
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s08_12_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s08_12_cdd.log 2>&1 &
+
 

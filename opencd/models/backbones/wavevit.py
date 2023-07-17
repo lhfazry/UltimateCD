@@ -557,6 +557,7 @@ class WaveViT(BaseModule):
         embed_dims = [64, 128, 320, 448],
         num_heads = [2, 4, 10, 14], 
         mlp_ratios = [8, 8, 4, 4], 
+        wave_blocks = 2,
         drop_path_rate = 0., 
         depths = [3, 4, 6, 3],
         sr_ratios = [4, 2, 1, 1], 
@@ -587,7 +588,7 @@ class WaveViT(BaseModule):
                 drop_path=dpr[cur + j], 
                 norm_layer=norm_layer,
                 sr_ratio=sr_ratios[i], 
-                block_type='wave' if i < 2 else 'std_att',
+                block_type='wave' if i < wave_blocks else 'std_att',
                 wave=wave,
                 locality_ffn=locality_ffn,
                 global_context=global_context)
