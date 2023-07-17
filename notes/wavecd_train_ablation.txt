@@ -1,3 +1,10 @@
 CDD
 ----
 ./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_concat_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_concat_locality_cdd.log 2>&1 &
+
+./train.sh 7 configs/wavecd/ablation/wavecd_s_128x128_10k_diff_locality_cdd.py >> logs/wavecd/ablation/wavecd_s_128x128_10k_diff_locality_cdd.log 2>&1 &
+
