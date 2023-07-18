@@ -1,0 +1,30 @@
+IoU
+------
+
+Wave Attention:
+python tools/analyze_logs.py work_dirs/wavecd/ablation/wavecd_s_128x128_10k_nowave_sum_locality_cdd/20230718_105532.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Tanpa Wave Attention" "Dengan Wave Attention" --out results/wavecd/ablation/wavecd_s_128x128_10k_ablation_wave_ious.png --style white
+
+
+LFF:
+python tools/analyze_logs.py work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_cdd/joined.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Tanpa LFF" "Dengan LFF" --out results/wavecd/ablation/wavecd_s_128x128_10k_ablation_lff_iou.png --style white
+
+Feature Fusion:
+python tools/analyze_logs.py work_dirs/wavecd/ablation/wavecd_s_128x128_10k_diff_locality_cdd/20230717_043624.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_absdiff_locality_cdd/20230717_023326.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_concat_locality_cdd/20230717_023356.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Substraction" "Lp Distance" "Concatenation" "Addition" --out results/wavecd/ablation/wavecd_s_128x128_10k_ablation_ff_iou.png --style white
+
+Decoder:
+python tools/analyze_logs.py work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_conv_cdd/20230717_074223.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_fcn_cdd/20230717_095545.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_mlp_cdd/20230717_131611.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Conv. Decoder" "FCN" "MLP Decoder" "FPN + PPM" --out results/wavecd/ablation/wavecd_s_128x128_10k_ablation_decoder_iou.png --style white
+
+PMD:
+python tools/analyze_logs.py work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_conv_cdd/20230717_074223.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_fcn_cdd/20230717_095545.log.json work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_mlp_cdd/20230717_131611.log.json work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mIoU --legend "Conv. Decoder" "FCN" "MLP Decoder" "FPN + PPM" --out results/wavecd/ablation/wavecd_s_128x128_10k_ablation_decoder_iou.png --style white
+
+python tools/analyze_logs.py 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b10_cdd/head10k.log.json 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_b30_cdd/head10k.log.json 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c02_06_cdd/head10k.log.json  
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_c08_12_cdd/head10k.log.json 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h10_cdd/head10k.log.json 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_h30_cdd/head10k.log.json 
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s02_06_cdd/head10k.log.json  
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_s08_12_cdd/head10k.log.json  
+work_dirs/wavecd/ablation/wavecd_s_128x128_10k_sum_locality_pmd_cdd/head10k.log.json  
+work_dirs/wavecd/cdd/wavecd_s_128x128_10k_sum_locality_cdd/20230527_222910.log.json --keys mFscore --legend "Brightness (-10,10)" "Brightness (-30, 30)" "Contrast (0.2, 0.6)" "Contrast (0.8, 1.2)" "Saturation (0.2, 0.6)" "Saturation (0.8, 1.2)" "Hue (-10,10)" "Hue (-30, 30)" "Kombinasi" "Tanpa Augmentasi" --out results/wavecd/wavecd_s_128x128_10k_sum_pmd_f1.png --style white
