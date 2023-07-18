@@ -50,3 +50,4 @@ WaveCD vs SwinSUNet
 python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd/20230617_073008.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/all.log.json --keys mFscore --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_cdd_f1.png --style white
 
 python tools/analyze_logs.py work_dirs/wavecd/cdd/wavecd_s_256x256_50k_sum_locality_noaux_cdd/20230617_073008.log.json work_dirs/swinsunet/swinsunet_t_256x256_25k_cdd/all.log.json --keys mIoU --legend "WaveCD" "SwinSUNet" --out results/wavecd/wavecd_s_256x256_50k_sum_locality_noaux_cdd__iou.png --style white
+

@@ -57,7 +57,7 @@ def plot_curve(log_dicts, args):
                 plt.xlabel('iteration')
                 plt.plot(plot_iters, plot_values, label=label)
 
-            ax.set_ylim(bottom=0)
+            #ax.set_ylim(bottom=0)
 
         #plt.yscale('log')
         plt.legend()
